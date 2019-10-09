@@ -103,6 +103,29 @@ namespace SharpHash.Tests
 
     public static class TestHelper
     {
+        public static string lstrip(string str, char value)
+        {
+            Int32 s_pos = 0;
+	        for (Int32 i = 0; i < str.Length; i++, s_pos++)
+	        {
+		        if (str[i] != value) break;
+	        }// end if
+
+            str = str.Substring(s_pos);
+
+            if (str.Length == 0) return "0";
+
+            return str;
+        } // end lstrip
+
+        public static string StringOfChar(char value, Int32 count)
+        {
+            string temp = "";
+	        for (Int32 i = 0; i < count; i++)
+		        temp += value;
+	        return temp;
+        } // end function StringOfChar
+
         public static void TestActualAndExpectedData(object actual, object expected, IHash i_hash)
         {
             string ActualString, name = actual.GetType().Name;
@@ -134,7 +157,7 @@ namespace SharpHash.Tests
             
             hash.TransformString(actual.Substring(from)); // hash the remaining part
 
-            string ActualString = hash.TransformFinal().ToString();
+            string ActualString = lstrip(hash.TransformFinal().ToString(), '0');
 
             Assert.AreEqual(expected, ActualString);
         } // end function TestIncrementalHash
