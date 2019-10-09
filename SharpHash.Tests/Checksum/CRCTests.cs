@@ -71,7 +71,7 @@ namespace SharpHash.Checksum.Tests
             {
                 crcObj = CRC.CreateCRCObject(Idx);
 
-                ExpectedString = ((crcObj as ICRC).GetCheckValue().ToString("X"));
+                ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
 
                 ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine).ToString(), '0');
                 
@@ -88,7 +88,7 @@ namespace SharpHash.Checksum.Tests
             {
                 crcObj = CRC.CreateCRCObject(Idx);
 
-                ExpectedString = ((crcObj as ICRC).GetCheckValue().ToString("X"));
+                ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
                 
                 TestHelper.TestIncrementalHash(TestConstants.OnetoNine,
                 ExpectedString, crcObj);
@@ -140,12 +140,12 @@ namespace SharpHash.Checksum.Tests
             {
                 Original = CRC.CreateCRCObject(Idx);
                 Original.Initialize();
-                Original.SetBufferSize(64 * 1024); // 64Kb
+                Original.BufferSize = (64 * 1024); // 64Kb
                                                    // Make Copy Of Current State
                 Copy = Original.Clone();
-                Copy.SetBufferSize(128 * 1024); // 128Kb
+                Copy.BufferSize = (128 * 1024); // 128Kb
 
-                Assert.AreNotEqual(Original.GetBufferSize(), Copy.GetBufferSize());
+                Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
             } // end foreach
         }
 
@@ -299,12 +299,12 @@ namespace SharpHash.Checksum.Tests
                 GetWorkingValue(Idx);
                 Original = crcObj;
                 Original.Initialize();
-                Original.SetBufferSize(64 * 1024); // 64Kb
+                Original.BufferSize = (64 * 1024); // 64Kb
                                                    // Make Copy Of Current State
                 Copy = Original.Clone();
-                Copy.SetBufferSize(128 * 1024); // 128Kb
+                Copy.BufferSize = (128 * 1024); // 128Kb
 
-                Assert.AreNotEqual(Original.GetBufferSize(), Copy.GetBufferSize());
+                Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
             } // end foreach
         }
 

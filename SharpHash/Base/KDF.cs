@@ -5,6 +5,8 @@ namespace SharpHash.Base
 {
     public abstract class KDF : IKDF
     {
+        public abstract void Clear();
+
         /// <summary>
         /// Returns the pseudo-random bytes for this object.
         /// </summary>

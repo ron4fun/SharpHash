@@ -11,37 +11,45 @@ namespace SharpHash.Base
         protected Int32 block_size;
         protected Int32 hash_size;
 
-        virtual public string GetName()
+        virtual public string Name
         {
-            return this.GetType().Name;
-        } // end function GetName
-
-        virtual public Int32 GetBufferSize()
-        {
-            return buffer_size;
-        } // end function GetBufferSize
-
-        virtual public void SetBufferSize(Int32 value)
-        { 
-            if (value > 0)
+            get
             {
-                buffer_size = value;
-            } // end if
-            else
+                return this.GetType().Name;
+            }
+        } // end property Name
+
+        virtual public Int32 BufferSize 
+        {
+            get { return buffer_size; }
+            set
             {
-                throw new ArgumentHashLibException(InvalidBufferSize);
-            } // end else
-        } // end function SetBufferSize
+                if (value > 0)
+                {
+                    buffer_size = value;
+                } // end if
+                else
+                {
+                    throw new ArgumentHashLibException(InvalidBufferSize);
+                } // end else
+            }
+        } // end property BufferSize
 
-        virtual public Int32 GetBlockSize()
+        virtual public Int32 BlockSize
         {
-            return block_size;
-        } // end function GetBlockSize
+            get
+            {
+                return block_size;
+            }
+        } // end property BlockSize
 
-        virtual public Int32 GetHashSize()
+        virtual public Int32 HashSize
         {
-            return hash_size;
-        } // end function GetHashSize
+            get
+            {
+                return hash_size;
+            }
+        } // end property HashSize
 
         protected static Int32 BUFFER_SIZE = (Int32)(64 * 1024); // 64Kb
 
@@ -62,8 +70,8 @@ namespace SharpHash.Base
 
         virtual public IHash Clone()
 	    {
-		    throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, GetName()));
-	    }
+		    throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
+	    } // end function Clone
 
 	    virtual public IHashResult ComputeString(string a_data)
         {

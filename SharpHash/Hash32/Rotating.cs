@@ -17,7 +17,7 @@ namespace SharpHash.Hash32
             Rotating HashInstance = new Rotating();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

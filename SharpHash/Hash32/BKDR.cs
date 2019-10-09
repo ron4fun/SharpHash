@@ -18,7 +18,7 @@ namespace SharpHash.Hash32
             BKDR HashInstance = new BKDR();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

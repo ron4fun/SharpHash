@@ -17,7 +17,7 @@ namespace SharpHash.Hash32
             FNV1a HashInstance = new FNV1a();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

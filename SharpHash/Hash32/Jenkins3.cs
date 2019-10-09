@@ -18,7 +18,7 @@ namespace SharpHash.Hash32
 
             HashInstance._list = new List<byte[]>(_list);
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

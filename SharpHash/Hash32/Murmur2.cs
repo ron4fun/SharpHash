@@ -28,8 +28,8 @@ namespace SharpHash.Hash32
             HashInstance.h = h;
             HashInstance._list = new List<byte[]>(_list);
 
-            HashInstance.SetBufferSize(GetBufferSize());
-            
+            HashInstance.BufferSize = BufferSize;
+
             return HashInstance;
         } // end function Clone
 
@@ -112,36 +112,42 @@ namespace SharpHash.Hash32
             h = h ^ a_data;
         } // end function TransformUInt32Fast
 
-        virtual public Int32? GetKeyLength()
+        virtual public Int32? KeyLength
 	    {
-		    return 4;
-	    } // end function GetKeyLength
-
-	    virtual public byte[] GetKey()
-	    {
-		    return Converters.ReadUInt32AsBytesLE(key);
-	    } // end function GetKey
-
-	    virtual public void SetKey(byte[] value)
-        {
-            if (!(value == null || value.Length == 0))
-                key = CKEY;
-            else
+            get
             {
-                if (value.Length != GetKeyLength())
-                    throw new ArgumentHashLibException(string.Format(InvalidKeyLength, GetKeyLength()));
+                return 4;
+            }
+	    } // end property KeyLength
 
-                unsafe
+	    virtual public byte[] Key
+	    {
+            get
+            {
+                return Converters.ReadUInt32AsBytesLE(key);
+            }
+            set
+            {
+                if (!(value == null || value.Length == 0))
+                    key = CKEY;
+                else
                 {
-                    fixed (byte* bPtr = &value[0])
-                    {
-                        key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
-                    }
-                }
-                
-            } // end else
-        } // end function SetKey
+                    if (value.Length != KeyLength)
+                        throw new ArgumentHashLibException(string.Format(InvalidKeyLength, KeyLength));
 
+                    unsafe
+                    {
+                        fixed (byte* bPtr = &value[0])
+                        {
+                            key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
+                        }
+                    }
+
+                } // end else
+            } 
+        
+        } // end property Key
+        
     } // end class Murmur2
 
 }

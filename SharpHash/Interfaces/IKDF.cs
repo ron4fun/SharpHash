@@ -4,6 +4,8 @@ namespace SharpHash.Interfaces
 {
     public interface IKDF
     {
+        void Clear();
+
         /// <summary>
         /// Returns the pseudo-random bytes for this object.
         /// </summary>

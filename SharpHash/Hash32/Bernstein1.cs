@@ -17,7 +17,7 @@ namespace SharpHash.Hash32
             Bernstein1 HashInstance = new Bernstein1();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

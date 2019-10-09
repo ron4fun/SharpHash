@@ -19,7 +19,7 @@ namespace SharpHash.Checksum
             HashInstance.a = a;
 		    HashInstance.b = b;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
 		    return HashInstance;
 	    } // end function Clone

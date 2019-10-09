@@ -1,57 +1,115 @@
-﻿using System;
+﻿using SharpHash.KDF;
+using System;
 
 namespace SharpHash.Interfaces
 {
     public interface ITransformBlock
-    { }; // end class ITransformBlock
+    { }; // end interface ITransformBlock
 
     public interface IBlockHash : IHash
-    {}; // end class IBlockHash
+    { }; // end interface IBlockHash
 
     public interface INonBlockHash
-    { }; // end class INonBlockHash
+    { }; // end interface INonBlockHash
 
     public interface IChecksum
-    { }; // end class IChecksum
+    { }; // end interface IChecksum
 
     public interface ICrypto : IBlockHash
-    {}; // end class ICrypto
+    { }; // end interface ICrypto
 
     public interface ICryptoNotBuildIn : ICrypto
-    {}; // end class ICryptoNotBuildIn
+    { }; // end interface ICryptoNotBuildIn
 
     public interface IWithKey : IHash
     {
-        byte[] GetKey();
-        void SetKey(byte[] value);
-	    Int32? GetKeyLength();
+        byte[] Key { get; set; }
+        Int32? KeyLength { get; }
 
-    }; // end class IWithKey
+    }; // end interface IWithKey
 
     public interface IPBKDF2_HMAC : IKDF
-    {}; // end class IPBKDF2_HMAC
+    { }; // end interface IPBKDF2_HMAC
 
     public interface IPBKDF2_HMACNotBuildIn : IPBKDF2_HMAC
-    {}; // end class IPBKDF2_HMACNotBuildIn
+    { }; // end interface IPBKDF2_HMACNotBuildIn
+
+    public interface IPBKDF_Argon2 : IKDF
+    { }; // end interface IPBKDF_Argon2
+
+    public interface IPBKDF_Argon2NotBuildIn : IPBKDF_Argon2
+    { }; // end interface IPBKDF_Argon2NotBuildIn
+
+    public interface IPBKDF_Scrypt : IKDF
+    { }; // end interface IPBKDF_Scrypt
+
+    public interface IPBKDF_ScryptNotBuildIn : IPBKDF_Scrypt
+    { }; // end interface IPBKDF_ScryptNotBuildIn
 
     public interface IHMAC : IWithKey
-    {}; // end class IHMAC
+    { }; // end interface IHMAC
 
     public interface IIHMACNotBuildIn : IHMAC
-    {}; // end class IHMACNotBuildIn
+    { }; // end interface IHMACNotBuildIn
 
     public interface IHash16 : IHash
-    {}; // end class IHash16
+    { }; // end interface IHash16
 
     public interface IHash32 : IHash
-    {}; // end class IHash32
+    { }; // end interface IHash32
 
     public interface IHash64 : IHash
-    {}; // end class IHash64
+    { }; // end interface IHash64
 
     public interface IHash128 : IHash
-    {}; // end class IHash128
+    { }; // end interface IHash128
 
     public interface IHashWithKey : IWithKey
-    {}; // end class IHashWithKey
+    { }; // end interface IHashWithKey
+
+    public interface IXOF : IHash
+    {
+        UInt32 XOFSizeInBits { get; set; }
+    } // end interface IXOF
+
+    public interface IArgon2Parameters
+    {
+        void Clear();
+
+        byte[] Salt { get; }
+        byte[] Secret { get; }
+        byte[] Additional { get; }
+        Int32 Iterations { get; }
+        Int32 Memory { get; }
+        Int32 Lanes { get; }
+        Argon2Type Type { get; }
+        Argon2Version Version { get; }
+
+    }  // end interface IArgon2Parameters
+
+    public interface IArgon2ParametersBuilder
+    {
+        IArgon2ParametersBuilder WithParallelism(Int32 a_parallelism);
+
+        IArgon2ParametersBuilder WithSalt(byte[] a_salt);
+
+        IArgon2ParametersBuilder WithSecret(byte[] a_secret);
+
+        IArgon2ParametersBuilder WithAdditional(byte[] a_additional);
+
+        IArgon2ParametersBuilder WithIterations(Int32 a_iterations);
+
+        IArgon2ParametersBuilder WithMemoryAsKB(Int32 a_memory);
+
+        IArgon2ParametersBuilder WithMemoryPowOfTwo(Int32 a_memory);
+
+        IArgon2ParametersBuilder WithVersion(Argon2Version a_version);
+
+        void Clear();
+
+        IArgon2Parameters Build();
+
+    } // end interface IArgon2ParametersBuilder
+
+
 }

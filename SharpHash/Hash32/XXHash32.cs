@@ -58,7 +58,7 @@ namespace SharpHash.Hash32
             for (Int32 i = 0; i < memory.Length; i++)
                 HashInstance.memory[i] = memory[i];
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone
@@ -193,35 +193,40 @@ namespace SharpHash.Hash32
             return result;
         } // end function TransformFinal
 
-        virtual public Int32? GetKeyLength()
+        virtual public Int32? KeyLength
 	    {
-		    return 4;
-        } // end function GetKeyLength
-
-        virtual public byte[] GetKey()
-	    {
-		    return Converters.ReadUInt32AsBytesLE(key);
-	    } // end function GetKey
-
-        virtual public void SetKey(byte[] value)
-        {
-            if (!(value == null || value.Length == 0))
-                key = CKEY;
-            else
+            get
             {
-                if (value.Length != GetKeyLength())
-                    throw new ArgumentHashLibException(String.Format(InvalidKeyLength, GetKeyLength()));
+                return 4;
+            }
+        } // end property KeyLength
 
-                unsafe
+        virtual public byte[] Key
+	    {
+            get
+            {
+                return Converters.ReadUInt32AsBytesLE(key);
+            }
+            set
+            {
+                if (!(value == null || value.Length == 0))
+                    key = CKEY;
+                else
                 {
-                    fixed (byte* vPtr = &value[0])
+                    if (value.Length != KeyLength)
+                        throw new ArgumentHashLibException(String.Format(InvalidKeyLength, KeyLength));
+
+                    unsafe
                     {
-                        key = Converters.ReadBytesAsUInt32LE((IntPtr)vPtr, 0);
+                        fixed (byte* vPtr = &value[0])
+                        {
+                            key = Converters.ReadBytesAsUInt32LE((IntPtr)vPtr, 0);
+                        }
                     }
-                }
-                
-            } // end else
-        } // end function SetKey
+
+                } // end else
+            }
+        } // end property GetKey
 
     } // end class XXHash32
 

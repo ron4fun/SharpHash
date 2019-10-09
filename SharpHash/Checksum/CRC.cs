@@ -520,10 +520,10 @@ namespace SharpHash.Checksum
 
     public class CRC : Hash, IChecksum, ICRC, ITransformBlock
     {
-        private string[] Names = null;
-        private Int32 Width;
-        private UInt64 Polynomial, Init, XorOut, CheckValue, CRCMask, CRCHighBitMask, hash;
-        private bool ReflectIn, ReflectOut, IsTableGenerated;
+        private string[] names = null;
+        private Int32 width;
+        private UInt64 polynomial, init, xorOut, checkValue, CRCMask, CRCHighBitMask, hash;
+        private bool reflectIn, reflectOut, IsTableGenerated;
 
         private UInt64[] CRCTable;
 
@@ -556,20 +556,20 @@ namespace SharpHash.Checksum
                 block_size = 1;
             } // end else
 
-            Names = _Names;
-            Width = _Width;
-            Polynomial = _poly;
-            Init = _Init;
-            ReflectIn = _refIn;
-            ReflectOut = _refOut;
-            XorOut = _XorOut;
-            CheckValue = _check;
+            names = _Names;
+            width = _Width;
+            polynomial = _poly;
+            init = _Init;
+            reflectIn = _refIn;
+            reflectOut = _refOut;
+            xorOut = _XorOut;
+            checkValue = _check;
 
         } // end constructor
 
         override public IHash Clone()
     	{
-            CRC HashInstance = new CRC(Width, Polynomial, Init, ReflectIn, ReflectOut, XorOut, CheckValue, Names);
+            CRC HashInstance = new CRC(width, polynomial, init, reflectIn, reflectOut, xorOut, checkValue, names);
             HashInstance.CRCMask = CRCMask;
 		    HashInstance.CRCHighBitMask = CRCHighBitMask;
 		    HashInstance.hash = hash;
@@ -582,14 +582,17 @@ namespace SharpHash.Checksum
                     HashInstance.CRCTable[i] = CRCTable[i];
             } // end if
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
-		    return HashInstance;
+            return HashInstance;
 	    } // end function Clone
 
-        override public string GetName()
+        override public string Name
 	    {
-		    return Names[0];
+            get
+            {
+                return Names[0];
+            }
 	    }
 
         override public void Initialize()
@@ -597,14 +600,14 @@ namespace SharpHash.Checksum
             // initialize some bitmasks
             CRCMask = ((((UInt64)1 << (Width - 1)) - 1) << 1) | 1;
             CRCHighBitMask = (UInt64)1 << (Width - 1);
-            hash = Init;
+            hash = init;
 
             if (Width > Delta) // then use table
             {
                 if (!IsTableGenerated)
                     GenerateTable();
 
-                if (ReflectIn)
+                if (reflectIn)
                     hash = Reflect(hash, Width);
             } // end if
         } // end function Initialize
@@ -618,19 +621,19 @@ namespace SharpHash.Checksum
 
             if (Width > Delta)
             {
-                if (ReflectIn ^ ReflectOut)
+                if (reflectIn ^ reflectOut)
                     hash = Reflect(hash, Width);
             } // end if
             else
             {
-                if (ReflectOut)
+                if (reflectOut)
                     hash = Reflect(hash, Width);
             } // end else
 
-            hash = hash ^ XorOut;
+            hash = hash ^ xorOut;
             hash = hash & CRCMask;
 
-            if (Width == 21) // special case
+            if (width == 21) // special case
             {
                 LUInt32 = (UInt32)hash;
 
@@ -1000,84 +1003,108 @@ namespace SharpHash.Checksum
 		    throw new ArgumentHashLibException("Invalid CRCStandard object.");
         } // end function CreateCRCObject
 
-        virtual public string[] GetNames()
+        virtual public string[] Names
 	    {
-		    return Names;
-	    } // end function GetNames
+            get
+            {
+                return names;
+            }
+	    } // end property Names
 
-        virtual public Int32 GetWidth()
+        virtual public Int32 Width
 	    {
-		    return Width;
-	    } // end function GetWidth
+            get
+            {
+                return width;
+            }
+        } // end property Width
 
-        virtual public UInt64 GetPolynomial()
+        virtual public UInt64 Polynomial
 	    {
-		    return Polynomial;
-	    } // end function GetPolynomial
+            get
+            {
+                return polynomial;
+            }
+        } // end property Polynomial
 
-	    virtual public UInt64 GetInit()
+        virtual public UInt64 Initial
 	    {
-		    return Init;
-	    } // end function GetInit
+            get
+            {
+                return init;
+            }
+        } // end property Initial
 
-	    virtual public bool GetReflectIn()
+        virtual public bool IsInputReflected
 	    {
-		    return ReflectIn;
-	    } // end function GetReflectIn
+            get
+            {
+                return reflectIn;
+            }
+        } // end property IsInputReflected
 
-	    virtual public bool GetReflectOut()
+        virtual public bool IsOutputReflected
 	    {
-		    return ReflectOut;
-	    } // end function GetReflectOut 
+            get
+            {
+                return reflectOut;
+            }
+        } // end property IsOutputReflected 
 
-	    virtual public UInt64 GetXOROut()
+        virtual public UInt64 OutputXor
 	    {
-		    return XorOut;
-	    } // end function GetXOROut
+            get
+            {
+                return xorOut;
+            }
+        } // end property OutputXor
 
-	    virtual public UInt64 GetCheckValue()
+        virtual public UInt64 CheckValue
 	    {
-		    return CheckValue;
-	    } // end function GetCheckValue
+            get
+            {
+                return checkValue;
+            }
+        } // end property CheckValue
 
         protected void SetNames(string[] value)
 	    {
-		    Names = value;
+		    names = value;
 	    } // end function SetNames
 
         protected void SetWidth(Int32 value)
         {
-            Width = value;
+            width = value;
         } // end function SetWidth
 
         protected void SetPolynomial(UInt64 value)
         {
-            Polynomial = value;
+            polynomial = value;
         } // end function SetPolynomial
 
         protected void SetInit(UInt64 value)
         {
-            Init = value;
+            init = value;
         } // end function SetInit
 
         protected void SetReflectIn(bool value)
         {
-            ReflectIn = value;
+            reflectIn = value;
         } // end function SetReflectIn
 
         protected void SetReflectOut(bool value)
         {
-            ReflectOut = value;
+            reflectOut = value;
         } // end function SetReflectOut
 
         protected void SetXOROut(UInt64 value)
         {
-            XorOut = value;
+            xorOut = value;
         } // end function SetXOROut
 
         protected void SetCheckValue(UInt64 value)
         {
-            CheckValue = value;
+            checkValue = value;
         } // end function SetCheckValue
 
         private void GenerateTable()
@@ -1094,22 +1121,22 @@ namespace SharpHash.Checksum
                     while (i < 256)
                     {
                         crc = i;
-                        if (ReflectIn)
+                        if (reflectIn)
                             crc = Reflect(crc, 8);
 
-                        crc = crc << (Width - 8);
+                        crc = crc << (width - 8);
                         j = 0;
                         while (j < 8)
                         {
                             bit = crc & CRCHighBitMask;
                             crc = crc << 1;
                             if (bit != 0)
-                                crc = (crc ^ Polynomial);
+                                crc = (crc ^ polynomial);
                             j++;
                         } // end while
 
-                        if (ReflectIn)
-                            crc = Reflect(crc, Width);
+                        if (reflectIn)
+                            crc = Reflect(crc, width);
 
                         crc = crc & CRCMask;
                         ptr_Fm_CRCTable[i] = crc;
@@ -1135,7 +1162,7 @@ namespace SharpHash.Checksum
             {
                 fixed (UInt64* ptr_Fm_CRCTable = &CRCTable[0])
                 {
-                    if (ReflectIn)
+                    if (reflectIn)
                     {
                         while (Length > 0)
                         {
@@ -1149,7 +1176,7 @@ namespace SharpHash.Checksum
                         while (Length > 0)
                         {
                             tmp = (tmp << 8) ^ ptr_Fm_CRCTable
-                            [(byte)((tmp >> (Width - 8)) ^ ((byte*)a_data)[i])];
+                            [(byte)((tmp >> (width - 8)) ^ ((byte*)a_data)[i])];
                             i++;
                             Length--;
                         } // end while
@@ -1177,7 +1204,7 @@ namespace SharpHash.Checksum
                     c = ((byte*)a_data)[i];
                 }
                 
-                if (ReflectIn)
+                if (reflectIn)
                     c = Reflect(c, 8);
 
                 j = 0x80;
@@ -1188,7 +1215,7 @@ namespace SharpHash.Checksum
                     if ((c & j) > 0)
                         bit = bit ^ CRCHighBitMask;
                     if (bit > 0)
-                        hash = hash ^ Polynomial;
+                        hash = hash ^ polynomial;
                     j = j >> 1;
                 } // end while
 

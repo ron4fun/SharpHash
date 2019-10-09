@@ -17,7 +17,7 @@ namespace SharpHash.Hash32
             ELF HashInstance = new ELF();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

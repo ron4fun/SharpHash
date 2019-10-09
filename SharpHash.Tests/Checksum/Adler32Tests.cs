@@ -98,12 +98,12 @@ namespace SharpHash.Checksum.Tests
             
             Original = adler;
             Original.Initialize();
-            Original.SetBufferSize(64 * 1024); // 64Kb
+            Original.BufferSize = (64 * 1024); // 64Kb
                                                 // Make Copy Of Current State
             Copy = Original.Clone();
-            Copy.SetBufferSize(128 * 1024); // 128Kb
+            Copy.BufferSize = (128 * 1024); // 128Kb
 
-            Assert.AreNotEqual(Original.GetBufferSize(), Copy.GetBufferSize());
+            Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
         }
 
         [TestMethod]

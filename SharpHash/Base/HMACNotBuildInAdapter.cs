@@ -11,10 +11,10 @@ namespace SharpHash.Base
         private Int32 blocksize;
 
         public HMACNotBuildInAdapter(IHash a_underlyingHash) 
-            : base(a_underlyingHash.GetHashSize(), a_underlyingHash.GetBlockSize())
+            : base(a_underlyingHash.HashSize, a_underlyingHash.BlockSize)
         {
             hash = a_underlyingHash.Clone();
-            blocksize = hash.GetBlockSize();
+            blocksize = hash.BlockSize;
             key = new byte[0];
             ipad = new byte[blocksize];
             opad = new byte[blocksize];
@@ -54,29 +54,37 @@ namespace SharpHash.Base
             hash.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
 
-	    override public string GetName()
+	    override public string Name
 	    {
-		    return $"HMAC({hash.GetName()})";
-	    } // end function GetName
+            get
+            {
+                return $"HMAC({hash.Name})";
+            }
+	    } // end property GetName
 
-	    virtual public byte[] GetKey()
+	    virtual public byte[] Key
 	    {
-		    return key;
-	    } // end function GetKey
+            get
+            {
+                return key;
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    key = new byte[0];
+                else
+                    key = value;
+            }
+        } // end property Key
 
-	    virtual public Int32? GetKeyLength()
+        virtual public Int32? KeyLength
 	    {
-		    return null;
-	    } // end function GetKeyLength
-
-	    virtual public void SetKey(byte[] value)
-        {
-            if (value == null || value.Length == 0)
-                key = new byte[0]; 
-            else
-                key = value;
-        } // end function SetKey
-
+            get
+            {
+                return null;
+            }
+        } // end property KeyLength
+        
         protected void UpdatePads()
         {
             byte[] LKey;

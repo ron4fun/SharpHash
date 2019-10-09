@@ -40,6 +40,12 @@ namespace SharpHash.KDF
 		    Initialize();
         } // end constructor
 
+        public override void Clear()
+        {
+            Utils.Utils.memset(Password, (char)0, Password.Length);
+            Utils.Utils.memset(Password, (char)0, Salt.Length);
+        } // end function Clear
+
         override public byte[] GetBytes(Int32 bc)
         {
             Int32 LOffset, LSize, LRemainder;
@@ -129,8 +135,8 @@ namespace SharpHash.KDF
 
             HMAC = new HMACNotBuildInAdapter(hash);
 
-            HMAC.SetKey(Password);
-            BlockSize = (Int32)HMAC.GetHashSize();
+            HMAC.Key = Password;
+            BlockSize = (Int32)HMAC.HashSize;
 
             Array.Resize(ref buffer, BlockSize);
 

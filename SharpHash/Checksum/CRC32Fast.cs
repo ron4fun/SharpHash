@@ -117,7 +117,7 @@ namespace SharpHash.Checksum
             CRC32_PKZIP_Fast HashInstance = new CRC32_PKZIP_Fast();
             HashInstance.CurrentCRC = CurrentCRC;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone
@@ -146,7 +146,7 @@ namespace SharpHash.Checksum
             CRC32_CASTAGNOLI_Fast HashInstance = new CRC32_CASTAGNOLI_Fast();
             HashInstance.CurrentCRC = CurrentCRC;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

@@ -23,7 +23,7 @@ namespace SharpHash.Hash32
             PJW HashInstance = new PJW();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

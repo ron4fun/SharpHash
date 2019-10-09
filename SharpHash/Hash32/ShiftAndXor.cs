@@ -17,7 +17,7 @@ namespace SharpHash.Hash32
             ShiftAndXor HashInstance = new ShiftAndXor();
             HashInstance.hash = hash;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone

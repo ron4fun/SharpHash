@@ -9,7 +9,7 @@ namespace SharpHash.NullDigest
     {
         private MemoryStream Out = null;
 
-        public NullDigest() : base(0,-1) // Dummy State
+        public NullDigest() : base(-1,-1) // Dummy State
         {
             Out = new MemoryStream();
         } // end constructor
@@ -29,7 +29,7 @@ namespace SharpHash.NullDigest
 
             HashInstance.Out.Position = 0;
 
-            HashInstance.SetBufferSize(GetBufferSize());
+            HashInstance.BufferSize = BufferSize;
 
 		    return HashInstance;
 	    }
@@ -72,7 +72,7 @@ namespace SharpHash.NullDigest
                 Out.Write(a_data, a_index, a_length);
             }
 
-            //hash_size = Out.Length;
+            hash_size = (Int32)Out.Length;
         } // end function TransformBytes
 
     }

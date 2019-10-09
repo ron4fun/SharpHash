@@ -6,12 +6,11 @@ namespace SharpHash.Interfaces
 {
     public interface IHash
     {
-        string GetName();
-        Int32 GetBlockSize();
-        Int32 GetHashSize();
-        Int32 GetBufferSize();
-        void SetBufferSize(Int32 value);
-
+        string Name { get; }
+        Int32 BlockSize { get; }
+        Int32 HashSize { get; }
+        Int32 BufferSize { get; set; }
+       
         IHash Clone();
 
         IHashResult ComputeString(string a_data);
