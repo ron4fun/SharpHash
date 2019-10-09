@@ -1,0 +1,15 @@
+language: csharp
+solution: "./SharpHash/SharpHash.sln"
+matrix:
+  include:
+    - dotnet: 2.0.0
+      mono: none
+      env: DOTNETCORE=2  # optional, can be used to take different code paths in your script
+
+
+dist: trusty
+script:
+  - cd SharpHash.Tests
+  - dotnet restore
+  - dotnet build
+  - dotnet test
