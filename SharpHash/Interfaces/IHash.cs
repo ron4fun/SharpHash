@@ -8,7 +8,7 @@ namespace SharpHash.Interfaces
     {
         string GetName();
         Int32 GetBlockSize();
-        HashSize GetHashSize();
+        Int32 GetHashSize();
         Int32 GetBufferSize();
         void SetBufferSize(Int32 value);
 
