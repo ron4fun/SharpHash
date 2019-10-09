@@ -575,8 +575,12 @@ namespace SharpHash.Checksum
 		    HashInstance.hash = hash;
 		    HashInstance.IsTableGenerated = IsTableGenerated;
 
-            for(Int32 i = 0; i < CRCTable.Length; i++)
-		        HashInstance.CRCTable[i] = CRCTable[i];
+            if (!(CRCTable == null || CRCTable.Length == 0))
+            {
+                HashInstance.CRCTable = new UInt64[CRCTable.Length];
+                for (Int32 i = 0; i < CRCTable.Length; i++)
+                    HashInstance.CRCTable[i] = CRCTable[i];
+            } // end if
 
             HashInstance.SetBufferSize(GetBufferSize());
 
@@ -673,7 +677,7 @@ namespace SharpHash.Checksum
 
             unsafe
             {
-                fixed (byte* ptr_a_data = &a_data[0])
+                fixed (byte* ptr_a_data = a_data)
                 {
                     if (Width > Delta)
                         CalculateCRCbyTable((IntPtr)ptr_a_data, a_length, i);
