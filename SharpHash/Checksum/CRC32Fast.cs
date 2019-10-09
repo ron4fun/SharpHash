@@ -9,7 +9,7 @@ namespace SharpHash.Checksum
         protected UInt32 CurrentCRC = 0;
 
         public CRC32Fast()
-            : base((HashSize)4, 1)
+            : base(4, 1)
         { } // end constructor
 
         override public void Initialize()

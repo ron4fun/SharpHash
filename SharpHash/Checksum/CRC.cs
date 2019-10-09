@@ -537,22 +537,22 @@ namespace SharpHash.Checksum
 
             if (_Width >= 0 && _Width <= 7)
             {
-                hash_size = (HashSize)1;
+                hash_size = 1;
                 block_size = 1;
             } // end if
             else if (_Width >= 8 && _Width <= 16)
             {
-                hash_size = (HashSize)2;
+                hash_size = 2;
                 block_size = 1;
             } // end else if
             else if (_Width >= 17 && _Width <= 39)
             {
-                hash_size = (HashSize)4;
+                hash_size = 4;
                 block_size = 1;
             } // end else if
             else
             {
-                hash_size = (HashSize)8;
+                hash_size = 8;
                 block_size = 1;
             } // end else
 

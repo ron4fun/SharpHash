@@ -9,7 +9,7 @@ namespace SharpHash.Base
     {
         private Int32 buffer_size;
         protected Int32 block_size;
-        protected HashSize hash_size;
+        protected Int32 hash_size;
 
         virtual public string GetName()
         {
@@ -38,7 +38,7 @@ namespace SharpHash.Base
             return block_size;
         } // end function GetBlockSize
 
-        virtual public HashSize GetHashSize()
+        virtual public Int32 GetHashSize()
         {
             return hash_size;
         } // end function GetHashSize
@@ -51,7 +51,7 @@ namespace SharpHash.Base
         private static string FileNotExist = "Specified File Not Found";
         private static string CloneNotYetImplemented = "Clone Not Yet Implemented For \"{0}\"";
 
-        public Hash(HashSize a_hash_size, Int32 a_block_size)
+        public Hash(Int32 a_hash_size, Int32 a_block_size)
         {
             block_size = a_block_size;
             hash_size = a_hash_size;

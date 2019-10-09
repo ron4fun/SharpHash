@@ -8,7 +8,7 @@ namespace SharpHash.Base
         protected HashBuffer buffer = null;
         UInt64 processed_bytes = 0;
 
-        public BlockHash(HashSize a_hash_size, Int32 a_block_size, Int32 a_buffer_size = -1)
+        public BlockHash(Int32 a_hash_size, Int32 a_block_size, Int32 a_buffer_size = -1)
 		: base(a_hash_size, a_block_size)
         {
             if (a_buffer_size == -1)

@@ -8,7 +8,7 @@ namespace SharpHash.Base
     {
         protected List<byte[]> _list;
 
-        public MultipleTransformNonBlock(HashSize a_hash_size, Int32 a_block_size)
+        public MultipleTransformNonBlock(Int32 a_hash_size, Int32 a_block_size)
 		: base(a_hash_size, a_block_size)
         {
             _list = new List<byte[]>();

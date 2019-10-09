@@ -16,7 +16,7 @@ namespace SharpHash.Checksum
 
         public CRC16(UInt64 _poly, UInt64 _Init, bool _refIn, bool _refOut, 
             UInt64 _XorOut, UInt64 _check, string[] _Names)
-		: base((HashSize)2, 1)
+		: base(2, 1)
         {
             CRCAlgorithm = new CRC(16, _poly, _Init, _refIn, _refOut, _XorOut, _check, _Names);
         } // end constructor
