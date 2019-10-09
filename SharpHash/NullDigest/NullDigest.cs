@@ -9,13 +9,14 @@ namespace SharpHash.NullDigest
     {
         private MemoryStream Out = null;
 
-        public NullDigest() : base((HashSize)(-1),-1) // Dummy State
+        public NullDigest() : base(0,-1) // Dummy State
         {
             Out = new MemoryStream();
         } // end constructor
 
         ~NullDigest()
         {
+            Out.Flush();
             Out.Close();
         }
 
@@ -35,7 +36,9 @@ namespace SharpHash.NullDigest
 
         override public void Initialize()
         {
+            Out.Flush();
             Out.SetLength(0); // Reset stream
+
             hash_size = 0;
             block_size = 0;
         } // end function Initialize
@@ -47,12 +50,17 @@ namespace SharpHash.NullDigest
             byte[] res = new byte[size];
             Array.Resize(ref res, size);
 
-            if (!(res == null || res.Length == 0))
-                Out.Read(res, 0, size);
+            try
+            {
+                if (!(res == null || res.Length == 0))
+                    Out.Read(res, 0, size);    
+            } // end try
+            finally
+            {
+                Initialize();
+            } // end finally
 
             IHashResult result = new HashResult(res);
-
-            Initialize();
 
             return result;
         } // end function TransformFinal
@@ -64,7 +72,7 @@ namespace SharpHash.NullDigest
                 Out.Write(a_data, a_index, a_length);
             }
 
-            hash_size = (HashSize)Out.Length;
+            //hash_size = Out.Length;
         } // end function TransformBytes
 
     }
