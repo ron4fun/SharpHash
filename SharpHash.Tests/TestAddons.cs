@@ -1,6 +1,9 @@
 using SharpHash.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using SharpHash.Base;
+using System.IO;
+using SharpHash.Utils;
 
 namespace SharpHash.Tests
 {
@@ -103,6 +106,20 @@ namespace SharpHash.Tests
 
     public static class TestHelper
     {
+        static byte[] ChunkOne, ChunkTwo;
+
+        static TestHelper()
+        {
+            byte[] MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData);
+            Int32 Count = MainData.Length - 3;
+
+            ChunkOne = new byte[Count];
+            ChunkTwo = new byte[MainData.Length - Count];
+
+            Utils.Utils.memcopy(ChunkOne, MainData, Count);
+            Utils.Utils.memcopy(ChunkTwo, MainData, MainData.Length - Count, Count);
+        }
+
         public static string lstrip(string str, char value)
         {
             Int32 s_pos = 0;
@@ -125,6 +142,54 @@ namespace SharpHash.Tests
 		        temp += value;
 	        return temp;
         } // end function StringOfChar
+
+        public static void TestEmptyStream(string expected, IHash hash)
+        {
+            Stream stream;
+            string ActualString;
+
+            stream = new MemoryStream();
+
+            ActualString = hash.ComputeStream(stream).ToString();
+
+            Assert.AreEqual(expected, ActualString);
+
+            stream.Close(); // close stream
+        } // end function 
+
+        public static void TestHashCloneIsCorrect(IHash hash)
+        {
+            IHash Original = hash, Copy;
+            string ExpectedString, ActualString;
+
+            // Initialize Original Hash
+            Original.Initialize();
+            Original.TransformBytes(ChunkOne);
+
+            // Make Copy Of Current State
+            Copy = Original.Clone();
+
+            Original.TransformBytes(ChunkTwo);
+            ExpectedString = Original.TransformFinal().ToString();
+
+            Copy.TransformBytes(ChunkTwo);
+            ActualString = Copy.TransformFinal().ToString();
+
+            Assert.AreEqual(ExpectedString, ActualString);
+        }
+
+        public static void TestHashCloneIsUnique(IHash hash)
+        {
+            IHash Original = hash, Copy;
+
+            Original.Initialize();
+            Original.BufferSize = (64 * 1024); // 64Kb
+                                               // Make Copy Of Current State
+            Copy = Original.Clone();
+            Copy.BufferSize = (128 * 1024); // 128Kb
+
+            Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
+        }
 
         public static void TestActualAndExpectedData(object actual, object expected, IHash i_hash)
         {
@@ -158,6 +223,7 @@ namespace SharpHash.Tests
             hash.TransformString(actual.Substring(from)); // hash the remaining part
 
             string ActualString = lstrip(hash.TransformFinal().ToString(), '0');
+            expected = lstrip(expected, '0');
 
             Assert.AreEqual(expected, ActualString);
         } // end function TestIncrementalHash
