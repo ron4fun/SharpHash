@@ -28,11 +28,16 @@ namespace SharpHash.Hash32
 
         override protected IHashResult ComputeAggregatedBytes(byte[] a_data)
 	    {
-		    UInt32 hash = (UInt32)a_data.Length;
+            UInt32 hash = 0;
 
-		    for (Int32 i = 0; i < a_data.Length; i++)
-			    hash = Utils.Bits.RotateLeft32(hash, 5) ^ a_data[i];
-		
+            if (!(a_data == null || a_data.Length == 0))
+            {
+                hash = (UInt32)a_data.Length;
+
+                for (Int32 i = 0; i < a_data.Length; i++)
+                    hash = Utils.Bits.RotateLeft32(hash, 5) ^ a_data[i];
+            } // end if
+                		
 		    return new HashResult(hash);
 	    } // end function ComputeAggregatedBytes
 

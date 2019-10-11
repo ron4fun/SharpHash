@@ -31,10 +31,10 @@ namespace SharpHash.Hash32
             UInt32 hash, tmp, u1;
             Int32 Length, currentIndex, i1, i2;
 
-            Length = a_data.Length;
-
-            if (Length == 0)
+            if (a_data == null || a_data.Length == 0)
                 return new HashResult((Int32)0);
+
+            Length = a_data.Length;
 
             hash = (UInt32)Length;
             currentIndex = 0;
