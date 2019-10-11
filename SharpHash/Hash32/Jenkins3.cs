@@ -3,6 +3,7 @@ using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SharpHash.Hash32
 {
@@ -16,7 +17,10 @@ namespace SharpHash.Hash32
         {
             Jenkins3 HashInstance = new Jenkins3();
 
-            HashInstance._list = new List<byte[]>(_list);
+            HashInstance.Buffer = new MemoryStream();
+            byte[] buf = Buffer.ToArray();
+            HashInstance.Buffer.Write(buf, 0, buf.Length);
+            HashInstance.Buffer.Position = Buffer.Position;
 
             HashInstance.BufferSize = BufferSize;
 
@@ -27,10 +31,11 @@ namespace SharpHash.Hash32
         {
             Int32 length, currentIndex, i1, i2, i3, i4;
             UInt32 a, b, c;
+            
+            if (a_data == null || a_data.Length == 0)
+                return new HashResult((UInt32)0);
 
             length = a_data.Length;
-            if (length == 0)
-                return new HashResult((UInt32)0);
 
             a = 0xDEADBEEF + (UInt32)length;
             b = a;

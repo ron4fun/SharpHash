@@ -55,6 +55,61 @@ namespace SharpHash.Hash32
 
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
+            Int32 len, nBlocks, i, offset;
+            UInt32 k;
+
+            len = a_length;
+            i = a_index;
+            total_length += (UInt32)len;
+
+            unsafe
+            {
+                fixed (byte* ptr_a_data = a_data, ptr_Fm_buf = buf)
+                {
+                    //consume last pending bytes
+                    if (idx != 0 && a_length != 0)
+                    {
+                        while (idx < 4 && len != 0)
+                        {
+                            buf[idx++] = *(ptr_a_data + a_index);
+                            a_index++;
+                            len--;
+                        }
+
+                        if (idx == 4)
+                        {
+                            k = Converters.ReadBytesAsUInt32LE((IntPtr)ptr_Fm_buf, 0);
+                            TransformUInt32Fast(k);
+                            idx = 0;
+                        }
+                    } // end if
+                    else
+                    {
+                        i = 0;
+                    } // end else
+
+                    nBlocks = (len) >> 2;
+                    offset = 0;
+
+                    // body
+                    while (i < nBlocks)
+                    {
+                        k = Converters.ReadBytesAsUInt32LE((IntPtr)ptr_a_data, a_index + (i * 4));
+                        TransformUInt32Fast(k);
+                        i++;
+                    } // end while
+
+                    //save pending end bytes
+                    offset = a_index + (i * 4);
+                    while (offset < (len + a_index))
+                    {
+                        ByteUpdate(a_data[offset]);
+                        offset++;
+                    } // end while
+
+                }
+            }
+
 
         } // end function TransformBytes
 
@@ -167,7 +222,7 @@ namespace SharpHash.Hash32
             }
             set
             {
-                if (!(value == null || value.Length == 0))
+                if (value == null || value.Length == 0)
                     key = CKEY;
                 else
                 {

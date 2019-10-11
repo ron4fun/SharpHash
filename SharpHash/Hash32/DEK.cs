@@ -2,6 +2,7 @@
 using SharpHash.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SharpHash.Hash32
 {
@@ -14,8 +15,11 @@ namespace SharpHash.Hash32
         override public IHash Clone()
         {
             DEK HashInstance = new DEK();
-            
-            HashInstance._list = new List<byte[]>(_list);
+
+            HashInstance.Buffer = new MemoryStream();
+            byte[] buf = Buffer.ToArray();
+            HashInstance.Buffer.Write(buf, 0, buf.Length);
+            HashInstance.Buffer.Position = Buffer.Position;
 
             HashInstance.BufferSize = BufferSize;
 

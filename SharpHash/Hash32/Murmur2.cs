@@ -3,6 +3,7 @@ using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SharpHash.Hash32
 {
@@ -26,7 +27,11 @@ namespace SharpHash.Hash32
             HashInstance.key = key;
             HashInstance.working_key = working_key;
             HashInstance.h = h;
-            HashInstance._list = new List<byte[]>(_list);
+
+            HashInstance.Buffer = new MemoryStream();
+            byte[] buf = Buffer.ToArray();
+            HashInstance.Buffer.Write(buf, 0, buf.Length);
+            HashInstance.Buffer.Position = Buffer.Position;
 
             HashInstance.BufferSize = BufferSize;
 
@@ -48,13 +53,13 @@ namespace SharpHash.Hash32
 	    {
 		    Int32 Length, current_index;
 		    UInt32 k;
-
-		    Length = a_data.Length;
             
-		    if (Length == 0)
+		    if (a_data == null || a_data.Length == 0)
 			    return 0;
-		
-		    h = working_key ^ (UInt32)Length;
+
+            Length = a_data.Length;
+
+            h = working_key ^ (UInt32)Length;
             current_index = 0;
 
             unsafe
@@ -91,15 +96,15 @@ namespace SharpHash.Hash32
                             break;
 
                     } // end switch
-
-                    h = h ^ (h >> 13);
-
-                    h = h * M;
-                    h = h ^ (h >> 15);
                 }
             }
 
-		    return (Int32)h;
+            h = h ^ (h >> 13);
+
+            h = h * M;
+            h = h ^ (h >> 15);
+
+            return (Int32)h;
 	    } // end function InternalComputeBytes
 
 	    private void TransformUInt32Fast(UInt32 a_data)
@@ -128,7 +133,7 @@ namespace SharpHash.Hash32
             }
             set
             {
-                if (!(value == null || value.Length == 0))
+                if (value == null || value.Length == 0)
                     key = CKEY;
                 else
                 {
