@@ -1,44 +1,36 @@
 ﻿using SharpHash.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SharpHash.Base
 {
     public abstract class MultipleTransformNonBlock : Hash, INonBlockHash
     {
-        protected List<byte[]> _list;
+        protected MemoryStream Buffer = null;
 
         public MultipleTransformNonBlock(Int32 a_hash_size, Int32 a_block_size)
 		: base(a_hash_size, a_block_size)
         {
-            _list = new List<byte[]>();
+            Buffer = new MemoryStream();
         } // end constructor
+
+        ~MultipleTransformNonBlock()
+        {
+            Buffer.Flush();
+            Buffer.Close();
+        } // end destructor
 
         override public void Initialize()
         {
-            _list.Clear();
+            Buffer.Flush();
+            Buffer.SetLength(0);
         } // end fucntion Initialize
 
         override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
 	    {
-            if (a_data == null || a_data.Length == 0)
-            {
-                _list.Add(new byte[] { });
-                return;
-            } // end if
-
-            unsafe
-            {
-                byte[] temp = new byte[a_length];
-
-                fixed (byte* DestPtr = &temp[0], srcPtr = &a_data[a_index])
-                {
-                    Utils.Utils.memcopy((IntPtr)DestPtr, (IntPtr)srcPtr, a_length);                    
-                }
-
-                _list.Add(temp);
-            }
-	    } // end function TransformBytes
+            Buffer.Write(a_data, a_index, a_length);
+        } // end function TransformBytes
 
         override public IHashResult TransformFinal()
         {
@@ -60,30 +52,16 @@ namespace SharpHash.Base
 
         private byte[] Aggregate()
         {
-            UInt32 sum = 0;
-            Int32 index = 0;
+            byte[] temp = null;
 
-            for (Int32 i = 0; i < _list.Count; i++)
-	        {
-                sum = sum + (UInt32)(_list)[i].Length;
-            } // end for
+            if (Buffer.Length > 0)
+            {
+                Buffer.Position = 0;
+                temp = new byte[Buffer.Length];
+                Buffer.Read(temp, 0, (Int32)Buffer.Length);
+            } // end if
 
-            byte[] result = new byte[sum];
-
-            for (Int32 i = 0; i < _list.Count; i++) 
-	        {
-                unsafe
-                {
-                    fixed (byte* dPtr = &result[index], sPtr = &(_list)[i][0])
-                    {
-                        Utils.Utils.memmove((IntPtr)dPtr, (IntPtr)sPtr, (_list)[i].Length * sizeof(byte));
-                    }
-                }
-                
-                index = index + (_list)[i].Length;
-            } // end for
-
-            return result;
+            return temp;
         } // end function Aggregate
 
     }
