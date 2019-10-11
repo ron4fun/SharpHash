@@ -3,7 +3,7 @@ using SharpHash.Interfaces;
 using System;
 using System.IO;
 
-namespace SharpHash.NullDigest
+namespace SharpHash
 {
     public class NullDigest : Hash, ITransformBlock
     {
@@ -27,7 +27,7 @@ namespace SharpHash.NullDigest
             byte[] buf = Out.ToArray();
             HashInstance.Out.Write(buf, 0, buf.Length);
 
-            HashInstance.Out.Position = 0;
+            HashInstance.Out.Position = Out.Position;
 
             HashInstance.BufferSize = BufferSize;
 
@@ -52,6 +52,7 @@ namespace SharpHash.NullDigest
 
             try
             {
+                Out.Position = 0;
                 if (!(res == null || res.Length == 0))
                     Out.Read(res, 0, size);    
             } // end try
