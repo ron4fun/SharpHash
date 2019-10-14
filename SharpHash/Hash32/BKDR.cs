@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class BKDR : Hash, IHash32, ITransformBlock
+    public class BKDR : Hash, IBlockHash, IHash32, ITransformBlock
     {
         private UInt32 hash;
         static private Int32 SEED = 131;
