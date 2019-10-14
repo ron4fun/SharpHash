@@ -60,43 +60,42 @@ namespace SharpHash.Utils
             }
         } // end function swap_copy_str_to_u32
 
-        public static void swap_copy_str_to_u64(IntPtr src, Int32 src_index,
+        public static unsafe void swap_copy_str_to_u64(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
-            unsafe {
-                UInt64* lsrc, ldest, lend;
-                byte* lbsrc;
-                Int32 lLength;
+            UInt64* lsrc, ldest, lend;
+            byte* lbsrc;
+            Int32 lLength;
 
-                // if all pointers and length are 64-bits aligned
-                if ((((Int32)((byte*)(dest) - (byte*)(0)) | (int)((byte*)(src) - (byte*)(0)) | src_index |
-                    dest_index | length) & 7) == 0)
+            // if all pointers and length are 64-bits aligned
+            if ((((Int32)((byte*)dest - (byte*)0) | (Int32)((byte*)src - (byte*)0) | src_index |
+                dest_index | length) & 7) == 0)
+            {
+                // copy aligned memory block as 64-bit integers
+                lsrc = (UInt64*)((byte*)src + src_index);
+                lend = (UInt64*)(((byte*)src + src_index) + length);
+                ldest = (UInt64*)((byte*)dest + dest_index);
+                while (lsrc < lend)
                 {
-                    // copy aligned memory block as 64-bit integers
-                    lsrc = (UInt64*)((byte*)(src) + src_index);
-                    lend = (UInt64*)(((byte*)(src) + src_index) + length);
-                    ldest = (UInt64*)((byte*)(dest) + dest_index);
-                    while (lsrc < lend)
-                    {
-                        *ldest = Bits.ReverseBytesUInt64(*lsrc);
-                        ldest += 1;
-                        lsrc += 1;
-                    } // end while
-                } // end if
-                else
+                    *ldest = Bits.ReverseBytesUInt64(*lsrc);
+                    ldest += 1;
+                    lsrc += 1;
+                } // end while
+            } // end if
+            else
+            {
+                lbsrc = ((byte*)src + src_index);
+
+                lLength = length + dest_index;
+                while (dest_index < lLength)
                 {
-                    lbsrc = ((byte*)(src) + src_index);
+                    ((byte*)dest)[dest_index ^ 7] = *lbsrc;
 
-                    lLength = length + dest_index;
-                    while (dest_index < lLength)
-                    {
-                        ((byte*)dest)[dest_index ^ 7] = *lbsrc;
-
-                        lbsrc += 1;
-                        dest_index += 1;
-                    } // end while				
-                } // end else		
-            }
+                    lbsrc += 1;
+                    dest_index += 1;
+                } // end while				
+            } // end else		
+            
         } // end function swap_copy_str_to_u64
 	
 	    public static UInt32 be2me_32(UInt32 x)
@@ -146,7 +145,7 @@ namespace SharpHash.Utils
             {
                 unsafe
                 {
-                    Utils.memmove((IntPtr)((byte*)(dest) + dest_index), (IntPtr)((byte*)(src) + src_index), length);
+                    Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
                 }
             } // end else
         } // end function be64_copy
