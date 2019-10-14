@@ -7,8 +7,7 @@ namespace SharpHash.Base
 
         private byte[] data = null;
         private Int32 pos = 0;
-
-
+        
         public HashBuffer(Int32 a_length)
 	    {
             data = new byte[a_length];
@@ -63,7 +62,7 @@ namespace SharpHash.Base
             
             pos = pos + Length;
 
-            return GetIsFull();
+            return IsFull;
         } // end function Feed
 
         public bool Feed(IntPtr a_data, Int32 a_length_a_data,
@@ -91,7 +90,7 @@ namespace SharpHash.Base
             {
                 fixed (byte* bDest = &data[pos])
                 {
-                    Utils.Utils.memmove((IntPtr)bDest, (IntPtr)((byte*)a_data)[a_start_index], Length * sizeof(byte));
+                    Utils.Utils.memmove((IntPtr)bDest, (IntPtr)((byte*)a_data + a_start_index), Length * sizeof(byte));
                 }
             }
             
@@ -100,7 +99,7 @@ namespace SharpHash.Base
             a_length = a_length - Length;
             a_processed_bytes = a_processed_bytes + (UInt64)(Length);
 
-            return GetIsFull();
+            return IsFull;
         } // end function Feed
 
         public byte[] GetBytes()
@@ -123,27 +122,39 @@ namespace SharpHash.Base
             return data;
         } // end function GetBytesZeroPadded
 
-        public bool GetIsEmpty()
+        public bool IsEmpty
 	    {
-		    return pos == 0;
-	    } // end function GetIsEmpty
+            get
+            {
+                return pos == 0;
+            }
+	    } // end property IsEmpty
 	
-	    public bool GetIsFull()
+	    public bool IsFull
 	    {
-		    return pos == data.Length;
-	    } // end function GetIsFull
-	
-	    public Int32 GetLength()
+            get
+            {
+                return pos == data.Length;
+            }
+        } // end property IsFull
+
+        public Int32 Length
 	    {
-		    return data.Length;
-	    } // end function GetLength
-	
-	    public Int32 GetPos()
+            get
+            {
+                return data.Length;
+            }
+        } // end property Length
+
+        public Int32 Position
 	    {
-		    return pos;
-	    } // end function GetPos
-	
-	    public void Initialize()
+            get
+            {
+                return pos;
+            }
+        } // end property Position
+
+        public void Initialize()
         {
             pos = 0;
             
@@ -158,7 +169,7 @@ namespace SharpHash.Base
 
         public override string ToString()
 	    {
-		    return $"HashBuffer, Length: {GetLength()}, Pos: {GetPos()}, IsEmpty: {GetIsEmpty()}";
+		    return $"HashBuffer, Length: {Length}, Pos: {Position}, IsEmpty: {IsEmpty}";
 	    } // end function ToString
 	
 

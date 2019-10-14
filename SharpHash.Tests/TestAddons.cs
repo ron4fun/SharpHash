@@ -191,6 +191,27 @@ namespace SharpHash.Tests
             Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
         }
 
+        public static void TestHMACCloneIsCorrect(IHash hash)
+        {
+            IHMAC Original, Copy;
+
+            Original = new HMACNotBuildInAdapter(hash);
+	        Original.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey);
+            Original.Initialize();
+            Original.TransformBytes(ChunkOne);
+
+            // Make Copy Of Current State
+            Copy = (IHMAC)Original.Clone();
+
+            Original.TransformBytes(ChunkTwo);
+            string ExpectedString = Original.TransformFinal().ToString();
+
+            Copy.TransformBytes(ChunkTwo);
+            string ActualString = Copy.TransformFinal().ToString();
+
+            Assert.AreEqual(ExpectedString, ActualString);
+        } // end function TestHMACCloneIsCorrect
+
         public static void TestActualAndExpectedData(object actual, object expected, IHash i_hash)
         {
             string ActualString, name = actual.GetType().Name;
