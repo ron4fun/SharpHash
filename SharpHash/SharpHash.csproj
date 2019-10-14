@@ -6,8 +6,4 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Hash32\" />
-  </ItemGroup>
-
 </Project>
