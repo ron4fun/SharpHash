@@ -5,59 +5,53 @@ namespace SharpHash.Utils
 {
     public static class Converters
     {
-        public static void toUpper(IntPtr value, Int32 length)
+        public unsafe static void toUpper(IntPtr value, Int32 length)
 	    {
 		    for (int i = 0; i < length; i++)
 		    {
-                unsafe
-                {
-                    char c = (char)((byte*)value)[i];
+                char c = (char)((byte*)value)[i];
 
-                    ((byte*)value)[i] = (byte)char.ToLower(c);
-                }
+                ((byte*)value)[i] = (byte)char.ToLower(c);
             } // end for
 
         } // end function toUpper
 
-        public static void swap_copy_str_to_u32(IntPtr src, Int32 src_index,
+        public unsafe static void swap_copy_str_to_u32(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
-        {
-            unsafe
+        {           
+            UInt32* lsrc, ldest, lend;
+            byte* lbsrc;
+            Int32 lLength;
+
+            // if all pointers and length are 32-bits aligned
+            if ((((int)((byte*)(dest) - (byte*)(0)) | (int)((byte*)(src) - (byte*)(0)) | src_index |
+                dest_index | length) & 3) == 0)
             {
-                UInt32* lsrc, ldest, lend;
-                byte* lbsrc;
-                Int32 lLength;
-
-                // if all pointers and length are 32-bits aligned
-                if ((((int)((byte*)(dest) - (byte*)(0)) | (int)((byte*)(src) - (byte*)(0)) | src_index |
-                    dest_index | length) & 3) == 0)
+                // copy memory as 32-bit words
+                lsrc = (UInt32*)((byte*)(src) + src_index);
+                lend = (UInt32*)(((byte*)(src) + src_index) + length);
+                ldest = (UInt32*)((byte*)(dest) + dest_index);
+                while (lsrc < lend)
                 {
-                    // copy memory as 32-bit words
-                    lsrc = (UInt32*)((byte*)(src) + src_index);
-                    lend = (UInt32*)(((byte*)(src) + src_index) + length);
-                    ldest = (UInt32*)((byte*)(dest) + dest_index);
-                    while (lsrc < lend)
-                    {
-                        *ldest = Bits.ReverseBytesUInt32(*lsrc);
-                        ldest += 1;
-                        lsrc += 1;
-                    } // end while
-                } // end if
+                    *ldest = Bits.ReverseBytesUInt32(*lsrc);
+                    ldest += 1;
+                    lsrc += 1;
+                } // end while
+            } // end if
 
-                else
+            else
+            {
+                lbsrc = ((byte*)(src) + src_index);
+
+                lLength = length + dest_index;
+                while (dest_index < lLength)
                 {
-                    lbsrc = ((byte*)(src) + src_index);
+                    ((byte*)dest)[dest_index ^ 3] = *lbsrc;
 
-                    lLength = length + dest_index;
-                    while (dest_index < lLength)
-                    {
-                        ((byte*)dest)[dest_index ^ 3] = *lbsrc;
-
-                        lbsrc += 1;
-                        dest_index += 1;
-                    } // end while
-                } // end else
-            }
+                    lbsrc += 1;
+                    dest_index += 1;
+                } // end while
+            } // end else
         } // end function swap_copy_str_to_u32
 
         public static unsafe void swap_copy_str_to_u64(IntPtr src, Int32 src_index,
@@ -118,35 +112,29 @@ namespace SharpHash.Utils
             return x;
         } // end function be2me_64
 
-        public static void be32_copy(IntPtr src, Int32 src_index,
+        public unsafe static void be32_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
             {
-                Converters.swap_copy_str_to_u32(src, src_index, dest, dest_index, length);
+                swap_copy_str_to_u32(src, src_index, dest, dest_index, length);
             } // end if	
             else
             {
-                unsafe
-                {
-                    Utils.memmove((IntPtr)(((byte*)dest) + dest_index), (IntPtr)(((byte*)src) + src_index), length);   
-                }
+                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);   
             } // end else
         } // end function be32_copy
 
-        public static void be64_copy(IntPtr src, Int32 src_index,
+        public unsafe static void be64_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
             {
-                Converters.swap_copy_str_to_u64(src, src_index, dest, dest_index, length);
+                swap_copy_str_to_u64(src, src_index, dest, dest_index, length);
             } // end if	
             else
             {
-                unsafe
-                {
-                    Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
-                }
+                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end else
         } // end function be64_copy
 
@@ -170,54 +158,42 @@ namespace SharpHash.Utils
             return x;
         } // end function le2me_64
 
-        public static void le32_copy(IntPtr src, Int32 src_index,
+        public unsafe static void le32_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
             {
-                unsafe
-                {
-                    Utils.memmove((IntPtr)((byte*)(dest) + dest_index), (IntPtr)((byte*)(src) + src_index), length);
-                }
+                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end if
             else
             {
-                Converters.swap_copy_str_to_u32(src, src_index, dest, dest_index, length);
+                swap_copy_str_to_u32(src, src_index, dest, dest_index, length);
             } // end else
         } // end function le32_copy
 
-        public static void le64_copy(IntPtr src, Int32 src_index,
+        public unsafe  static void le64_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
             {
-                unsafe
-                {
-                    Utils.memmove((IntPtr)((byte*)(dest) + dest_index), (IntPtr)((byte*)(src) + src_index), length);
-                }
+                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end if
             else
             {
-                Converters.swap_copy_str_to_u64(src, src_index, dest, dest_index, length);
+                swap_copy_str_to_u64(src, src_index, dest, dest_index, length);
             } // end else
         } // end function le64_copy
 
-        public static UInt32 ReadBytesAsUInt32LE(IntPtr a_in, Int32 a_index)
+        public unsafe static UInt32 ReadBytesAsUInt32LE(IntPtr a_in, Int32 a_index)
         {
-            unsafe
-            {
-                UInt32 result = *(UInt32*)((byte*)a_in + a_index);
-                return Converters.le2me_32((Int32)result);
-            }            
+            UInt32 result = *(UInt32*)((byte*)a_in + a_index);
+            return Converters.le2me_32((Int32)result);            
         } // end function ReadBytesAsUInt32LE
 
-        public static UInt64 ReadBytesAsUInt64LE(IntPtr a_in, Int32 a_index)
+        public unsafe static UInt64 ReadBytesAsUInt64LE(IntPtr a_in, Int32 a_index)
         {
-            unsafe
-            {
-                UInt64 result = *(UInt64*)((byte*)a_in + a_index);
-                return Converters.le2me_64(result);
-            }
+            UInt64 result = *(UInt64*)((byte*)a_in + a_index);
+            return Converters.le2me_64(result);
         } // end function ReadBytesAsUInt64LE
 
         public static byte[] ReadUInt32AsBytesLE(UInt32 a_in)
@@ -270,17 +246,14 @@ namespace SharpHash.Utils
             a_out[a_index + 7] = (byte)a_in;
         } // end function ReadUInt64AsBytesBE
 
-        public static string ConvertBytesToHexString(byte[] a_in, bool a_group)
+        public unsafe static string ConvertBytesToHexString(byte[] a_in, bool a_group)
         {
             if (a_in == null || a_in.Length == 0) return "";
 
-            unsafe
+            fixed (byte* bPtr = a_in)
             {
-                fixed (byte* bPtr = a_in)
-                {
-                    return ConvertBytesToHexString((IntPtr)bPtr, (UInt32)a_in.Length, a_group);
-                }
-            }
+                return ConvertBytesToHexString((IntPtr)bPtr, (UInt32)a_in.Length, a_group);
+            }            
         } // end function ConvertBytesToHexString
 
         public static string ConvertBytesToHexString(IntPtr a_in, UInt32 size, bool a_group)

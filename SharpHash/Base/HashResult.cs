@@ -41,14 +41,8 @@ namespace SharpHash.Base
             else
             {
                 hash = new byte[a_hash.Length];
-                unsafe
-                {
-                    fixed (byte* bDest = &hash[0], bSrc = &a_hash[0])
-                    {
-                        Utils.Utils.memmove((IntPtr)bDest, (IntPtr)bSrc, a_hash.Length * sizeof(byte));
-                    }
-                }
-            }                    
+                Utils.Utils.memcopy(hash, a_hash, a_hash.Length);
+            } // end else
         } // end constructor
 
         public HashResult(UInt32 a_hash)

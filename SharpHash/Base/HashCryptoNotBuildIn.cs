@@ -23,20 +23,20 @@ namespace SharpHash.Base
             {
                 if (!buffer.IsEmpty)
                 {
-                    if (buffer.Feed((IntPtr)ptr_a_data, (Int32)a_data.Length, a_index, a_length, processed_bytes))
+                    if (buffer.Feed((IntPtr)ptr_a_data, (Int32)a_data.Length, ref a_index, ref a_length, ref processed_bytes))
                         TransformBuffer();
                 } // end if
 
                 while (a_length >= buffer.Length)
                 {
-                    processed_bytes = processed_bytes + (UInt64)(buffer.Length);
+                    processed_bytes = processed_bytes + (UInt64)buffer.Length;
                     TransformBlock((IntPtr)ptr_a_data, buffer.Length, a_index);
                     a_index = a_index + buffer.Length;
                     a_length = a_length - buffer.Length;
                 } // end while
 
                 if (a_length > 0)
-                    buffer.Feed((IntPtr)ptr_a_data, (Int32)a_data.Length, a_index, a_length, processed_bytes);
+                    buffer.Feed((IntPtr)ptr_a_data, (Int32)a_data.Length, ref a_index, ref a_length, ref processed_bytes);
             }
 	    } // end function TransformBytes
 
@@ -50,7 +50,9 @@ namespace SharpHash.Base
         {
             Finish();
 
-            byte[] tempresult = GetResult();
+            byte[] temp = GetResult();
+            byte[] tempresult = new byte[temp.Length];
+            Utils.Utils.memcopy(tempresult, temp, temp.Length);
 
             Initialize();
 

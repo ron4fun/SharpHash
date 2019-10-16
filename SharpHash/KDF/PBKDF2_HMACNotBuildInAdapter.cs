@@ -42,8 +42,8 @@ namespace SharpHash.KDF
 
         public override void Clear()
         {
-            Utils.Utils.memset(Password, (char)0, Password.Length);
-            Utils.Utils.memset(Password, (char)0, Salt.Length);
+            Utils.Utils.memset(Password, 0);
+            Utils.Utils.memset(Password, 0);
         } // end function Clear
 
         override public byte[] GetBytes(Int32 bc)
@@ -131,7 +131,7 @@ namespace SharpHash.KDF
 	    private void Initialize()
         {
             if (!(buffer == null || buffer.Length == 0))
-                Utils.Utils.memset(buffer, (char)0, buffer.Length * sizeof(byte));
+                Utils.Utils.memset(buffer, 0);
 
             HMAC = new HMACNotBuildInAdapter(hash);
 

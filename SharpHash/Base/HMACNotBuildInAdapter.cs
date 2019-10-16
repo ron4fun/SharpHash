@@ -103,8 +103,8 @@ namespace SharpHash.Base
             {
                 fixed (byte* ipadPtr = &ipad[0], opadPtr = &opad[0])
                 {
-                    Utils.Utils.memset((IntPtr)ipadPtr, (char)0x36, blocksize * sizeof(byte));
-                    Utils.Utils.memset((IntPtr)opadPtr, (char)0x5C, blocksize * sizeof(byte));
+                    Utils.Utils.memset((IntPtr)ipadPtr, 0x36, blocksize * sizeof(byte));
+                    Utils.Utils.memset((IntPtr)opadPtr, 0x5C, blocksize * sizeof(byte));
                 }
             }
            
