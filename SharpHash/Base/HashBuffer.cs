@@ -32,7 +32,7 @@ namespace SharpHash.Base
             return result;
 	    }
 
-        public bool Feed(IntPtr a_data, Int32 a_length_a_data, Int32 a_length)
+        public unsafe bool Feed(IntPtr a_data, Int32 a_length_a_data, Int32 a_length)
         {
             Int32 Length;
 
@@ -52,21 +52,18 @@ namespace SharpHash.Base
                 Length = a_length;
             } // end if
 
-            unsafe
+            fixed (byte* bDest = &data[0])
             {
-                fixed (byte* bDest = &data[0])
-                {
-                    Utils.Utils.memmove((IntPtr)bDest, a_data, Length * sizeof(byte));
-                }
+                Utils.Utils.memmove((IntPtr)bDest, a_data, Length * sizeof(byte));
             }
-            
+                        
             pos = pos + Length;
 
             return IsFull;
         } // end function Feed
 
-        public bool Feed(IntPtr a_data, Int32 a_length_a_data,
-            Int32 a_start_index, Int32 a_length, UInt64 a_processed_bytes)
+        public unsafe bool Feed(IntPtr a_data, Int32 a_length_a_data,
+            ref Int32 a_start_index, ref Int32 a_length, ref UInt64 a_processed_bytes)
         {
             Int32 Length;
 
@@ -86,14 +83,11 @@ namespace SharpHash.Base
                 Length = a_length;
             } // end if
 
-            unsafe
+            fixed (byte* bDest = &data[pos])
             {
-                fixed (byte* bDest = &data[pos])
-                {
-                    Utils.Utils.memmove((IntPtr)bDest, (IntPtr)((byte*)a_data + a_start_index), Length * sizeof(byte));
-                }
+                Utils.Utils.memmove((IntPtr)bDest, (IntPtr)((byte*)a_data + a_start_index), Length * sizeof(byte));
             }
-            
+                        
             pos = pos + Length;
             a_start_index = a_start_index + Length;
             a_length = a_length - Length;
@@ -108,16 +102,13 @@ namespace SharpHash.Base
             return data;
         } // end function GetBytes
 
-        public byte[] GetBytesZeroPadded()
+        public unsafe byte[] GetBytesZeroPadded()
         {
-            unsafe
+            fixed (byte* bDest = &data[pos])
             {
-                fixed (byte* bDest = &data[pos])
-                {
-                    Utils.Utils.memset((IntPtr)bDest, (char)0, (data.Length - pos) * sizeof(byte));
-                }
+                Utils.Utils.memset((IntPtr)bDest, 0, (data.Length - pos) * sizeof(byte));
             }
-            
+                        
             pos = 0;
             return data;
         } // end function GetBytesZeroPadded
@@ -157,14 +148,8 @@ namespace SharpHash.Base
         public void Initialize()
         {
             pos = 0;
-            
-            unsafe
-            {
-                fixed (byte* bDest = &data[0])
-                {
-                    Utils.Utils.memset((IntPtr)bDest, (char)0, data.Length * sizeof(byte));
-                }
-            }
+
+            Utils.Utils.memset(data, 0);
         } // end function Initialize
 
         public override string ToString()
