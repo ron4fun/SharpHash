@@ -7,21 +7,21 @@ namespace SharpHash.Crypto
 {
     public abstract class MDBase : BlockHash, ICryptoNotBuildIn
     {
-        protected static UInt32 C1 = 0x50A28BE6;
-        protected static UInt32 C2 = 0x5A827999;
-        protected static UInt32 C3 = 0x5C4DD124;
-        protected static UInt32 C4 = 0x6ED9EBA1;
-        protected static UInt32 C5 = 0x6D703EF3;
-        protected static UInt32 C6 = 0x8F1BBCDC;
-        protected static UInt32 C7 = 0x7A6D76E9;
-        protected static UInt32 C8 = 0xA953FD4E;
+        protected readonly static UInt32 C1 = 0x50A28BE6;
+        protected readonly static UInt32 C2 = 0x5A827999;
+        protected readonly static UInt32 C3 = 0x5C4DD124;
+        protected readonly static UInt32 C4 = 0x6ED9EBA1;
+        protected readonly static UInt32 C5 = 0x6D703EF3;
+        protected readonly static UInt32 C6 = 0x8F1BBCDC;
+        protected readonly static UInt32 C7 = 0x7A6D76E9;
+        protected readonly static UInt32 C8 = 0xA953FD4E;
 
         protected UInt32[] state = null;
 
         public MDBase(Int32 a_state_length, Int32 a_hash_size)
             : base(a_hash_size, 64)
         {
-            Array.Resize(ref state, a_state_length);
+            state = new UInt32[a_state_length];
         } // end constructor
 
         override protected unsafe byte[] GetResult()
@@ -29,11 +29,11 @@ namespace SharpHash.Crypto
             byte[] result = new byte[state.Length * sizeof(UInt32)];
 
             fixed (UInt32* statePtr = state)
-            {
+            {                
                 fixed (byte* resultPtr = result)
                 {
-                    Converters.le32_copy((IntPtr)statePtr, 0, (IntPtr)resultPtr, 0, 
-                        state.Length * sizeof(UInt32));
+                    Converters.le32_copy((IntPtr)statePtr, 0, (IntPtr)resultPtr, 0,
+                        result.Length);
                 }
             }
 

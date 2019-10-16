@@ -5,9 +5,9 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class MD2 : MDBase, ICryptoNotBuildIn, ITransformBlock
+    public class MD2 : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
-        private byte[] _state = null;
+        private byte[] state = null;
         private byte[] checksum = null;
 
         private readonly static byte[] pi = new byte[256] {41, 46, 67, 201, 162, 216, 124, 1, 61, 54, 84, 161, 236, 240, 6,
@@ -29,17 +29,23 @@ namespace SharpHash.Crypto
         public MD2()
             : base(16, 16)
         {
-            Array.Resize(ref _state, 16);
-            Array.Resize(ref checksum, 16);
+            state = new byte[16];
+            checksum = new byte[16];
         } // end constructor
 
         override public IHash Clone()
         {
             MD2 HashInstance = new MD2();
-            HashInstance._state = _state;
-            HashInstance.checksum = checksum;
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
+
+            HashInstance.state = new byte[state.Length];
+            for (Int32 i = 0; i < state.Length; i++)
+                HashInstance.state[i] = state[i];
+
+            HashInstance.checksum = new byte[checksum.Length];
+            for (Int32 i = 0; i < checksum.Length; i++)
+                HashInstance.checksum[i] = checksum[i];
 
             HashInstance.BufferSize = BufferSize;
 
@@ -48,18 +54,15 @@ namespace SharpHash.Crypto
 
         override public unsafe void Initialize()
         {
-            fixed(byte* sPtr = _state, cPtr = checksum)
-            {
-                Utils.Utils.memset((IntPtr)sPtr, (char)0, 16 * sizeof(byte));
-                Utils.Utils.memset((IntPtr)cPtr, (char)0, 16 * sizeof(byte));
-            }
-            
+            Utils.Utils.memset(state, 0);
+            Utils.Utils.memset(checksum, 0);
+
             base.Initialize();
         } // end function Initialize
 
         override protected byte[] GetResult()
         {
-            return _state;
+            return state;
         } // end function GetResult
 
         override protected void Finish()
@@ -86,14 +89,14 @@ namespace SharpHash.Crypto
             UInt32 t = 0;
             byte[] temp = new byte[48];
 
-            fixed (byte* tempPtr = temp, statetPtr = _state)
+            fixed (byte* tempPtr = temp, statetPtr = state)
             {
                 Utils.Utils.memmove((IntPtr)tempPtr, (IntPtr)statetPtr, a_data_length);
-                Utils.Utils.memmove((IntPtr)((byte*)a_data + a_index), (IntPtr)((byte*)tempPtr + a_data_length), a_data_length);
+                Utils.Utils.memmove((IntPtr)((byte*)tempPtr + a_data_length), (IntPtr)((byte*)a_data + a_index), a_data_length);
 
                 for (Int32 i = 0; i < 16; i++)
 		        {
-                    temp[i + 32] = (byte)(_state[i] ^ ((byte*)a_data)[i + a_index]);
+                    temp[i + 32] = (byte)(state[i] ^ ((byte*)a_data)[i + a_index]);
                 } // end for
 
                 for (Int32 i = 0; i < 18; i++)
@@ -117,7 +120,7 @@ namespace SharpHash.Crypto
                     t = checksum[i];
                 } // end for
 
-                Utils.Utils.memset((IntPtr)tempPtr, (char)0, temp.Length);
+                Utils.Utils.memset(temp, 0);
             }
             
         } // end function TransformBlock

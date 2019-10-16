@@ -5,22 +5,25 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class MD4 : MDBase, ICryptoNotBuildIn, ITransformBlock
+    public class MD4 : MDBase, ITransformBlock
     {
         private UInt32[] data = null;
 
         public MD4()
             : base(4, 16)
         {
-            Array.Resize(ref data, 16);
+            data = new UInt32[16];
         } // end constructor
 
         override public IHash Clone()
         {
             MD4 HashInstance = new MD4();
-            HashInstance.state = state;
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
+
+            HashInstance.state = new UInt32[state.Length];
+            for (Int32 i = 0; i < state.Length; i++)
+                HashInstance.state[i] = state[i];
 
             HashInstance.BufferSize = BufferSize;
 
@@ -148,7 +151,7 @@ namespace SharpHash.Crypto
 
             fixed (UInt32* dPtr = data)
             {
-                Utils.Utils.memset((IntPtr)dPtr, (char)0, 16 * sizeof(UInt32));
+                Utils.Utils.memset((IntPtr)dPtr, 0, 16 * sizeof(UInt32));
             }
 
         } // end function TransformBlock

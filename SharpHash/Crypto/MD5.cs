@@ -5,22 +5,21 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class MD5 : MDBase, ICryptoNotBuildIn, ITransformBlock
+    public class MD5 : MDBase, ITransformBlock
     {
-        private UInt32[] data = null;
-
         public MD5()
             : base(4, 16)
-        {
-            Array.Resize(ref data, 16);
-        } // end constructor
+        { } // end constructor
 
         override public IHash Clone()
         {
             MD5 HashInstance = new MD5();
-            HashInstance.state = state;
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
+
+            HashInstance.state = new UInt32[state.Length];
+            for (Int32 i = 0; i < state.Length; i++)
+                HashInstance.state[i] = state[i];
 
             HashInstance.BufferSize = BufferSize;
 
@@ -31,10 +30,12 @@ namespace SharpHash.Crypto
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D;
+            UInt32[] data = new UInt32[16];
 
             fixed (UInt32* dPtr = data)
             {
-                Converters.le32_copy(a_data, a_index, (IntPtr)dPtr, 0, 64);
+                byte* sPtr = (byte*)dPtr;
+                Converters.le32_copy(a_data, a_index, (IntPtr)sPtr, 0, a_data_length);
             }
             
             A = state[0];
@@ -181,7 +182,7 @@ namespace SharpHash.Crypto
 
             fixed (UInt32* dPtr = data)
             {
-                Utils.Utils.memset((IntPtr)dPtr, (char)0, data.Length * sizeof(UInt32));
+                Utils.Utils.memset((IntPtr)dPtr, 0, data.Length * sizeof(UInt32));
             }
             
         } // end function TransformBlock
