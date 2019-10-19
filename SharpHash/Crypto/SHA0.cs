@@ -459,10 +459,7 @@ namespace SharpHash.Crypto
             state[3] = state[3] + D;
             state[4] = state[4] + E;
 
-            fixed (UInt32* dPtr = data)
-            {
-                Utils.Utils.memset((IntPtr)dPtr, 0, data.Length * sizeof(UInt32));
-            }
+            Utils.Utils.memset(ref data, 0);
 
         } // end function TransformBlock
 

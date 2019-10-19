@@ -388,10 +388,7 @@ namespace SharpHash.Crypto
 
             KeccakF1600_StatePermute();
 
-            fixed (UInt64* dPtr = data)
-            {
-                Utils.Utils.memset((IntPtr)dPtr, 0, 18 * sizeof(UInt64));
-            }
+            Utils.Utils.memset(ref data, 0);
 
         } // end function TransformBlock
 

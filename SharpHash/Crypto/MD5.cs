@@ -179,11 +179,8 @@ namespace SharpHash.Crypto
             state[2] = state[2] + C;
             state[3] = state[3] + D;
 
-            fixed (UInt32* dPtr = data)
-            {
-                Utils.Utils.memset((IntPtr)dPtr, 0, data.Length * sizeof(UInt32));
-            }
-            
+            Utils.Utils.memset(ref data, 0);
+
         } // end function TransformBlock
 
     } // end class MD5

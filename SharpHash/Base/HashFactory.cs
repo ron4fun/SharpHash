@@ -110,6 +110,14 @@ namespace SharpHash.Base
                 return new HAS160();
             } // end function CreateHAS160
 
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// Grindahl Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+
             public static IHash CreateGrindahl256()
             {
                 return new Grindahl256();
@@ -119,6 +127,47 @@ namespace SharpHash.Base
             {
                 return new Grindahl512();
             } // end function CreateGrindahl512
+
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// RIPEMD Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+
+            public static IHash CreateRIPEMD()
+            {
+                return new RIPEMD();
+            } // end function CreateRIPEMD
+
+            public static IHash CreateRIPEMD128()
+            {
+                return new RIPEMD128();
+            } // end function CreateRIPEMD128
+
+            public static IHash CreateRIPEMD160()
+            {
+                return new RIPEMD160();
+            } // end function CreateRIPEMD160
+
+            public static IHash CreateRIPEMD256()
+            {
+                return new RIPEMD256();
+            } // end function CreateRIPEMD256
+
+            public static IHash CreateRIPEMD320()
+            {
+                return new RIPEMD320();
+            } // end function CreateRIPEMD320
+
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// MD Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
 
             public static IHash CreateMD2()
             {
@@ -134,6 +183,14 @@ namespace SharpHash.Base
             {
                 return new MD5();
             } // end function CreateMD5
+
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// SHA Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+            
 
             public static IHash CreateSHA0()
             {
