@@ -2,12 +2,10 @@ using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace SharpHash.Hash128
 {
-    internal class MurmurHash3_x64_128 : Hash, IHash128, IHashWithKey, ITransformBlock
+    internal sealed class MurmurHash3_x64_128 : Hash, IHash128, IHashWithKey, ITransformBlock
     {
         private UInt64 h1, h2, total_length;
         private UInt32 key;
@@ -30,7 +28,7 @@ namespace SharpHash.Hash128
           : base(16, 16)
         {
             key = CKEY;
-            Array.Resize(ref buf, 16);
+            buf = new byte[16];
         } // end constructor
 
         override public IHash Clone()
@@ -45,8 +43,7 @@ namespace SharpHash.Hash128
             if (!(buf == null || buf.Length == 0))
             {
                 HashInstance.buf = new byte[buf.Length];
-                for (Int32 i = 0; i < buf.Length; i++)
-                    HashInstance.buf[i] = buf[i];
+                Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
             } // end if
 
             HashInstance.BufferSize = BufferSize;
@@ -156,7 +153,7 @@ namespace SharpHash.Hash128
 
         } // end function TransformBytes
 
-        virtual public Int32? KeyLength
+        public Int32? KeyLength
         {
             get
             {
@@ -164,7 +161,7 @@ namespace SharpHash.Hash128
             }
         } // end property KeyLength
 
-        virtual public byte[] Key
+        public byte[] Key
         {
             get
             {

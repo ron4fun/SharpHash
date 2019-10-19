@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SharpHash.Hash32
 {
-    internal class Murmur2 : MultipleTransformNonBlock, IHash32, IHashWithKey, ITransformBlock
+    internal sealed class Murmur2 : MultipleTransformNonBlock, IHash32, IHashWithKey, ITransformBlock
     {
         private UInt32 key, working_key, h;
 
@@ -117,7 +117,7 @@ namespace SharpHash.Hash32
             h = h ^ a_data;
         } // end function TransformUInt32Fast
 
-        virtual public Int32? KeyLength
+        public Int32? KeyLength
 	    {
             get
             {
@@ -125,7 +125,7 @@ namespace SharpHash.Hash32
             }
 	    } // end property KeyLength
 
-	    virtual public byte[] Key
+	    public byte[] Key
 	    {
             get
             {

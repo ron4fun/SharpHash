@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Base
 {
-    public class HashResult : IHashResult
+    public sealed class HashResult : IHashResult
     {
         private byte[] hash = null;
 
@@ -16,7 +16,7 @@ namespace SharpHash.Base
 
         public HashResult()
         {
-            hash = new byte[] { };
+            hash = new byte[0];
         } // end constructor
 
         public HashResult(UInt64 a_hash)
@@ -84,69 +84,61 @@ namespace SharpHash.Base
         {
             if (right.hash == null || right.hash.Length == 0)
             {
-                hash = new byte[] { };
+                hash = new byte[0];
             }
             else
             {
                 hash = new byte[right.hash.Length];
-                unsafe
-                {
-                    fixed (byte* bDest = &hash[0], bSrc = &right.hash[0])
-                    {
-                        Utils.Utils.memmove((IntPtr)bDest, (IntPtr)bSrc, right.hash.Length * sizeof(byte));
-                    }
-                }
+                Utils.Utils.memcopy(ref hash, right.hash, right.hash.Length);
             }
         }
 
-        virtual public bool CompareTo(IHashResult a_hashResult)
+        public bool CompareTo(IHashResult a_hashResult)
 	    {
-		    return HashResult.SlowEquals(a_hashResult.GetBytes(), hash);
+		    return SlowEquals(a_hashResult.GetBytes(), hash);
 	    } // end function CompareTo
 
-	    virtual public byte[] GetBytes()
+	    public byte[] GetBytes()
 	    {
-		    return hash;
+            if (hash == null || hash.Length == 0) return new byte[0];
+
+            byte[] result = new byte[hash.Length];
+            Utils.Utils.memcopy(ref result, hash, hash.Length);
+
+            return result;
 	    } // end function GetBytes
 
 	    override public Int32 GetHashCode()
 	    {
-            byte[] TempHolder = new byte[hash.Length];
-            
-            unsafe
+            byte[] TempHolder = new byte[hash.Length];         
+          
+            Utils.Utils.memcopy(ref TempHolder, hash, hash.Length);
+
+            Converters.toUpper(ref TempHolder);
+
+            Int32 LResult = 0, I = 0, Top = hash.Length;
+
+            while (I < Top)
             {
-                fixed (byte* tPtr = &TempHolder[0], srcPtr = &hash[0])
-                {
-                    Utils.Utils.memcopy((IntPtr)tPtr, (IntPtr)srcPtr, hash.Length * sizeof(byte));
+                LResult = (Int32)Utils.Bits.RotateLeft32((UInt32)LResult, 5);
+                LResult = (Int32)((UInt32)LResult ^ TempHolder[I]);
+                I += 1;
+            } // end while
 
-                    Converters.toUpper((IntPtr)tPtr, hash.Length);
-
-                    Int32 LResult = 0, I = 0, Top = hash.Length;
-
-                    while (I < Top)
-                    {
-                        LResult = (Int32)Utils.Bits.RotateLeft32((UInt32)LResult, 5);
-                        LResult = (Int32)((UInt32)LResult ^ (UInt32)(tPtr[(Int32)I]));
-                        I += 1;
-                    } // end while
-
-                    return LResult;
-                }
-            }
+            return LResult;       
 	    } // end function GetHashCode
 
-	    virtual public Int32 GetInt32()
+	    public Int32 GetInt32()
 	    {
 		    if (hash.Length != 4)
 		    {
 			    throw new InvalidOperationHashLibException(ImpossibleRepresentationInt32);
 		    } // end if
 		
-		    return ((Int32)(hash[0]) << 24) | ((Int32)(hash[1]) << 16) | 
-			    ((Int32)(hash[2]) << 8) | (Int32)(hash[3]);
+		    return (hash[0] << 24) | (hash[1] << 16) | (hash[2] << 8) | hash[3];
 	    } // end function GetInt32
 		
-	    virtual public byte GetUInt8()
+	    public byte GetUInt8()
 	    {
 		    if (hash.Length != 1)
 		    {
@@ -156,7 +148,7 @@ namespace SharpHash.Base
 		    return hash[0];
 	    } // end function GetUInt8
 			
-	    virtual public UInt16 GetUInt16()
+	    public UInt16 GetUInt16()
 	    {
 		    if (hash.Length != 2)
 		    {
@@ -166,18 +158,17 @@ namespace SharpHash.Base
 		    return (UInt16)((hash[0] << 8) | hash[1]);
 	    } // end function GetUInt16
 				
-	    virtual public UInt32 GetUInt32()
+	    public UInt32 GetUInt32()
 	    {
 		    if (hash.Length != 4)
 		    {
 			    throw new InvalidOperationHashLibException(ImpossibleRepresentationUInt32);
 		    } // end if
 		
-		    return ((UInt32)(hash[0]) << 24) | ((UInt32)(hash[1]) << 16) |
-			    ((UInt32)(hash[2]) << 8) | (UInt32)(hash[3]);
+		    return (UInt32)((hash[0] << 24) | (hash[1] << 16) | (hash[2] << 8) | hash[3]);
 	    } // end function GetUInt32
 					
-	    virtual public UInt64 GetUInt64()
+	    public UInt64 GetUInt64()
 	    {
 		    if (hash.Length != 8)
 		    {
@@ -188,7 +179,7 @@ namespace SharpHash.Base
 			    ((UInt64)(hash[4]) << 24) | ((UInt64)(hash[5]) << 16) | ((UInt64)(hash[6]) << 8) | (UInt64)(hash[7]);
 	    } // end function GetUInt64
 						
-	    static protected bool SlowEquals(byte[] a_ar1, byte[] a_ar2)
+	    static private bool SlowEquals(byte[] a_ar1, byte[] a_ar2)
         {
             UInt32 diff = (UInt32)(a_ar1.Length ^ a_ar2.Length), I = 0;
 
@@ -201,7 +192,7 @@ namespace SharpHash.Base
             return diff == 0;
         } // end function SlowEquals
 
-        virtual public string ToString(bool a_group = false)
+        public string ToString(bool a_group = false)
 	    {
 		    return Converters.ConvertBytesToHexString(hash, a_group);
 	    } // end function ToString

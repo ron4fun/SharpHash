@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Checksum
 {
-    internal abstract class CRC64Polynomials
+    internal sealed class CRC64Polynomials
     {
     	static public readonly UInt64 ECMA_182 = 0x42F0E1EBA9EA3693;
     }; // end class CRC64Polynomials
@@ -38,7 +38,7 @@ namespace SharpHash.Checksum
     } // end class CRC64
 
 
-    internal class CRC64_ECMA_182 : CRC64
+    internal sealed class CRC64_ECMA_182 : CRC64
     {
         public CRC64_ECMA_182() : base(CRC64Polynomials.ECMA_182, 0x0000000000000000, false, false, 0x0000000000000000, 0x6C40DF5F0B497347, new string[] { "CRC-64/ECMA"})
 	    {} // end constructor

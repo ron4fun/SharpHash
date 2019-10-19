@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Checksum
 {
-    internal abstract class CRC16Polynomials
+    internal sealed class CRC16Polynomials
     {
 	    static public readonly UInt16 BUYPASS = 0x8005;
     }; // end class CRC16Polynomials
@@ -38,7 +38,7 @@ namespace SharpHash.Checksum
 
     } // end class CRC16
 
-    internal class CRC16_BUYPASS : CRC16
+    internal sealed class CRC16_BUYPASS : CRC16
     {
         public CRC16_BUYPASS() 
             : base(CRC16Polynomials.BUYPASS, 0x0000, false, false, 0x0000, 0xFEE8, new string[] { "CRC-16/BUYPASS", "CRC-16/VERIFONE" })

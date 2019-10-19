@@ -518,7 +518,7 @@ namespace SharpHash.Checksum
     }; // end enum
 
 
-    internal class CRC : Hash, IChecksum, ICRC, ITransformBlock
+    internal sealed class CRC : Hash, IChecksum, ICRC, ITransformBlock
     {
         private string[] names = null;
         private Int32 width;
@@ -1006,7 +1006,7 @@ namespace SharpHash.Checksum
 		    throw new ArgumentHashLibException("Invalid CRCStandard object.");
         } // end function CreateCRCObject
 
-        virtual public string[] Names
+        public string[] Names
 	    {
             get
             {
@@ -1014,7 +1014,7 @@ namespace SharpHash.Checksum
             }
 	    } // end property Names
 
-        virtual public Int32 Width
+        public Int32 Width
 	    {
             get
             {
@@ -1022,7 +1022,7 @@ namespace SharpHash.Checksum
             }
         } // end property Width
 
-        virtual public UInt64 Polynomial
+        public UInt64 Polynomial
 	    {
             get
             {
@@ -1030,7 +1030,7 @@ namespace SharpHash.Checksum
             }
         } // end property Polynomial
 
-        virtual public UInt64 Initial
+        public UInt64 Initial
 	    {
             get
             {
@@ -1038,7 +1038,7 @@ namespace SharpHash.Checksum
             }
         } // end property Initial
 
-        virtual public bool IsInputReflected
+        public bool IsInputReflected
 	    {
             get
             {
@@ -1046,7 +1046,7 @@ namespace SharpHash.Checksum
             }
         } // end property IsInputReflected
 
-        virtual public bool IsOutputReflected
+        public bool IsOutputReflected
 	    {
             get
             {
@@ -1054,7 +1054,7 @@ namespace SharpHash.Checksum
             }
         } // end property IsOutputReflected 
 
-        virtual public UInt64 OutputXor
+        public UInt64 OutputXor
 	    {
             get
             {
@@ -1062,54 +1062,14 @@ namespace SharpHash.Checksum
             }
         } // end property OutputXor
 
-        virtual public UInt64 CheckValue
+        public UInt64 CheckValue
 	    {
             get
             {
                 return checkValue;
             }
         } // end property CheckValue
-
-        protected void SetNames(string[] value)
-	    {
-		    names = value;
-	    } // end function SetNames
-
-        protected void SetWidth(Int32 value)
-        {
-            width = value;
-        } // end function SetWidth
-
-        protected void SetPolynomial(UInt64 value)
-        {
-            polynomial = value;
-        } // end function SetPolynomial
-
-        protected void SetInit(UInt64 value)
-        {
-            init = value;
-        } // end function SetInit
-
-        protected void SetReflectIn(bool value)
-        {
-            reflectIn = value;
-        } // end function SetReflectIn
-
-        protected void SetReflectOut(bool value)
-        {
-            reflectOut = value;
-        } // end function SetReflectOut
-
-        protected void SetXOROut(UInt64 value)
-        {
-            xorOut = value;
-        } // end function SetXOROut
-
-        protected void SetCheckValue(UInt64 value)
-        {
-            checkValue = value;
-        } // end function SetCheckValue
-
+              
         private void GenerateTable()
         {
             UInt64 bit, crc;

@@ -105,6 +105,21 @@ namespace SharpHash.Base
 
         public static class Crypto
         {
+            public static IHash CreateHAS160()
+            {
+                return new HAS160();
+            } // end function CreateHAS160
+
+            public static IHash CreateGrindahl256()
+            {
+                return new Grindahl256();
+            } // end function CreateGrindahl256
+
+            public static IHash CreateGrindahl512()
+            {
+                return new Grindahl512();
+            } // end function CreateGrindahl512
+
             public static IHash CreateMD2()
             {
                 return new MD2();

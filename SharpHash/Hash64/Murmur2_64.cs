@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SharpHash.Hash64
 {
-    internal class Murmur2_64 : MultipleTransformNonBlock, IHash64, IHashWithKey, ITransformBlock
+    internal sealed class Murmur2_64 : MultipleTransformNonBlock, IHash64, IHashWithKey, ITransformBlock
     {
         private UInt32 key, working_key, h;
 
@@ -162,7 +162,7 @@ namespace SharpHash.Hash64
             return new HashResult(h);
         } // end function ComputeAggregatedBytes
 
-        virtual public Int32? KeyLength
+        public Int32? KeyLength
 	    {
             get
             {
@@ -170,7 +170,7 @@ namespace SharpHash.Hash64
             }
 	    } // end property KeyLength
 
-	    virtual public byte[] Key
+	    public byte[] Key
 	    {
             get
             {

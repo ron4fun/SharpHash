@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    internal class MurmurHash3_x86_32 : Hash, IHash32, IHashWithKey, ITransformBlock
+    internal sealed class MurmurHash3_x86_32 : Hash, IHash32, IHashWithKey, ITransformBlock
     {
         private UInt32 key, h, total_length;
         private Int32 idx;
@@ -25,7 +25,7 @@ namespace SharpHash.Hash32
          : base(4, 4)
         {
             key = CKEY;
-            Array.Resize(ref buf, 4);
+            buf = new byte[4];
         } // end constructor
 
         public override void Initialize()
@@ -45,8 +45,7 @@ namespace SharpHash.Hash32
             HashInstance.idx = idx;
 
             HashInstance.buf = new byte[buf.Length];
-            for (Int32 i = 0; i < buf.Length; i++)
-                HashInstance.buf[i] = buf[i];
+            Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -206,7 +205,7 @@ namespace SharpHash.Hash32
             h = h ^ (h >> 16);
         } // end function Finish
 
-        virtual public Int32? KeyLength
+        public Int32? KeyLength
 	    {
             get
             {
@@ -214,7 +213,7 @@ namespace SharpHash.Hash32
             }
 	    } // end property KeyLength
 
-        virtual public byte[] Key
+        public byte[] Key
 	    {
             get
             {

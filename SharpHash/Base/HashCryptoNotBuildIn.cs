@@ -51,12 +51,10 @@ namespace SharpHash.Base
             Finish();
 
             byte[] temp = GetResult();
-            byte[] tempresult = new byte[temp.Length];
-            Utils.Utils.memcopy(ref tempresult, temp, temp.Length);
 
             Initialize();
 
-            return new HashResult(tempresult);
+            return new HashResult(temp);
         } // end function TransformFinal
 
         private unsafe void TransformBuffer()

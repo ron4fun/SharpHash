@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    internal class PJW : Hash, IHash32, ITransformBlock
+    internal sealed class PJW : Hash, IHash32, ITransformBlock
     {
         static private readonly UInt32 UInt32MaxValue = 4294967295;
         static private readonly UInt32 BitsInUnsignedInt = sizeof(UInt32) * 8;

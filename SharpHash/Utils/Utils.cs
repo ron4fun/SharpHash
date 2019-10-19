@@ -13,6 +13,24 @@ namespace SharpHash.Utils
             }
         }
 
+        public unsafe static void memcopy(ref UInt32[] dest, UInt32[] src, Int32 n,
+            Int32 indexSrc = 0, Int32 indexDest = 0)
+        {
+            fixed (UInt32* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
+            {
+                memcopy((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt32));
+            }
+        }
+
+        public unsafe static void memcopy(ref UInt64[] dest, UInt64[] src, Int32 n,
+            Int32 indexSrc = 0, Int32 indexDest = 0)
+        {
+            fixed (UInt64* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
+            {
+                memcopy((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt64));
+            }
+        }
+
         public unsafe static void memcopy(IntPtr dest, IntPtr src, Int32 n)
         {
             // Typecast src and dest address to (byte *)
@@ -86,6 +104,22 @@ namespace SharpHash.Utils
                 block *= 2;
             }
         } // end function MemSet
+
+        public static unsafe void memset(ref UInt32[] array, byte value)
+        {
+            fixed (UInt32* destPtr = array)
+            {
+                memset((IntPtr)destPtr, value, array.Length * sizeof(UInt32));
+            }
+        } // end function memset
+
+        public static unsafe void memset(ref UInt64[] array, byte value)
+        {
+            fixed (UInt64* destPtr = array)
+            {
+                memset((IntPtr)destPtr, value, array.Length * sizeof(UInt64));
+            }
+        } // end function memset
 
         public static byte[] Concat(byte[] x, byte[] y)
         {

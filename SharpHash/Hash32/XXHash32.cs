@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    internal class XXHash32 : Hash, IHash32, IHashWithKey, ITransformBlock
+    internal sealed class XXHash32 : Hash, IHash32, IHashWithKey, ITransformBlock
     {
         private UInt32 key, hash;
 
@@ -36,8 +36,7 @@ namespace SharpHash.Hash32
                 if (!(memory == null || memory.Length == 0))
                 {
                     result.memory = new byte[memory.Length];
-                    for (Int32 i = 0; i < memory.Length; i++)
-                        result.memory[i] = memory[i];
+                    Utils.Utils.memcopy(ref result.memory, memory, memory.Length);
                 } // end if
                     
                 return result;
@@ -53,7 +52,7 @@ namespace SharpHash.Hash32
          : base(4, 16)
         {
             key = CKEY;
-            Array.Resize(ref state.memory, 16);
+            state.memory = new byte[16];
         } // end constructor
 
         public override void Initialize()
@@ -208,7 +207,7 @@ namespace SharpHash.Hash32
             return result;
         } // end function TransformFinal
 
-        virtual public Int32? KeyLength
+        public Int32? KeyLength
 	    {
             get
             {
@@ -216,7 +215,7 @@ namespace SharpHash.Hash32
             }
         } // end property KeyLength
 
-        virtual public byte[] Key
+        public byte[] Key
 	    {
             get
             {

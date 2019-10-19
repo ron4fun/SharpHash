@@ -100,7 +100,7 @@ namespace SharpHash.Checksum
                 
     } // end class CRC32Fast
 
-    internal class CRC32_PKZIP_Fast : CRC32Fast
+    internal sealed class CRC32_PKZIP_Fast : CRC32Fast
     {
         public CRC32_PKZIP_Fast()
         {
@@ -129,7 +129,7 @@ namespace SharpHash.Checksum
 
     } // end class CRC32_PKZIP
 
-    internal class CRC32_CASTAGNOLI_Fast : CRC32Fast
+    internal sealed class CRC32_CASTAGNOLI_Fast : CRC32Fast
     {
         // Polynomial Reversed
         static private readonly UInt32 CRC32_CASTAGNOLI_Polynomial = 0x82F63B78;

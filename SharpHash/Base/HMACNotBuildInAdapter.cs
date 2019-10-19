@@ -29,9 +29,24 @@ namespace SharpHash.Base
     	{
             HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash);
             hmac.blocksize = blocksize;
-		    hmac.opad = opad;
-		    hmac.ipad = ipad;
-		    hmac.key = key;
+
+            if (opad != null)
+            {
+                hmac.opad = new byte[opad.Length];
+                Utils.Utils.memcopy(ref hmac.opad, opad, opad.Length);
+            } //
+
+            if (ipad != null)
+            {
+                hmac.ipad = new byte[ipad.Length];
+                Utils.Utils.memcopy(ref hmac.ipad, ipad, ipad.Length);
+            } //
+
+            if (key != null)
+            {
+                hmac.key = new byte[key.Length];
+                Utils.Utils.memcopy(ref hmac.key, key, key.Length);
+            } //
 
 		    return hmac;
 	    }
@@ -71,14 +86,26 @@ namespace SharpHash.Base
 	    {
             get
             {
-                return key;
+                if (key != null)
+                {
+                    byte[] result = new byte[key.Length];
+                    Utils.Utils.memcopy(ref result, key, key.Length);
+
+                    return result;
+                } //
+
+                return new byte[0];
             }
             set
             {
                 if (value == null || value.Length == 0)
                     key = new byte[0];
                 else
-                    key = value;
+                {
+                    key = new byte[value.Length];
+                    Utils.Utils.memcopy(ref key, value, value.Length);
+                } // end else
+                    
             }
         } // end property Key
 

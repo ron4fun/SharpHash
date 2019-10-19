@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Hash64
 {
-    internal class XXHash64 : Hash, IHash64, IHashWithKey, ITransformBlock
+    internal sealed class XXHash64 : Hash, IHash64, IHashWithKey, ITransformBlock
     {
         private UInt64 key, hash;
 
@@ -36,8 +36,7 @@ namespace SharpHash.Hash64
                 if (!(memory == null || memory.Length == 0))
                 {
                     result.memory = new byte[memory.Length];
-                    for (Int32 i = 0; i < memory.Length; i++)
-                        result.memory[i] = memory[i];
+                    Utils.Utils.memcopy(ref result.memory, memory, memory.Length);
                 } // end if
                     
                 return result;
@@ -223,7 +222,7 @@ namespace SharpHash.Hash64
             return result;
         } // end function TransformFinal
 
-        virtual public Int32? KeyLength
+        public Int32? KeyLength
 	    {
             get
             {
@@ -231,7 +230,7 @@ namespace SharpHash.Hash64
             }
         } // end property KeyLength
 
-        virtual public byte[] Key
+        public byte[] Key
 	    {
             get
             {
@@ -258,6 +257,6 @@ namespace SharpHash.Hash64
             }
         } // end property GetKey
 
-    } // end class XXHash32
+    } // end class XXHash64
 
 }

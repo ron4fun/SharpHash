@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal class SHA2_224 : SHA2_256Base
+    internal sealed class SHA2_224 : SHA2_256Base
     {
         public SHA2_224() :
             base(28)
@@ -18,8 +18,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt32[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 

@@ -397,7 +397,7 @@ namespace SharpHash.Crypto
 
     } // end class SHA3
 
-    internal class SHA3_224 : SHA3
+    internal sealed class SHA3_224 : SHA3
     {
         public SHA3_224() :
             base((Int32)HashSizeEnum.HashSize224)
@@ -412,8 +412,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -422,7 +421,7 @@ namespace SharpHash.Crypto
         
     } // end class SHA3_224
 
-    internal class SHA3_256 : SHA3
+    internal sealed class SHA3_256 : SHA3
     {
         public SHA3_256() :
             base((Int32)HashSizeEnum.HashSize256)
@@ -437,8 +436,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -447,7 +445,7 @@ namespace SharpHash.Crypto
 
     } // end class SHA3_256
 
-    internal class SHA3_384 : SHA3
+    internal sealed class SHA3_384 : SHA3
     {
         public SHA3_384() :
             base((Int32)HashSizeEnum.HashSize384)
@@ -462,8 +460,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -472,7 +469,7 @@ namespace SharpHash.Crypto
 
     } // end class SHA3_384
 
-    internal class SHA3_512 : SHA3
+    internal sealed class SHA3_512 : SHA3
     {
         public SHA3_512() :
             base((Int32)HashSizeEnum.HashSize512)
@@ -487,8 +484,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -498,7 +494,7 @@ namespace SharpHash.Crypto
     } // end class SHA3_512
 
 
-    internal class Keccak_224 : SHA3
+    internal sealed class Keccak_224 : SHA3
     {
         public Keccak_224() :
             base((Int32)HashSizeEnum.HashSize224)
@@ -513,8 +509,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -523,7 +518,7 @@ namespace SharpHash.Crypto
 
     } // end class SHA3_224
 
-    internal class Keccak_256 : SHA3
+    internal sealed class Keccak_256 : SHA3
     {
         public Keccak_256() :
             base((Int32)HashSizeEnum.HashSize256)
@@ -538,8 +533,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -548,7 +542,7 @@ namespace SharpHash.Crypto
 
     } // end class Keccak_256
 
-    internal class Keccak_288 : SHA3
+    internal sealed class Keccak_288 : SHA3
     {
         public Keccak_288() :
             base((Int32)HashSizeEnum.HashSize288)
@@ -563,8 +557,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -573,7 +566,7 @@ namespace SharpHash.Crypto
 
     } // end class Keccak_288
 
-    internal class Keccak_384 : SHA3
+    internal sealed class Keccak_384 : SHA3
     {
         public Keccak_384() :
             base((Int32)HashSizeEnum.HashSize384)
@@ -588,8 +581,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -598,7 +590,7 @@ namespace SharpHash.Crypto
 
     } // end class Keccak_384
 
-    internal class Keccak_512 : SHA3
+    internal sealed class Keccak_512 : SHA3
     {
         public Keccak_512() :
             base((Int32)HashSizeEnum.HashSize512)
@@ -613,8 +605,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -735,7 +726,7 @@ namespace SharpHash.Crypto
 
     } // end class Shake
 
-    internal class Shake_128 : Shake
+    internal sealed class Shake_128 : Shake
     {
         public Shake_128() :
             base((Int32)HashSizeEnum.HashSize128)
@@ -762,8 +753,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -772,7 +762,7 @@ namespace SharpHash.Crypto
 
     } // end class Shake_128
 
-    internal class Shake_256 : Shake
+    internal sealed class Shake_256 : Shake
     {
         public Shake_256() :
             base((Int32)HashSizeEnum.HashSize256)
@@ -799,8 +789,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -925,7 +914,7 @@ namespace SharpHash.Crypto
 
     } // end function CShake
 
-    internal class CShake_128 : CShake
+    internal sealed class CShake_128 : CShake
     {
         public CShake_128(byte[] N, byte[] S) :
             base((Int32)HashSizeEnum.HashSize128, N, S)
@@ -960,8 +949,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -970,7 +958,7 @@ namespace SharpHash.Crypto
 
     } // end class CShake_128
 
-    internal class CShake_256 : CShake
+    internal sealed class CShake_256 : CShake
     {
         public CShake_256(byte[] N, byte[] S) :
             base((Int32)HashSizeEnum.HashSize256, N, S)
@@ -1004,8 +992,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt64[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1066,7 +1053,13 @@ namespace SharpHash.Crypto
         } // end function Clear
 
         virtual public byte[] Key {
-            get { return key; }
+            get
+            {
+                byte[] result = new byte[key.Length];
+                Utils.Utils.memcopy(ref result, key, key.Length);
+
+                return result;
+            }
             set
             {
                 if (value == null || value.Length == 0)
@@ -1104,7 +1097,7 @@ namespace SharpHash.Crypto
 
     } // end class KMACNotBuildInAdapter
 
-    internal class KMAC128 : KMACNotBuildInAdapter
+    internal sealed class KMAC128 : KMACNotBuildInAdapter
     {
         private KMAC128(IHash a_hash, byte[] a_KMACKey, byte[] a_Customization,
             UInt64 a_OutputLengthInBits)
@@ -1151,7 +1144,7 @@ namespace SharpHash.Crypto
 
     } // end class KMAC128
 
-    internal class KMAC128XOF : KMACNotBuildInAdapter, IXOF
+    internal sealed class KMAC128XOF : KMACNotBuildInAdapter, IXOF
     {
         private KMAC128XOF(byte[] a_KMACKey, byte[] a_Customization)
             : this(new CShake_128(Converters.ConvertStringToBytes("KMAC"), a_Customization) as IHash,
@@ -1199,7 +1192,7 @@ namespace SharpHash.Crypto
             return this;
         } // end function SetXOFSizeInBitsInternal
 
-        virtual public UInt64 XOFSizeInBits
+        public UInt64 XOFSizeInBits
         {
             get { return (hash as IXOF).XOFSizeInBits; }
             set { SetXOFSizeInBitsInternal(value); }
@@ -1216,7 +1209,7 @@ namespace SharpHash.Crypto
 
     } // end class KMAC128XOF
 
-    internal class KMAC256 : KMACNotBuildInAdapter
+    internal sealed class KMAC256 : KMACNotBuildInAdapter
     {
         private KMAC256(IHash a_hash, byte[] a_KMACKey, byte[] a_Customization,
             UInt64 a_OutputLengthInBits)
@@ -1263,7 +1256,7 @@ namespace SharpHash.Crypto
 
     } // end class KMAC256
 
-    internal class KMAC256XOF : KMACNotBuildInAdapter, IXOF
+    internal sealed class KMAC256XOF : KMACNotBuildInAdapter, IXOF
     {
         private UInt64 xofSizeInBits;
 
@@ -1313,7 +1306,7 @@ namespace SharpHash.Crypto
             return this;
         } // end function SetXOFSizeInBitsInternal
 
-        virtual public UInt64 XOFSizeInBits
+        public UInt64 XOFSizeInBits
         {
             get { return (hash as IXOF).XOFSizeInBits; }
             set { SetXOFSizeInBitsInternal(value); }

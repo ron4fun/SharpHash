@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    internal class ShiftAndXor : Hash, IHash32, ITransformBlock
+    internal sealed class ShiftAndXor : Hash, IHash32, ITransformBlock
     {
         private UInt32 hash;
 

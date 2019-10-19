@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal class MD2 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class MD2 : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
         private byte[] state = null;
         private byte[] checksum = null;
@@ -40,12 +40,10 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new byte[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.checksum = new byte[checksum.Length];
-            for (Int32 i = 0; i < checksum.Length; i++)
-                HashInstance.checksum[i] = checksum[i];
+            Utils.Utils.memcopy(ref HashInstance.checksum, checksum, checksum.Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -62,7 +60,10 @@ namespace SharpHash.Crypto
 
         override protected byte[] GetResult()
         {
-            return state;
+            byte[] result = new byte[state.Length];
+            Utils.Utils.memcopy(ref result, state, state.Length);
+
+            return result;
         } // end function GetResult
 
         override protected void Finish()

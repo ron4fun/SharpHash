@@ -2,9 +2,8 @@
 
 namespace SharpHash.Base
 {
-    internal class HashBuffer
+    internal sealed class HashBuffer
     {
-
         private byte[] data = null;
         private Int32 pos = 0;
         
@@ -21,14 +20,8 @@ namespace SharpHash.Base
 		    result.pos = pos;
 
             result.data = new byte[data.Length];
-            unsafe
-            {
-                fixed (byte* bDest = &result.data[0], bSrc = &data[0])
-                {
-                    Utils.Utils.memmove((IntPtr)bDest, (IntPtr)bSrc, data.Length * sizeof(byte));
-                }
-            }
-
+            Utils.Utils.memcopy(ref result.data, data, data.Length);
+           
             return result;
 	    }
 
@@ -99,7 +92,11 @@ namespace SharpHash.Base
         public byte[] GetBytes()
         {
             pos = 0;
-            return data;
+
+            byte[] result = new byte[data.Length];
+            Utils.Utils.memcopy(ref result, data, data.Length);
+
+            return result;
         } // end function GetBytes
 
         public unsafe byte[] GetBytesZeroPadded()
@@ -110,7 +107,11 @@ namespace SharpHash.Base
             }
                         
             pos = 0;
-            return data;
+
+            byte[] result = new byte[data.Length];
+            Utils.Utils.memcopy(ref result, data, data.Length);
+
+            return result;
         } // end function GetBytesZeroPadded
 
         public bool IsEmpty

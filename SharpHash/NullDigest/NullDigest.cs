@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SharpHash
 {
-    internal class NullDigest : Hash, ITransformBlock
+    internal sealed class NullDigest : Hash, ITransformBlock
     {
         private MemoryStream Out = null;
 

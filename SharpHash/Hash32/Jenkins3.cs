@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SharpHash.Hash32
 {
-    internal class Jenkins3 : MultipleTransformNonBlock, IHash32, ITransformBlock
+    internal sealed class Jenkins3 : MultipleTransformNonBlock, IHash32, ITransformBlock
     {
         private Int32 InitialValue;
 

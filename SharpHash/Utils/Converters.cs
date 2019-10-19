@@ -5,13 +5,14 @@ namespace SharpHash.Utils
 {
     public static class Converters
     {
-        public unsafe static void toUpper(IntPtr value, Int32 length)
-	    {
-		    for (int i = 0; i < length; i++)
-		    {
-                char c = (char)((byte*)value)[i];
+        public unsafe static void toUpper(ref byte[] value)
+        {
+            if (value == null) return;
 
-                ((byte*)value)[i] = (byte)char.ToLower(c);
+            for (int i = 0; i < value.Length; i++)
+            {
+                char c = (char)value[i];
+                value[i] = (byte)char.ToLower(c);
             } // end for
 
         } // end function toUpper

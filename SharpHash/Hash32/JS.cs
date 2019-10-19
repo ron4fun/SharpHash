@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    internal class JS : Hash, IHash32, ITransformBlock
+    internal sealed class JS : Hash, IHash32, ITransformBlock
     {
         private UInt32 hash;
 
@@ -47,5 +47,7 @@ namespace SharpHash.Hash32
                 a_length--;
             } // end while
         } // end function TransformBytes
+
     } // end class JS
+
 }

@@ -282,7 +282,7 @@ namespace SharpHash.Hash64
     /// <summary>
     /// SipHash 2 - 4 algorithm.
     /// <summary>
-    internal class SipHash2_4 : SipHash
+    internal sealed class SipHash2_4 : SipHash
     {
         public SipHash2_4() : base(2, 4)
         { } // end constructor
@@ -304,8 +304,7 @@ namespace SharpHash.Hash64
             if (!(buf == null || buf.Length == 0))
             {
                 HashInstance.buf = new byte[buf.Length];
-                for (Int32 i = 0; i < buf.Length; i++)
-                    HashInstance.buf[i] = buf[i];
+                Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
             } // end if
 
             HashInstance.BufferSize = BufferSize;

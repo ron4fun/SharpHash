@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal class SHA1 : SHA0
+    internal sealed class SHA1 : SHA0
     {               
         public SHA1()
         {} // end constructor
@@ -17,8 +17,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.state = new UInt32[state.Length];
-            for (Int32 i = 0; i < state.Length; i++)
-                HashInstance.state[i] = state[i];
+            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
 
             HashInstance.BufferSize = BufferSize;
 

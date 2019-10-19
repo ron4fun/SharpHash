@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    internal class RS : Hash, IHash32, ITransformBlock
+    internal sealed class RS : Hash, IHash32, ITransformBlock
     {
         private UInt32 a, hash;
         static private readonly UInt32 b = 378551;
