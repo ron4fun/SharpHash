@@ -58,7 +58,7 @@ Available Algorithms
  
  * `Grindahl (256, 512)`
  
- * `Has160`
+ * `HAS160`
 
  * `RIPEMD (128, 256, 256, 320)`
 
