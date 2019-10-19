@@ -4,13 +4,13 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class PJW : Hash, IBlockHash, IHash32, ITransformBlock
+    internal class PJW : Hash, IHash32, ITransformBlock
     {
-        static private UInt32 UInt32MaxValue = (UInt32)(4294967295);
-        static private UInt32 BitsInUnsignedInt = (Int32)(sizeof(UInt32) * 8);
-        static private UInt32 threeQuarters = (UInt32)(BitsInUnsignedInt * 3) >> 2;
-        static private UInt32 oneEighth = (UInt32)(BitsInUnsignedInt >> 3);
-        static private UInt32 highBits = (UInt32)(UInt32MaxValue << (Int32)(BitsInUnsignedInt - oneEighth));
+        static private readonly UInt32 UInt32MaxValue = 4294967295;
+        static private readonly UInt32 BitsInUnsignedInt = sizeof(UInt32) * 8;
+        static private readonly UInt32 threeQuarters = (BitsInUnsignedInt * 3) >> 2;
+        static private readonly UInt32 oneEighth = BitsInUnsignedInt >> 3;
+        static private readonly UInt32 highBits = UInt32MaxValue << (Int32)(BitsInUnsignedInt - oneEighth);
 
         private UInt32 hash;
 

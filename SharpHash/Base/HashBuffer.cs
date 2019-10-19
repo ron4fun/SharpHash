@@ -2,7 +2,7 @@
 
 namespace SharpHash.Base
 {
-    public class HashBuffer
+    internal class HashBuffer
     {
 
         private byte[] data = null;
@@ -149,7 +149,7 @@ namespace SharpHash.Base
         {
             pos = 0;
 
-            Utils.Utils.memset(data, 0);
+            Utils.Utils.memset(ref data, 0);
         } // end function Initialize
 
         public override string ToString()

@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class AP : Hash, IBlockHash, IHash32, ITransformBlock
+    internal class AP : Hash, IHash32, ITransformBlock
     {
         private UInt32 hash;
         private Int32 index;

@@ -3,16 +3,13 @@ using SharpHash.Interfaces;
 using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Crypto.Tests
 {
     [TestClass]
     public class SHA2_224Tests
     {
-        protected IHash hash = new SHA2_224();
+        protected IHash hash = HashFactory.Crypto.CreateSHA2_224();
 
         protected string ExpectedHashOfEmptyData = "D14A028C2A3A2BC9476102BB288234C415A2B01F828EA62AC5B3E42F";
         protected string ExpectedHashOfDefaultData = "DF2B86ED008508F542443C4B1810AA5A0F5658692B808EEB1D0A2F7E";
@@ -74,24 +71,27 @@ namespace SharpHash.Crypto.Tests
             TestHelper.TestHashCloneIsUnique(hash);
         }
 
+        [TestMethod]
         public void TestHMACWithDefaultDataAndLongKey()
         {
-            IHMAC hmac = new HMACNotBuildInAdapter(hash);
+            IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash);
             hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey);
             string ActualString = hmac.ComputeString(TestConstants.DefaultData).ToString();
 
             Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithLongKey, ActualString);
         }
 
+        [TestMethod]
         public void TestHMACWithDefaultDataAndShortKey()
         {
-            IHMAC hmac = new HMACNotBuildInAdapter(hash);
+            IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash);
             hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACShortStringKey);
             string ActualString = hmac.ComputeString(TestConstants.DefaultData).ToString();
 
             Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithShortKey, ActualString);
         }
 
+        [TestMethod]
         public void TestHMACCloneIsCorrect()
         {
             TestHelper.TestHMACCloneIsCorrect(hash);

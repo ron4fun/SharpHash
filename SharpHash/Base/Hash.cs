@@ -5,7 +5,7 @@ using SharpHash.Utils;
 
 namespace SharpHash.Base
 {
-    public abstract class Hash : IHash
+    internal abstract class Hash : IHash
     {
         private Int32 buffer_size;
         protected Int32 block_size;

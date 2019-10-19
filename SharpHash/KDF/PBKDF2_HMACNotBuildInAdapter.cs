@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.KDF
 {
-    public class PBKDF2_HMACNotBuildInAdapter : Base.KDF, IPBKDF2_HMACNotBuildIn
+    internal class PBKDF2_HMACNotBuildInAdapter : Base.KDF, IPBKDF2_HMACNotBuildIn
     {
         private IHash hash = null;
         private IHMAC HMAC = null;
@@ -13,12 +13,12 @@ namespace SharpHash.KDF
         private UInt32 IterationCount, Block;
         private Int32 BlockSize, startIndex, endIndex;
 
-        protected static string InvalidArgument = "\"bc (ByteCount)\" Argument must be a value greater than zero.";
-        protected static string InvalidIndex = "Invalid start or end index in the internal buffer.";
-        protected static string UninitializedInstance = "\"IHash\" instance is uninitialized.";
-        protected static string EmptyPassword = "Password can't be empty.";
-        protected static string EmptySalt = "Salt can't be empty.";
-        protected static string IterationtooSmall = "Iteration must be greater than zero.";
+        public static string InvalidArgument = "\"bc (ByteCount)\" Argument must be a value greater than zero.";
+        public static string InvalidIndex = "Invalid start or end index in the internal buffer.";
+        public static string UninitializedInstance = "\"IHash\" instance is uninitialized.";
+        public static string EmptyPassword = "Password can't be empty.";
+        public static string EmptySalt = "Salt can't be empty.";
+        public static string IterationtooSmall = "Iteration must be greater than zero.";
 
         public PBKDF2_HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_password, 
             byte[] a_salt, UInt32 a_iterations)
@@ -29,11 +29,11 @@ namespace SharpHash.KDF
             buffer = new byte[0];
 		    Password = new byte[a_password.Length];
             // Copy Password
-            Utils.Utils.memcopy(Password, a_password, a_password.Length);
+            Utils.Utils.memcopy(ref Password, a_password, a_password.Length);
 
 		    Salt = new byte[a_salt.Length];
             // Copy Salt
-            Utils.Utils.memcopy(Salt, a_salt, a_salt.Length);
+            Utils.Utils.memcopy(ref Salt, a_salt, a_salt.Length);
 
             IterationCount = a_iterations;
 
@@ -42,8 +42,8 @@ namespace SharpHash.KDF
 
         public override void Clear()
         {
-            Utils.Utils.memset(Password, 0);
-            Utils.Utils.memset(Password, 0);
+            Utils.Utils.memset(ref Password, 0);
+            Utils.Utils.memset(ref Salt, 0);
         } // end function Clear
 
         override public byte[] GetBytes(Int32 bc)
@@ -131,7 +131,7 @@ namespace SharpHash.KDF
 	    private void Initialize()
         {
             if (!(buffer == null || buffer.Length == 0))
-                Utils.Utils.memset(buffer, 0);
+                Utils.Utils.memset(ref buffer, 0);
 
             HMAC = new HMACNotBuildInAdapter(hash);
 

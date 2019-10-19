@@ -5,17 +5,17 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class XXHash32 : Hash, IBlockHash, IHash32, IHashWithKey, ITransformBlock
+    internal class XXHash32 : Hash, IHash32, IHashWithKey, ITransformBlock
     {
         private UInt32 key, hash;
 
-        static private UInt32 CKEY = 0x0;
+        static private readonly UInt32 CKEY = 0x0;
 
-        static private UInt32 PRIME32_1 = 2654435761;
-        static private UInt32 PRIME32_2 = 2246822519;
-        static private UInt32 PRIME32_3 = 3266489917;
-        static private UInt32 PRIME32_4 = 668265263;
-        static private UInt32 PRIME32_5 = 374761393;
+        static private readonly UInt32 PRIME32_1 = 2654435761;
+        static private readonly UInt32 PRIME32_2 = 2246822519;
+        static private readonly UInt32 PRIME32_3 = 3266489917;
+        static private readonly UInt32 PRIME32_4 = 668265263;
+        static private readonly UInt32 PRIME32_5 = 374761393;
 
         struct XXH_State
         {

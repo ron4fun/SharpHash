@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class JSTests
     {
-        protected IHash hash = new JS();
+        protected IHash hash = HashFactory.Hash32.CreateJS();
 
         protected string ExpectedHashOfEmptyData = "4E67C6A7";
         protected string ExpectedHashOfDefaultData = "683AFCFE";

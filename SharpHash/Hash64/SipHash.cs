@@ -5,20 +5,20 @@ using System;
 
 namespace SharpHash.Hash64
 {
-    public abstract class SipHash : Hash, IBlockHash, IHash64, ITransformBlock
+    internal abstract class SipHash : Hash, IHash64, IHashWithKey, ITransformBlock
     {
         protected UInt64 v0, v1, v2, v3, key0, key1, total_length, m;
         protected Int32 cr, fr, idx;
         protected byte[] buf = null;
 
-        private static UInt64 V0 = (UInt64)(0x736F6D6570736575);
-        private static UInt64 V1 = (UInt64)(0x646F72616E646F6D);
-        private static UInt64 V2 = (UInt64)(0x6C7967656E657261);
-        private static UInt64 V3 = (UInt64)(0x7465646279746573);
-        private static UInt64 KEY0 = (UInt64)(0x0706050403020100);
-        private static UInt64 KEY1 = (UInt64)(0x0F0E0D0C0B0A0908);
+        private static readonly UInt64 V0 = 0x736F6D6570736575;
+        private static readonly UInt64 V1 = 0x646F72616E646F6D;
+        private static readonly UInt64 V2 = 0x6C7967656E657261;
+        private static readonly UInt64 V3 = 0x7465646279746573;
+        private static readonly UInt64 KEY0 = 0x0706050403020100;
+        private static readonly UInt64 KEY1 = 0x0F0E0D0C0B0A0908;
 
-        static private string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
+        static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
         public SipHash(Int32 a_compression_rounds = 2, Int32 a_finalization_rounds = 4)
             : base(8, 8)
@@ -282,7 +282,7 @@ namespace SharpHash.Hash64
     /// <summary>
     /// SipHash 2 - 4 algorithm.
     /// <summary>
-    public class SipHash2_4 : SipHash
+    internal class SipHash2_4 : SipHash
     {
         public SipHash2_4() : base(2, 4)
         { } // end constructor

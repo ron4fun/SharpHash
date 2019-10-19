@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class SHA2_224 : SHA2_256Base
+    internal class SHA2_224 : SHA2_256Base
     {
         public SHA2_224() :
             base(28)

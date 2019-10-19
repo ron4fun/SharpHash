@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class BKDRTests
     {
-        protected IHash hash = new BKDR();
+        protected IHash hash = HashFactory.Hash32.CreateBKDR();
 
         protected string ExpectedHashOfEmptyData = "00000000";
         protected string ExpectedHashOfDefaultData = "29E11B15";

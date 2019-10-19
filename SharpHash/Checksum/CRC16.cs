@@ -4,13 +4,13 @@ using System;
 
 namespace SharpHash.Checksum
 {
-    public abstract class CRC16Polynomials
+    internal abstract class CRC16Polynomials
     {
-	    static public UInt16 BUYPASS = 0x8005;
+	    static public readonly UInt16 BUYPASS = 0x8005;
     }; // end class CRC16Polynomials
 
 
-    public class CRC16 : Hash, IChecksum, IBlockHash, IHash16, ITransformBlock
+    internal class CRC16 : Hash, IChecksum, IBlockHash, IHash16, ITransformBlock
     {
         private ICRC CRCAlgorithm = null;
 
@@ -38,7 +38,7 @@ namespace SharpHash.Checksum
 
     } // end class CRC16
 
-    public class CRC16_BUYPASS : CRC16
+    internal class CRC16_BUYPASS : CRC16
     {
         public CRC16_BUYPASS() 
             : base(CRC16Polynomials.BUYPASS, 0x0000, false, false, 0x0000, 0xFEE8, new string[] { "CRC-16/BUYPASS", "CRC-16/VERIFONE" })

@@ -4,7 +4,7 @@ using System;
 
 namespace SharpHash.Checksum
 {
-    public abstract class CRC32Fast : Hash, IChecksum, IBlockHash, IHash16, ITransformBlock
+    internal abstract class CRC32Fast : Hash, IChecksum, IBlockHash, IHash16, ITransformBlock
     {
         protected UInt32 CurrentCRC = 0;
 
@@ -100,7 +100,7 @@ namespace SharpHash.Checksum
                 
     } // end class CRC32Fast
 
-    public class CRC32_PKZIP_Fast : CRC32Fast
+    internal class CRC32_PKZIP_Fast : CRC32Fast
     {
         public CRC32_PKZIP_Fast()
         {
@@ -108,7 +108,7 @@ namespace SharpHash.Checksum
         } // end constructor
 
         // Polynomial Reversed
-        static private UInt32 CRC32_PKZIP_Polynomial = 0xEDB88320;
+        static private readonly UInt32 CRC32_PKZIP_Polynomial = 0xEDB88320;
 
         private UInt32[] CRC32_PKZIP_Table = null;
 
@@ -129,10 +129,10 @@ namespace SharpHash.Checksum
 
     } // end class CRC32_PKZIP
 
-    public class CRC32_CASTAGNOLI_Fast : CRC32Fast
+    internal class CRC32_CASTAGNOLI_Fast : CRC32Fast
     {
         // Polynomial Reversed
-        static private UInt32 CRC32_CASTAGNOLI_Polynomial = 0x82F63B78;
+        static private readonly UInt32 CRC32_CASTAGNOLI_Polynomial = 0x82F63B78;
 
         private UInt32[] CRC32_CASTAGNOLI_Table = null;
 

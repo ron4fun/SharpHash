@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class APTests
     {
-        protected IHash hash = new AP();
+        protected IHash hash = HashFactory.Hash32.CreateAP();
 
         protected string ExpectedHashOfEmptyData = "AAAAAAAA";
         protected string ExpectedHashOfDefaultData = "7F14EFED";

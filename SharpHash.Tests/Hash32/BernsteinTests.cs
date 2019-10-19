@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class BernsteinTests
     {
-        protected IHash hash = new Bernstein();
+        protected IHash hash = HashFactory.Hash32.CreateBernstein();
 
         protected string ExpectedHashOfEmptyData = "00001505";
         protected string ExpectedHashOfDefaultData = "C4635F48";

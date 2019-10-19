@@ -3,16 +3,13 @@ using SharpHash.Interfaces;
 using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash64.Tests
 {
     [TestClass]
     public class FNV64Tests
     {
-        protected IHash hash = new FNV64();
+        protected IHash hash = HashFactory.Hash64.CreateFNV();
 
         protected string ExpectedHashOfEmptyData = "0000000000000000";
         protected string ExpectedHashOfDefaultData = "061A6856F5925B83";

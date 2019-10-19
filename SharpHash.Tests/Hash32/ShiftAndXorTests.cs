@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class ShiftAndXorTests
     {
-        protected IHash hash = new ShiftAndXor();
+        protected IHash hash = HashFactory.Hash32.CreateShiftAndXor();
 
         protected string ExpectedHashOfEmptyData = "00000000";
         protected string ExpectedHashOfDefaultData = "BD0A7DA4";

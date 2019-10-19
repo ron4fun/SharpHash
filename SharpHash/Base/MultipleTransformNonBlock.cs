@@ -5,7 +5,7 @@ using System.IO;
 
 namespace SharpHash.Base
 {
-    public abstract class MultipleTransformNonBlock : Hash, INonBlockHash
+    internal abstract class MultipleTransformNonBlock : Hash, INonBlockHash
     {
         protected MemoryStream Buffer = null;
 

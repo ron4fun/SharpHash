@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class RotatingTests
     {
-        protected IHash hash = new Rotating();
+        protected IHash hash = HashFactory.Hash32.CreateRotating();
 
         protected string ExpectedHashOfEmptyData = "00000000";
         protected string ExpectedHashOfDefaultData = "158009D3";

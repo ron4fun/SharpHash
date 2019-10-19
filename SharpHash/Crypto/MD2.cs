@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class MD2 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal class MD2 : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
         private byte[] state = null;
         private byte[] checksum = null;
@@ -54,8 +54,8 @@ namespace SharpHash.Crypto
 
         override public unsafe void Initialize()
         {
-            Utils.Utils.memset(state, 0);
-            Utils.Utils.memset(checksum, 0);
+            Utils.Utils.memset(ref state, 0);
+            Utils.Utils.memset(ref checksum, 0);
 
             base.Initialize();
         } // end function Initialize
@@ -120,7 +120,7 @@ namespace SharpHash.Crypto
                     t = checksum[i];
                 } // end for
 
-                Utils.Utils.memset(temp, 0);
+                Utils.Utils.memset(ref temp, 0);
             }
             
         } // end function TransformBlock

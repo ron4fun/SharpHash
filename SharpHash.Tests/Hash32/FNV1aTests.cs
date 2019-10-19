@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class FNV1aTests
     {
-        protected IHash hash = new FNV1a();
+        protected IHash hash = HashFactory.Hash32.CreateFNV1a();
 
         protected string ExpectedHashOfEmptyData = "811C9DC5";
         protected string ExpectedHashOfDefaultData = "1892F1F8";

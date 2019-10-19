@@ -2,7 +2,7 @@
 
 namespace SharpHash.Utils
 {
-    public static class ExtendedBitConverter
+    internal static class ExtendedBitConverter
     {
         public static char GetHexValue(Int32 i)
 	    {
@@ -14,30 +14,27 @@ namespace SharpHash.Utils
 		    return (char)((i - 10) + 'A');
 	    } // end function GetHexValue
 
-        public static string ToString(IntPtr value, Int32 StartIndex, Int32 Length)
+        public static unsafe string ToString(IntPtr value, Int32 StartIndex, Int32 Length)
         {
             Int32 chArrayLength = Length * 3;
 
-            unsafe
+            char[] chArray = new char[chArrayLength];
+
+            Int32 Idx = 0;
+            Int32 Index = StartIndex;
+            while (Idx < chArrayLength)
             {
-                char[] chArray = new char[chArrayLength];
+                byte b = ((byte*)value)[Index];
+                Index += 1;
 
-                Int32 Idx = 0;
-                Int32 Index = StartIndex;
-                while (Idx < chArrayLength)
-                {
-                    byte b = ((byte*)value)[Index];
-                    Index += 1;
+                chArray[Idx] = GetHexValue(b >> 4);
+                chArray[Idx + 1] = GetHexValue(b & 15);
+                chArray[Idx + 2] = '-';
 
-                    chArray[Idx] = GetHexValue(b >> 4);
-                    chArray[Idx + 1] = GetHexValue(b & 15);
-                    chArray[Idx + 2] = '-';
+                Idx += 3;
+            } // end while
 
-                    Idx += 3;
-                } // end while
-
-                return new string(chArray, 0, chArrayLength - 1);
-            }
+            return new string(chArray, 0, chArrayLength - 1);
         } // end function ToString
 
     } // end class ExtendedBitConverter

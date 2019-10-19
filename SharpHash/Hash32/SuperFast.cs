@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SharpHash.Hash32
 {
-    public class SuperFast : MultipleTransformNonBlock, IHash32, ITransformBlock
+    internal class SuperFast : MultipleTransformNonBlock, IHash32, ITransformBlock
     {
         public SuperFast()
             : base(4, 4)

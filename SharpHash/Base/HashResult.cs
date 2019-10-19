@@ -8,11 +8,11 @@ namespace SharpHash.Base
     {
         private byte[] hash = null;
 
-        private static string ImpossibleRepresentationInt32 = "Current Data Structure cannot be Represented as an 'Int32' Type.";
-        private static string ImpossibleRepresentationUInt8 = "Current Data Structure cannot be Represented as an 'UInt8' Type.";
-        private static string ImpossibleRepresentationUInt16 = "Current Data Structure cannot be Represented as an 'UInt16' Type.";
-        private static string ImpossibleRepresentationUInt32 = "Current Data Structure cannot be Represented as an 'UInt32' Type.";
-        private static string ImpossibleRepresentationUInt64 = "Current Data Structure cannot be Represented as an 'UInt64' Type.";
+        private static readonly string ImpossibleRepresentationInt32 = "Current Data Structure cannot be Represented as an 'Int32' Type.";
+        private static readonly string ImpossibleRepresentationUInt8 = "Current Data Structure cannot be Represented as an 'UInt8' Type.";
+        private static readonly string ImpossibleRepresentationUInt16 = "Current Data Structure cannot be Represented as an 'UInt16' Type.";
+        private static readonly string ImpossibleRepresentationUInt32 = "Current Data Structure cannot be Represented as an 'UInt32' Type.";
+        private static readonly string ImpossibleRepresentationUInt64 = "Current Data Structure cannot be Represented as an 'UInt64' Type.";
 
         public HashResult()
         {
@@ -41,7 +41,7 @@ namespace SharpHash.Base
             else
             {
                 hash = new byte[a_hash.Length];
-                Utils.Utils.memcopy(hash, a_hash, a_hash.Length);
+                Utils.Utils.memcopy(ref hash, a_hash, a_hash.Length);
             } // end else
         } // end constructor
 

@@ -1,18 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class DEKTests
     {
-        protected IHash hash = new DEK();
+        protected IHash hash = HashFactory.Hash32.CreateDEK();
 
         protected string ExpectedHashOfEmptyData = "00000000";
         protected string ExpectedHashOfDefaultData = "8E01E947";

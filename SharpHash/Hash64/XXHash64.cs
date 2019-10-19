@@ -5,17 +5,17 @@ using System;
 
 namespace SharpHash.Hash64
 {
-    public class XXHash64 : Hash, IBlockHash, IHash64, IHashWithKey, ITransformBlock
+    internal class XXHash64 : Hash, IHash64, IHashWithKey, ITransformBlock
     {
         private UInt64 key, hash;
 
-        static private UInt32 CKEY = 0x0;
+        static private readonly UInt32 CKEY = 0x0;
 
-        static private UInt64 PRIME64_1 = 11400714785074694791;
-        static private UInt64 PRIME64_2 = 14029467366897019727;
-        static private UInt64 PRIME64_3 = 1609587929392839161;
-        static private UInt64 PRIME64_4 = 9650029242287828579;
-        static private UInt64 PRIME64_5 = 2870177450012600261;
+        static private readonly UInt64 PRIME64_1 = 11400714785074694791;
+        static private readonly UInt64 PRIME64_2 = 14029467366897019727;
+        static private readonly UInt64 PRIME64_3 = 1609587929392839161;
+        static private readonly UInt64 PRIME64_4 = 9650029242287828579;
+        static private readonly UInt64 PRIME64_5 = 2870177450012600261;
 
         struct XXH_State
         {

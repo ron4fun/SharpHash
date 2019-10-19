@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SharpHash.Hash32
 {
-    public class DEK : MultipleTransformNonBlock, IHash32, ITransformBlock
+    internal class DEK : MultipleTransformNonBlock, IHash32, ITransformBlock
     {
         public DEK()
             : base(4, 1)

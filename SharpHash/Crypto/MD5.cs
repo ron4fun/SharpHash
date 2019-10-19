@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class MD5 : MDBase, ITransformBlock
+    internal class MD5 : MDBase, ITransformBlock
     {
         public MD5()
             : base(4, 16)

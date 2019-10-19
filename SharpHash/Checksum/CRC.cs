@@ -518,7 +518,7 @@ namespace SharpHash.Checksum
     }; // end enum
 
 
-    public class CRC : Hash, IChecksum, ICRC, ITransformBlock
+    internal class CRC : Hash, IChecksum, ICRC, ITransformBlock
     {
         private string[] names = null;
         private Int32 width;
@@ -556,7 +556,10 @@ namespace SharpHash.Checksum
                 block_size = 1;
             } // end else
 
-            names = _Names;
+            names = new string[_Names.Length];
+            for (Int32 i = 0; i < _Names.Length; i++)
+                names[i] = _Names[i];
+
             width = _Width;
             polynomial = _poly;
             init = _Init;

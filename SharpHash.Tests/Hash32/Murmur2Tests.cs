@@ -4,15 +4,13 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
     public class Murmur2Tests
     {
-        protected IHash hash = new Murmur2();
+        protected IHash hash = HashFactory.Hash32.CreateMurmur2();
 
         protected string ExpectedHashOfEmptyData = "00000000";
         protected string ExpectedHashOfDefaultData = "30512DE6";

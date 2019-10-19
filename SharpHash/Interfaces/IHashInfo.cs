@@ -28,6 +28,40 @@ namespace SharpHash.Interfaces
 
     }; // end interface IWithKey
 
+    public interface IMAC : IHash
+    {
+        void Clear();
+        byte[] Key { get; set; }
+
+    }; // end interface IMAC
+
+    public interface IHMAC : IMAC
+    { }; // end interface IHMAC
+
+    public interface IIHMACNotBuildIn : IHMAC
+    { }; // end interface IHMACNotBuildIn
+
+    public interface IKMAC : IMAC
+    { }; // end interface IKMAC
+
+    public interface IKMACNotBuildIn : IKMAC
+    { }; // end interface IKMACNotBuildIn
+
+    public interface IHash16 : IHash
+    { }; // end interface IHash16
+
+    public interface IHash32 : IHash
+    { }; // end interface IHash32
+
+    public interface IHash64 : IHash
+    { }; // end interface IHash64
+
+    public interface IHash128 : IHash
+    { }; // end interface IHash128
+
+    public interface IHashWithKey : IWithKey
+    { }; // end interface IHashWithKey
+
     public interface IPBKDF2_HMAC : IKDF
     { }; // end interface IPBKDF2_HMAC
 
@@ -46,30 +80,11 @@ namespace SharpHash.Interfaces
     public interface IPBKDF_ScryptNotBuildIn : IPBKDF_Scrypt
     { }; // end interface IPBKDF_ScryptNotBuildIn
 
-    public interface IHMAC : IWithKey
-    { }; // end interface IHMAC
-
-    public interface IIHMACNotBuildIn : IHMAC
-    { }; // end interface IHMACNotBuildIn
-
-    public interface IHash16 : IHash
-    { }; // end interface IHash16
-
-    public interface IHash32 : IHash
-    { }; // end interface IHash32
-
-    public interface IHash64 : IHash
-    { }; // end interface IHash64
-
-    public interface IHash128 : IHash
-    { }; // end interface IHash128
-
-    public interface IHashWithKey : IWithKey
-    { }; // end interface IHashWithKey
-
     public interface IXOF : IHash
     {
-        UInt32 XOFSizeInBits { get; set; }
+        UInt64 XOFSizeInBits { get; set; }
+        void DoOutput(ref byte[] destination, UInt64 destinationOffset, UInt64 outputLength);
+
     } // end interface IXOF
 
     public interface IArgon2Parameters

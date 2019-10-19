@@ -3,7 +3,7 @@ using System;
 
 namespace SharpHash.Base
 {
-    public class HMACNotBuildInAdapter : Hash, IHMAC, IIHMACNotBuildIn, IWithKey,
+    internal class HMACNotBuildInAdapter : Hash, IHMAC, IIHMACNotBuildIn, IWithKey,
         ICrypto, ICryptoNotBuildIn
     {
         private IHash hash = null;
@@ -19,6 +19,11 @@ namespace SharpHash.Base
             ipad = new byte[blocksize];
             opad = new byte[blocksize];
         } // end constructor
+
+        public void Clear()
+        {
+            Utils.Utils.memset(ref key, 0);
+        } // end function Clear
 
         override public IHash Clone()
     	{

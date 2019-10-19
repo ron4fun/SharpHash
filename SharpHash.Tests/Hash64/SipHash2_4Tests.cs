@@ -4,15 +4,13 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash64.Tests
 {
     [TestClass]
     public class SipHash2_4Tests
     {
-        protected IHash hash = new SipHash2_4();
+        protected IHash hash = HashFactory.Hash64.CreateSipHash2_4();
 
         protected string ExpectedHashOfEmptyData = "726FDB47DD0E0E31";
         protected string ExpectedHashOfDefaultData = "AA43C4288619D24E";
@@ -81,14 +79,14 @@ namespace SharpHash.Hash64.Tests
                 Count = ChunkedDataBytes.Length - i;
 
                 temp = new byte[Count];
-                Utils.Utils.memcopy(temp, ChunkedDataBytes, Count, i);
+                Utils.Utils.memcopy(ref temp, ChunkedDataBytes, Count, i);
 
                 hash.Initialize();
 
                 hash.TransformBytes(ChunkedDataBytes, i, Count);
 
                 ActualString = hash.TransformFinal().ToString();
-                ExpectedString = new SipHash2_4().ComputeBytes(temp).ToString();
+                ExpectedString = HashFactory.Hash64.CreateSipHash2_4().ComputeBytes(temp).ToString();
 
                 Assert.AreEqual(ExpectedString, ActualString);
             }

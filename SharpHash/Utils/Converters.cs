@@ -199,7 +199,7 @@ namespace SharpHash.Utils
         public static byte[] ReadUInt32AsBytesLE(UInt32 a_in)
         {
             byte[] arr = new byte[4];
-            arr[0] = (byte)(a_in);
+            arr[0] = (byte)a_in;
             arr[1] = (byte)(a_in >> 8);
             arr[2] = (byte)(a_in >> 16);
             arr[3] = (byte)(a_in >> 24);
@@ -210,7 +210,7 @@ namespace SharpHash.Utils
         public static byte[] ReadUInt64AsBytesLE(UInt64 a_in)
         {
             byte[] arr = new byte[8];
-            arr[0] = (byte)(a_in);
+            arr[0] = (byte)a_in;
             arr[1] = (byte)(a_in >> 8);
             arr[2] = (byte)(a_in >> 16);
             arr[3] = (byte)(a_in >> 24);

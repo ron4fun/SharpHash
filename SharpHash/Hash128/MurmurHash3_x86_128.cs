@@ -7,27 +7,27 @@ using System.IO;
 
 namespace SharpHash.Hash128
 {
-    public class MurmurHash3_x86_128 : Hash, IHash128, IHashWithKey, ITransformBlock
+    internal class MurmurHash3_x86_128 : Hash, IHash128, IHashWithKey, ITransformBlock
     {
         private UInt32 key, h1, h2, h3, h4, total_length;
         private Int32 idx;
         byte[] buf = null;
 
-        static private UInt32 CKEY = 0x0;
+        static private readonly UInt32 CKEY = 0x0;
 
-        static private UInt32 C1 = 0x239B961B;
-        static private UInt32 C2 = 0xAB0E9789;
-        static private UInt32 C3 = 0x38B34AE5;
-        static private UInt32 C4 = 0xA1E38B93;
-        static private UInt32 C5 = 0x85EBCA6B;
-        static private UInt32 C6 = 0xC2B2AE35;
+        static private readonly UInt32 C1 = 0x239B961B;
+        static private readonly UInt32 C2 = 0xAB0E9789;
+        static private readonly UInt32 C3 = 0x38B34AE5;
+        static private readonly UInt32 C4 = 0xA1E38B93;
+        static private readonly UInt32 C5 = 0x85EBCA6B;
+        static private readonly UInt32 C6 = 0xC2B2AE35;
 
-        static private UInt32 C7 = 0x561CCD1B;
-        static private UInt32 C8 = 0x0BCAA747;
-        static private UInt32 C9 = 0x96CD1C35;
-        static private UInt32 C10 = 0x32AC3B17;
+        static private readonly UInt32 C7 = 0x561CCD1B;
+        static private readonly UInt32 C8 = 0x0BCAA747;
+        static private readonly UInt32 C9 = 0x96CD1C35;
+        static private readonly UInt32 C10 = 0x32AC3B17;
 
-        static private string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
+        static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
         public MurmurHash3_x86_128()
           : base(16, 16)

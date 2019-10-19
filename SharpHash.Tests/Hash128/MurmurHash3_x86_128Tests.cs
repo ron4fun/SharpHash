@@ -1,18 +1,16 @@
-using SharpHash.Hash128;
+using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace SharpHash.Hash128.Tests
 {
     [TestClass]
     public class MurmurHash3_x86_128Tests
     {
-        protected IHash hash = new MurmurHash3_x86_128();
+        protected IHash hash = HashFactory.Hash128.CreateMurmurHash3_x86_128();
 
         protected string ExpectedHashOfEmptyData = "00000000000000000000000000000000";
         protected string ExpectedHashOfDefaultData = "B35E1058738E067BF637B17075F14B8B";
@@ -75,14 +73,14 @@ namespace SharpHash.Hash128.Tests
                 Count = ChunkedDataBytes.Length - i;
 
                 temp = new byte[Count];
-                Utils.Utils.memcopy(temp, ChunkedDataBytes, Count, i);
+                Utils.Utils.memcopy(ref temp, ChunkedDataBytes, Count, i);
 
                 hash.Initialize();
 
                 hash.TransformBytes(ChunkedDataBytes, i, Count);
 
                 ActualString = hash.TransformFinal().ToString();
-                ExpectedString = new MurmurHash3_x86_128().ComputeBytes(temp).ToString();
+                ExpectedString = HashFactory.Hash128.CreateMurmurHash3_x86_128().ComputeBytes(temp).ToString();
 
                 Assert.AreEqual(ExpectedString, ActualString);
             }

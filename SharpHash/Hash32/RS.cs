@@ -4,10 +4,10 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class RS : Hash, IBlockHash, IHash32, ITransformBlock
+    internal class RS : Hash, IHash32, ITransformBlock
     {
         private UInt32 a, hash;
-        static private UInt32 b = 378551;
+        static private readonly UInt32 b = 378551;
 
         public RS()
           : base(4, 1)

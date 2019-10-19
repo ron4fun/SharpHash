@@ -4,9 +4,9 @@ using System;
 
 namespace SharpHash.Checksum
 {
-    public class Adler32 : Hash, IChecksum, IBlockHash, IHash32, ITransformBlock
+    internal class Adler32 : Hash, IChecksum, IBlockHash, IHash32, ITransformBlock
     {
-        static private UInt32 MOD_ADLER = 65521;
+        static private readonly UInt32 MOD_ADLER = 65521;
         private UInt32 a = 1, b = 0;
 
         public Adler32() 

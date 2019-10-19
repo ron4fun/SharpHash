@@ -2,24 +2,21 @@
 
 namespace SharpHash.Utils
 {
-    public static class Bits
+    internal static class Bits
     {
-        public static void ReverseByteArray(IntPtr Source, IntPtr Dest, Int64 size)
+        public static unsafe void ReverseByteArray(IntPtr Source, IntPtr Dest, Int64 size)
 	    {
-            unsafe
-            {
-                byte* ptr_src = (byte*)Source;
-                byte* ptr_dest = (byte*)Dest;
+            byte* ptr_src = (byte*)Source;
+            byte* ptr_dest = (byte*)Dest;
 
-                ptr_dest = ptr_dest + (size - 1);
-                while (size > 0)
-                {
-                    *ptr_dest = *ptr_src;
-                    ptr_src += 1;
-                    ptr_dest -= 1;
-                    size -= 1;
-                } // end while
-            }
+            ptr_dest = ptr_dest + (size - 1);
+            while (size > 0)
+            {
+                *ptr_dest = *ptr_src;
+                ptr_src += 1;
+                ptr_dest -= 1;
+                size -= 1;
+            } // end while           
         } // end function ReverseByteArray
 
         public static Int32 ReverseBytesInt32(Int32 value)

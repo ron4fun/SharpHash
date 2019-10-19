@@ -4,7 +4,7 @@ namespace SharpHash.Utils
 {
     public static class Utils
     {
-        public unsafe static void memcopy(byte[] dest, byte[] src, Int32 n, 
+        public unsafe static void memcopy(ref byte[] dest, byte[] src, Int32 n, 
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
             fixed (byte* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
@@ -44,7 +44,7 @@ namespace SharpHash.Utils
                 cdest[i] = temp[i];            
         }
 
-        public unsafe static void memmove(byte[] dest, byte[] src, Int32 n)
+        public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n)
         {
             fixed (byte* destPtr = &dest[0], srcPtr = &src[0])
             {
@@ -62,7 +62,7 @@ namespace SharpHash.Utils
                 cdest[i] = value;
         } // end function MemSet
 
-        public static void memset(byte[] array, byte value)
+        public static void memset(ref byte[] array, byte value)
         {
             if (array == null)
             {
@@ -86,6 +86,73 @@ namespace SharpHash.Utils
                 block *= 2;
             }
         } // end function MemSet
+
+        public static byte[] Concat(byte[] x, byte[] y)
+        {
+            byte[] result = new byte[0];
+            Int32 index = 0;
+
+            if (x == null || x.Length == 0)
+            {
+                if (y == null) return result;
+
+                Array.Resize(ref result, y.Length);
+                memcopy(ref result, y, y.Length);
+
+                return result;
+            } // end if
+
+            if (y == null || y.Length == 0)
+            {
+                Array.Resize(ref result, x.Length);
+                memcopy(ref result, x, x.Length);
+
+                return result;
+            } // end if
+
+            Array.Resize(ref result, x.Length + y.Length);
+
+            // If Lengths are equal
+            if (x.Length == y.Length)
+            {
+                // Multi fill array
+                while (index < y.Length)
+                {
+                    result[index] = x[index];
+                    result[x.Length + index] = y[index++];
+                } // end while
+            } // end if
+
+            else if (x.Length > y.Length)
+            {
+                // Multi fill array
+                while (index < y.Length)
+                {
+                    result[index] = x[index];
+                    result[x.Length + index] = y[index++];
+                } // end while
+
+                while (index < x.Length)
+                    result[index] = x[index++];
+
+            } // end else if
+
+            else if (y.Length > x.Length)
+            {
+                // Multi fill array
+                while (index < x.Length)
+                {
+                    result[index] = x[index];
+                    result[x.Length + index] = y[index++];
+                } // end while
+
+                while (index < y.Length)
+                    result[x.Length + index] = y[index++];
+
+            } // ende else if
+         
+            return result;
+        } // end function Concat
 
     }
 }

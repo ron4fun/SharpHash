@@ -4,7 +4,6 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,7 +35,7 @@ namespace SharpHash.Checksum.Tests
 
                 foreach (CRCStandard Idx in CRCStandardValues)
                 {
-                    crcObj = CRC.CreateCRCObject(Idx);
+                    crcObj = HashFactory.Checksum.CreateCRC(Idx);
                     crcObj.Initialize();
 
                     i = size;
@@ -53,7 +52,7 @@ namespace SharpHash.Checksum.Tests
 
                     ActualString = crcObj.TransformFinal().ToString();
 
-                    ExpectedString = CRC.CreateCRCObject(Idx) 
+                    ExpectedString = HashFactory.Checksum.CreateCRC(Idx) 
                         .ComputeString(TestConstants.ChunkedData).ToString();
 
                     Assert.AreEqual(ExpectedString, ActualString);
@@ -69,7 +68,7 @@ namespace SharpHash.Checksum.Tests
 
             foreach (CRCStandard Idx in CRCStandardValues)
             {
-                crcObj = CRC.CreateCRCObject(Idx);
+                crcObj = HashFactory.Checksum.CreateCRC(Idx);
 
                 ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
 
@@ -86,7 +85,7 @@ namespace SharpHash.Checksum.Tests
 
             foreach (CRCStandard Idx in CRCStandardValues)
             {
-                crcObj = CRC.CreateCRCObject(Idx);
+                crcObj = HashFactory.Checksum.CreateCRC(Idx);
 
                 ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
                 
@@ -110,12 +109,12 @@ namespace SharpHash.Checksum.Tests
             ChunkOne = new byte[Count];
             ChunkTwo = new byte[MainData.Length - Count];
 
-            Utils.Utils.memcopy(ChunkOne, MainData, Count);
-            Utils.Utils.memcopy(ChunkTwo, MainData, MainData.Length - Count, Count);
+            Utils.Utils.memcopy(ref ChunkOne, MainData, Count);
+            Utils.Utils.memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
 
             foreach (CRCStandard Idx in CRCStandardValues)
             {
-                Original = CRC.CreateCRCObject(Idx);
+                Original = HashFactory.Checksum.CreateCRC(Idx);
                 Original.Initialize();
 
                 Original.TransformBytes(ChunkOne);
@@ -138,7 +137,7 @@ namespace SharpHash.Checksum.Tests
 
             foreach (CRCStandard Idx in CRCStandardValues)
             {
-                Original = CRC.CreateCRCObject(Idx);
+                Original = HashFactory.Checksum.CreateCRC(Idx);
                 Original.Initialize();
                 Original.BufferSize = (64 * 1024); // 64Kb
                                                    // Make Copy Of Current State
@@ -166,11 +165,11 @@ namespace SharpHash.Checksum.Tests
             switch (a_index)
             {
                 case 0:
-                    crcObj = new CRC32_PKZIP_Fast();
+                    crcObj = HashFactory.Checksum.CreateCRC32_PKZIP();
                     return CRC32_PKZIP_Check_Value;
 
                 case 1:
-                    crcObj = new CRC32_CASTAGNOLI_Fast();
+                    crcObj = HashFactory.Checksum.CreateCRC32_CASTAGNOLI();
                     return CRC32_CASTAGNOLI_Check_Value;
             } // end switch
   
@@ -267,8 +266,8 @@ namespace SharpHash.Checksum.Tests
             ChunkOne = new byte[Count];
             ChunkTwo = new byte[MainData.Length - Count];
 
-            Utils.Utils.memcopy(ChunkOne, MainData, Count);
-            Utils.Utils.memcopy(ChunkTwo, MainData, MainData.Length - Count, Count);
+            Utils.Utils.memcopy(ref ChunkOne, MainData, Count);
+            Utils.Utils.memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
 
             foreach (var Idx in WorkingIndex)
             {

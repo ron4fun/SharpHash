@@ -1,13 +1,17 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
+using SharpHash.Utils;
 using System;
 using System.IO;
 
 namespace SharpHash
 {
-    public class NullDigest : Hash, ITransformBlock
+    internal class NullDigest : Hash, ITransformBlock
     {
         private MemoryStream Out = null;
+
+        private static readonly string HashSizeNotImplemented = "HashSize Not Implemented For \"{0}\"";
+        private static readonly string BlockSizeNotImplemented = "BlockSize Not Implemented For \"{0}\"";
 
         public NullDigest() : base(-1,-1) // Dummy State
         {
@@ -19,6 +23,22 @@ namespace SharpHash
             Out.Flush();
             Out.Close();
         }
+
+        override public Int32 BlockSize
+        {
+            get
+            {
+                throw new NotImplementedHashLibException(String.Format(BlockSizeNotImplemented, Name));
+            }
+        } // end property BlockSize
+
+        override public Int32 HashSize
+        {
+            get
+            {
+                throw new NotImplementedHashLibException(String.Format(HashSizeNotImplemented, Name));
+            }
+        } // end property HashSize
 
         override public IHash Clone()
     	{
@@ -38,9 +58,6 @@ namespace SharpHash
         {
             Out.Flush();
             Out.SetLength(0); // Reset stream
-
-            hash_size = 0;
-            block_size = 0;
         } // end function Initialize
 
         override public IHashResult TransformFinal()
@@ -71,9 +88,7 @@ namespace SharpHash
             if (!(a_data == null || a_data.Length == 0))
             {
                 Out.Write(a_data, a_index, a_length);
-            }
-
-            hash_size = (Int32)Out.Length;
+            } // end if
         } // end function TransformBytes
 
     }

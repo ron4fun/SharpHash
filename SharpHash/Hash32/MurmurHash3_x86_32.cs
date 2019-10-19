@@ -5,21 +5,21 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class MurmurHash3_x86_32 : Hash, IHash32, IHashWithKey, ITransformBlock
+    internal class MurmurHash3_x86_32 : Hash, IHash32, IHashWithKey, ITransformBlock
     {
         private UInt32 key, h, total_length;
         private Int32 idx;
         private byte[] buf = null;
 
-        static private UInt32 CKEY = 0x0;
+        static private readonly UInt32 CKEY = 0x0;
 
-        static private UInt32 C1 = 0xCC9E2D51;
-        static private UInt32 C2 = 0x1B873593;
-        static private UInt32 C3 = 0xE6546B64;
-        static private UInt32 C4 = 0x85EBCA6B;
-        static private UInt32 C5 = 0xC2B2AE35;
+        static private readonly UInt32 C1 = 0xCC9E2D51;
+        static private readonly UInt32 C2 = 0x1B873593;
+        static private readonly UInt32 C3 = 0xE6546B64;
+        static private readonly UInt32 C4 = 0x85EBCA6B;
+        static private readonly UInt32 C5 = 0xC2B2AE35;
 
-        static private string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
+        static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
         public MurmurHash3_x86_32()
          : base(4, 4)

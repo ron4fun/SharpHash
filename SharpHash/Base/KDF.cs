@@ -3,7 +3,7 @@ using System;
 
 namespace SharpHash.Base
 {
-    public abstract class KDF : IKDF
+    internal abstract class KDF : IKDF
     {
         public abstract void Clear();
 

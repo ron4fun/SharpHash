@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class SHA1 : SHA0
+    internal class SHA1 : SHA0
     {               
         public SHA1()
         {} // end constructor

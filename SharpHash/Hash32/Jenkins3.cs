@@ -7,17 +7,23 @@ using System.IO;
 
 namespace SharpHash.Hash32
 {
-    public class Jenkins3 : MultipleTransformNonBlock, IHash32, ITransformBlock
+    internal class Jenkins3 : MultipleTransformNonBlock, IHash32, ITransformBlock
     {
-        public Jenkins3()
+        private Int32 InitialValue;
+
+        public Jenkins3(Int32 initialValue = 0)
           : base(4, 12)
-        { } // end constructor
+        {
+            InitialValue = initialValue;
+        } // end constructor
 
         override public IHash Clone()
         {
             Jenkins3 HashInstance = new Jenkins3();
 
             HashInstance.Buffer = new MemoryStream();
+            HashInstance.InitialValue = InitialValue;
+
             byte[] buf = Buffer.ToArray();
             HashInstance.Buffer.Write(buf, 0, buf.Length);
             HashInstance.Buffer.Position = Buffer.Position;
@@ -37,9 +43,12 @@ namespace SharpHash.Hash32
 
             length = a_data.Length;
 
-            a = 0xDEADBEEF + (UInt32)length;
+            a = 0xDEADBEEF + (UInt32)length + (UInt32)InitialValue;
             b = a;
             c = b;
+
+            if (length == 0) return new HashResult(c);
+
             currentIndex = 0;
             while (length > 12)
             {

@@ -1,17 +1,14 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
 
 namespace SharpHash.Checksum.Tests
 {
     [TestClass]
     public class Adler32Tests
     {     
-        protected IHash hash = new Adler32();
+        protected IHash hash = HashFactory.Checksum.CreateAdler32();
 
         protected string ExpectedHashOfEmptyData = "00000001";
         protected string ExpectedHashOfDefaultData = "25D40524";

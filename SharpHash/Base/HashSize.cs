@@ -3,7 +3,7 @@ namespace SharpHash.Base
 {
     // Note: The name HashSizeEnum was given considering the name conflict
     // between the enum and the Hash property for getting hash_size.
-    public enum HashSizeEnum
+    internal enum HashSizeEnum
     {
         HashSize128 = 16,
         HashSize160 = 20,

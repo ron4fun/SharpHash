@@ -4,10 +4,10 @@ using System;
 
 namespace SharpHash.Hash32
 {
-    public class BKDR : Hash, IBlockHash, IHash32, ITransformBlock
+    internal class BKDR : Hash, IHash32, ITransformBlock
     {
         private UInt32 hash;
-        static private Int32 SEED = 131;
+        static private readonly Int32 SEED = 131;
 
         public BKDR()
             : base(4, 1)

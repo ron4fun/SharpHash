@@ -5,7 +5,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    public class MD4 : MDBase, ITransformBlock
+    internal class MD4 : MDBase, ITransformBlock
     {
         private UInt32[] data = null;
 

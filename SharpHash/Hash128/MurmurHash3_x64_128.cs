@@ -7,24 +7,24 @@ using System.IO;
 
 namespace SharpHash.Hash128
 {
-    public class MurmurHash3_x64_128 : Hash, IHash128, IHashWithKey, ITransformBlock
+    internal class MurmurHash3_x64_128 : Hash, IHash128, IHashWithKey, ITransformBlock
     {
         private UInt64 h1, h2, total_length;
         private UInt32 key;
         private Int32 idx;
         private byte[] buf = null;
 
-        static private UInt32 CKEY = 0x0;
+        static private readonly UInt32 CKEY = 0x0;
 
-        static private UInt64 C1 = 0x87C37B91114253D5;
-        static private UInt64 C5 = 0xFF51AFD7ED558CCD;
-        static private UInt64 C6 = 0xC4CEB9FE1A85EC53;
+        static private readonly UInt64 C1 = 0x87C37B91114253D5;
+        static private readonly UInt64 C5 = 0xFF51AFD7ED558CCD;
+        static private readonly UInt64 C6 = 0xC4CEB9FE1A85EC53;
 
-        static private UInt64 C2 = 0x4CF5AD432745937F;
-        static private UInt32 C3 = 0x52DCE729;
-        static private UInt32 C4 = 0x38495AB5;      
+        static private readonly UInt64 C2 = 0x4CF5AD432745937F;
+        static private readonly UInt32 C3 = 0x52DCE729;
+        static private readonly UInt32 C4 = 0x38495AB5;      
 
-        static private string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
+        static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
         public MurmurHash3_x64_128()
           : base(16, 16)

@@ -7,15 +7,15 @@ using System.IO;
 
 namespace SharpHash.Hash64
 {
-    public class Murmur2_64 : MultipleTransformNonBlock, IHash64, IHashWithKey, ITransformBlock
+    internal class Murmur2_64 : MultipleTransformNonBlock, IHash64, IHashWithKey, ITransformBlock
     {
         private UInt32 key, working_key, h;
 
-        static private UInt32 CKEY = 0x0;
-        static private UInt64 M = 0xC6A4A7935BD1E995;
-        static private Int32 R = 47;
+        static private readonly UInt32 CKEY = 0x0;
+        static private readonly UInt64 M = 0xC6A4A7935BD1E995;
+        static private readonly Int32 R = 47;
 
-        static private string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
+        static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
         public Murmur2_64()
           : base(8, 8)

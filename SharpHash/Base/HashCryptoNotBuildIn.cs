@@ -3,7 +3,7 @@ using System;
 
 namespace SharpHash.Base
 {
-    public abstract class BlockHash : Hash, IBlockHash
+    internal abstract class BlockHash : Hash, IBlockHash
     {
         protected HashBuffer buffer = null;
         protected UInt64 processed_bytes = 0;
@@ -52,7 +52,7 @@ namespace SharpHash.Base
 
             byte[] temp = GetResult();
             byte[] tempresult = new byte[temp.Length];
-            Utils.Utils.memcopy(tempresult, temp, temp.Length);
+            Utils.Utils.memcopy(ref tempresult, temp, temp.Length);
 
             Initialize();
 
