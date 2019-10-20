@@ -2,12 +2,28 @@ language: csharp
 solution: "./SharpHash/SharpHash.sln"
 matrix:
   include:
-    - dotnet: 2.0.0
-      mono: none
-      env: DOTNETCORE=2  # optional, can be used to take different code paths in your script
+    - os: windows
+    - os: linux
+      dist: trusty
+      dotnet: 2.0.0
+    - os: osx
+      osx_image: xcode11.2
+      dotnet: 2.0.0
 
+branches:
+  only:
+    - master
 
-dist: trusty
+mono: none
+
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+    - DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install vcbuildtools && PowerShell -Command 'Install-WindowsFeature Net-Framework-Core' ; fi
+
 script:
   - cd SharpHash.Tests
   - dotnet restore
