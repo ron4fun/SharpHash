@@ -4,6 +4,7 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Text;
 
 namespace SharpHash.Hash64.Tests
 {
@@ -80,7 +81,8 @@ namespace SharpHash.Hash64.Tests
             LIHashWithKey = (hash as IHashWithKey);
             LIHashWithKey.Key = Converters.ReadUInt32AsBytesLE(UInt32.MaxValue);
 
-            string ActualString = LIHashWithKey.ComputeString(TestConstants.DefaultData).ToString();
+            string ActualString = LIHashWithKey.ComputeString(TestConstants.DefaultData,
+                Encoding.UTF8).ToString();
 
             Assert.AreEqual(ExpectedString, ActualString);
         }

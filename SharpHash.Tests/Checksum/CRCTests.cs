@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace SharpHash.Checksum.Tests
 {
@@ -42,18 +43,18 @@ namespace SharpHash.Checksum.Tests
                     while (i < TestConstants.ChunkedData.Length)
                     {
                         temp = TestConstants.ChunkedData.Substring(i - size, size);
-                        crcObj.TransformString(temp);
+                        crcObj.TransformString(temp, Encoding.UTF8);
 
                         i += size;
                     } // end while
 
                     temp = TestConstants.ChunkedData.Substring((i - size));
-                    crcObj.TransformString(temp);
+                    crcObj.TransformString(temp, Encoding.UTF8);
 
                     ActualString = crcObj.TransformFinal().ToString();
 
                     ExpectedString = HashFactory.Checksum.CreateCRC(Idx) 
-                        .ComputeString(TestConstants.ChunkedData).ToString();
+                        .ComputeString(TestConstants.ChunkedData, Encoding.UTF8).ToString();
 
                     Assert.AreEqual(ExpectedString, ActualString);
                 } // end for
@@ -72,7 +73,7 @@ namespace SharpHash.Checksum.Tests
 
                 ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
 
-                ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine).ToString(), '0');
+                ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine, Encoding.UTF8).ToString(), '0');
                 
                 Assert.AreEqual(ExpectedString, ActualString);
               } // end foreach
@@ -103,7 +104,7 @@ namespace SharpHash.Checksum.Tests
             Int32 Count;
             string ActualString, ExpectedString;
 
-            MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData);
+            MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData, Encoding.UTF8);
             Count = MainData.Length - 3;
 
             ChunkOne = new byte[Count];
@@ -196,17 +197,17 @@ namespace SharpHash.Checksum.Tests
                     while (i < TestConstants.ChunkedData.Length)
                     {
                         temp = TestConstants.ChunkedData.Substring(i - size, size);
-                        crcObj.TransformString(temp);
+                        crcObj.TransformString(temp, Encoding.UTF8);
 
                         i += size;
                     } // end while
 
                     temp = TestConstants.ChunkedData.Substring((i - size));
-                    crcObj.TransformString(temp);
+                    crcObj.TransformString(temp, Encoding.UTF8);
 
                     ActualString = crcObj.TransformFinal().ToString();
 
-                    ExpectedString = crcObj.ComputeString(TestConstants.ChunkedData)
+                    ExpectedString = crcObj.ComputeString(TestConstants.ChunkedData, Encoding.UTF8)
                         .ToString();
                     
                     Assert.AreEqual(ExpectedString, ActualString);
@@ -227,7 +228,7 @@ namespace SharpHash.Checksum.Tests
 
                 ExpectedString = Check_Value.ToString("X");
 
-                ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine).ToString(), '0');
+                ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine, Encoding.UTF8).ToString(), '0');
 
                 Assert.AreEqual(ExpectedString, ActualString);
             } // end foreach
@@ -260,7 +261,7 @@ namespace SharpHash.Checksum.Tests
             Int32 Count;
             string ActualString, ExpectedString;
 
-            MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData);
+            MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData, Encoding.UTF8);
             Count = MainData.Length - 3;
 
             ChunkOne = new byte[Count];

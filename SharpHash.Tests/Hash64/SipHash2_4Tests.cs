@@ -4,6 +4,7 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Text;
 
 namespace SharpHash.Hash64.Tests
 {
@@ -73,7 +74,8 @@ namespace SharpHash.Hash64.Tests
             byte[] temp, ChunkedDataBytes;
             string ActualString, ExpectedString;
 
-            ChunkedDataBytes = Converters.ConvertStringToBytes(TestConstants.ChunkedData);
+            ChunkedDataBytes = Converters.ConvertStringToBytes(TestConstants.ChunkedData,
+                Encoding.UTF8);
             for (i = 0; i < ChunkedDataBytes.Length; i++)
             {
                 Count = ChunkedDataBytes.Length - i;

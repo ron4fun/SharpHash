@@ -110,6 +110,11 @@ namespace SharpHash.Base
                 return new HAS160();
             } // end function CreateHAS160
 
+            public static IHash CreatePanama()
+            {
+                return new Panama();
+            } // end function CreatePanama
+
 
             ///////////////////////////////////////////
             /// <summary>

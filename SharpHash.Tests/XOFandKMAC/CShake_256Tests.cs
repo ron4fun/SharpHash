@@ -4,6 +4,7 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Text;
 
 namespace SharpHash.XOFandKMAC.Tests
 {
@@ -34,10 +35,10 @@ namespace SharpHash.XOFandKMAC.Tests
             Shake_256 = HashFactory.XOF.CreateShake_256(8000);
             CShake_256 = HashFactory.XOF.CreateCShake_256(null, null, 8000);
 
-            string ExpectedString = Shake_256.ComputeString(TestConstants.EmptyData)
+            string ExpectedString = Shake_256.ComputeString(TestConstants.EmptyData, Encoding.UTF8)
                 .ToString();
 
-            string ActualString = CShake_256.ComputeString(TestConstants.EmptyData)
+            string ActualString = CShake_256.ComputeString(TestConstants.EmptyData, Encoding.UTF8)
                 .ToString();
 
             Assert.AreEqual(ExpectedString, ActualString, 

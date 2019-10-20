@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 
@@ -73,9 +74,9 @@ namespace SharpHash.Base
 		    throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
 	    } // end function Clone
 
-	    virtual public IHashResult ComputeString(string a_data)
+	    virtual public IHashResult ComputeString(string a_data, Encoding encoding)
         {
-            return ComputeBytes(Converters.ConvertStringToBytes(a_data));
+            return ComputeBytes(Converters.ConvertStringToBytes(a_data, encoding));
         } // end function ComputeString
 
         virtual public IHashResult ComputeUntyped(IntPtr a_data, Int64 a_length)
@@ -155,20 +156,24 @@ namespace SharpHash.Base
             return TransformFinal();
         } // end function ComputeBytes
 
-        virtual public void TransformString(string a_data)
+        virtual public void TransformString(string a_data, Encoding encoding)
         {
-            TransformBytes(Converters.ConvertStringToBytes(a_data));
+            TransformBytes(Converters.ConvertStringToBytes(a_data, encoding));
         } // end function TransformString
 
         virtual public void TransformBytes(byte[] a_data)
         {
-            TransformBytes(a_data, 0, a_data.Length);
+            TransformBytes(a_data, 0, a_data?.Length ?? 0);
         } // end function TransformBytes
 
         virtual public void TransformBytes(byte[] a_data, Int32 a_index)
         {
-            Int32 Length = a_data.Length - a_index;
-            TransformBytes(a_data, a_index, Length);
+            if (a_data != null)
+            {
+                Int32 Length = a_data.Length - a_index;
+
+                if (Length > 0) TransformBytes(a_data, a_index, Length);
+            } // end if
         } // end function TransformBytes
 
         public abstract void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length);
@@ -180,7 +185,7 @@ namespace SharpHash.Base
             Int64 total;
 
             total = 0;
-            size = (UInt64)a_stream.Length;
+            size = (UInt64)(a_stream?.Length ?? 0);
 
             if (a_stream != null)
             {

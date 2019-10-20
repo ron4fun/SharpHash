@@ -3,6 +3,7 @@ using SharpHash.Interfaces;
 using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 
 namespace SharpHash.Crypto.Tests
 {
@@ -75,8 +76,10 @@ namespace SharpHash.Crypto.Tests
         public void TestHMACWithDefaultDataAndLongKey()
         {
             IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash);
-            hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey);
-            string ActualString = hmac.ComputeString(TestConstants.DefaultData).ToString();
+            hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
+                Encoding.UTF8);
+            string ActualString = hmac.ComputeString(TestConstants.DefaultData,
+                Encoding.UTF8).ToString();
 
             Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithLongKey, ActualString);
         }
@@ -85,8 +88,10 @@ namespace SharpHash.Crypto.Tests
         public void TestHMACWithDefaultDataAndShortKey()
         {
             IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash);
-            hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACShortStringKey);
-            string ActualString = hmac.ComputeString(TestConstants.DefaultData).ToString();
+            hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACShortStringKey,
+                Encoding.UTF8);
+            string ActualString = hmac.ComputeString(TestConstants.DefaultData,
+                Encoding.UTF8).ToString();
 
             Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithShortKey, ActualString);
         }

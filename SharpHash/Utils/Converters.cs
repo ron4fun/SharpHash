@@ -1,5 +1,6 @@
 ﻿using SharpHash.Utils;
 using System;
+using System.Text;
 
 namespace SharpHash.Utils
 {
@@ -314,15 +315,9 @@ namespace SharpHash.Utils
             return result;
         } // end function ConvertHexStringToBytes
 
-        public static byte[] ConvertStringToBytes(string a_in)
+        public static byte[] ConvertStringToBytes(string a_in, Encoding encoding)
         {
-            byte[] arr = new byte[a_in.Length];
-            for (Int32 i = 0; i < a_in.Length; i++)
-		    {
-                arr[i] = (byte)(a_in[i]);
-            } // end for
-
-            return arr;
+            return encoding.GetBytes(a_in);
         } // end function ConvertStringToBytes
 
         public static string[] SplitString(string S, char Delimiter)

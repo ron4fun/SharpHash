@@ -4,6 +4,7 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Text;
 
 namespace SharpHash.XOFandKMAC.Tests
 {
@@ -96,7 +97,7 @@ namespace SharpHash.XOFandKMAC.Tests
             IHash VeryLongShake_128 = HashFactory.XOF.CreateShake_128(8000);
 
             string ActualString = VeryLongShake_128.ComputeString(
-                TestConstants.EmptyData).ToString();
+                TestConstants.EmptyData, Encoding.UTF8).ToString();
 
             string ExpectedString = ExpectedVeryLongShakeOfEmptyString;
 
@@ -116,7 +117,7 @@ namespace SharpHash.XOFandKMAC.Tests
             TempResult = new byte[1000];
             VeryLongShake_128 = HashFactory.XOF.CreateShake_128(8000) as IXOF;
             VeryLongShake_128.Initialize();
-            VeryLongShake_128.TransformString(TestConstants.EmptyData);
+            VeryLongShake_128.TransformString(TestConstants.EmptyData, Encoding.UTF8);
 
             VeryLongShake_128.DoOutput(ref TempResult, 0, 250);
 

@@ -1004,6 +1004,8 @@ namespace SharpHash.Crypto
         protected IHash hash;
         protected byte[] key, Customization;
 
+        protected static readonly byte[] KMAC_Bytes =  new byte[] { 75, 77, 65, 67 };
+
         protected KMACNotBuildInAdapter(Int32 a_hash_size) 
             : base(a_hash_size, 200 - (a_hash_size * 2))
         {} // end constructor
@@ -1118,7 +1120,7 @@ namespace SharpHash.Crypto
 
         private KMAC128(byte[] a_KMACKey, byte[] a_Customization,
             UInt64 a_OutputLengthInBits)
-        : this(new CShake_128(Converters.ConvertStringToBytes("KMAC"), a_Customization) as IHash,
+        : this(new CShake_128(KMAC_Bytes, a_Customization) as IHash,
                 a_KMACKey, a_Customization, a_OutputLengthInBits)
         { } // end constructor
 
@@ -1144,7 +1146,7 @@ namespace SharpHash.Crypto
     internal sealed class KMAC128XOF : KMACNotBuildInAdapter, IXOF
     {
         private KMAC128XOF(byte[] a_KMACKey, byte[] a_Customization)
-            : this(new CShake_128(Converters.ConvertStringToBytes("KMAC"), a_Customization) as IHash,
+            : this(new CShake_128(KMAC_Bytes, a_Customization) as IHash,
                   a_KMACKey, a_Customization)
         { } // end constructor
 
@@ -1230,7 +1232,7 @@ namespace SharpHash.Crypto
 
         private KMAC256(byte[] a_KMACKey, byte[] a_Customization,
             UInt64 a_OutputLengthInBits)
-        : this(new CShake_256(Converters.ConvertStringToBytes("KMAC"), a_Customization) as IHash,
+        : this(new CShake_256(KMAC_Bytes, a_Customization) as IHash,
                 a_KMACKey, a_Customization, a_OutputLengthInBits)
         { } // end constructor
 
@@ -1255,10 +1257,8 @@ namespace SharpHash.Crypto
 
     internal sealed class KMAC256XOF : KMACNotBuildInAdapter, IXOF
     {
-        private UInt64 xofSizeInBits;
-
         private KMAC256XOF(byte[] a_KMACKey, byte[] a_Customization)
-            : this(new CShake_256(Converters.ConvertStringToBytes("KMAC"), a_Customization) as IHash,
+            : this(new CShake_256(KMAC_Bytes, a_Customization) as IHash,
                   a_KMACKey, a_Customization)
         { } // end constructor
 

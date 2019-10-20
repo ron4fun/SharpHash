@@ -5,6 +5,9 @@ using SharpHash.Base;
 using System.IO;
 using SharpHash.Utils;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace SharpHash.Tests
 {
@@ -121,7 +124,7 @@ namespace SharpHash.Tests
 
         static TestHelper()
         {
-            byte[] MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData);
+            byte[] MainData = Converters.ConvertStringToBytes(TestConstants.DefaultData, Encoding.UTF8);
             Int32 Count = MainData.Length - 3;
 
             ChunkOne = new byte[Count];
@@ -130,6 +133,16 @@ namespace SharpHash.Tests
             Utils.Utils.memcopy(ref ChunkOne, MainData, Count);
             Utils.Utils.memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
         }
+
+        public static void MultithreadComputeHash(ref string result, IHash hash, Int32 iterations)
+        {
+            for (Int32 i = 0; i < iterations; i++)
+            {
+                Thread.Sleep(250);
+                result = hash.ComputeString(result, Encoding.UTF8).ToString();
+            } // end for
+                
+        } // end function ComputeHash
 
         public static string lstrip(string str, char value)
         {
@@ -164,6 +177,30 @@ namespace SharpHash.Tests
 		        temp += value;
 	        return temp;
         } // end function StringOfChar
+
+        public static void TestMultithreadingAndCloneCorrect(IHash hash)
+        {
+            IHash clone_1 = hash.Clone(), clone_2 = hash.Clone(), clone_3 = hash.Clone(),
+                clone_4 = hash.Clone(), clone_5 = hash.Clone();
+
+            Int32 iterations = 20; // 20 is idle
+            string initial = "start";
+            string a = initial, b = initial, c = initial, d = initial, e = initial;
+
+            Task t1 = Task.Factory.StartNew(() => MultithreadComputeHash(ref a, clone_1, iterations));
+            Task t2 = Task.Factory.StartNew(() => MultithreadComputeHash(ref b, clone_2, iterations));
+            Task t3 = Task.Factory.StartNew(() => MultithreadComputeHash(ref c, clone_3, iterations));
+            Task t4 = Task.Factory.StartNew(() => MultithreadComputeHash(ref d, clone_4, iterations));
+            Task t5 = Task.Factory.StartNew(() => MultithreadComputeHash(ref e, clone_5, iterations));
+
+            Task.WaitAll(t1, t2, t3, t4, t5);
+
+            bool allEqual = a == b ? b == c ? c == d ? d == e ? true : false : false : false : false;
+           
+            Assert.IsTrue(allEqual,
+                $"Multithreading test failed for [{hash.Name}]");
+
+        } // end function
 
         public static void TestEmptyStream(string expected, IHash hash)
         {
@@ -238,7 +275,8 @@ namespace SharpHash.Tests
             IHMAC Original, Copy;
 
             Original = HashFactory.HMAC.CreateHMAC(hash);
-	        Original.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey);
+	        Original.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
+                Encoding.UTF8);
             Original.Initialize();
             Original.TransformBytes(ChunkOne);
 
@@ -262,7 +300,7 @@ namespace SharpHash.Tests
 
             if (name == "String")
             {
-                ActualString = i_hash?.ComputeString((string)actual).ToString();
+                ActualString = i_hash?.ComputeString((string)actual, Encoding.UTF8).ToString();
             }
             else if (actual.GetType().Name == "Byte[]")
             {
@@ -283,11 +321,11 @@ namespace SharpHash.Tests
             Int32 from = 0, part = 3;
             while (from + part < actual.Length)
             {
-                hash.TransformString(actual.Substring(from, part));
+                hash.TransformString(actual.Substring(from, part), Encoding.UTF8);
                 from += part;
             } // end while
             
-            hash.TransformString(actual.Substring(from)); // hash the remaining part
+            hash.TransformString(actual.Substring(from), Encoding.UTF8); // hash the remaining part
 
             string ActualString = lstrip(hash.TransformFinal().ToString(), '0');
             expected = lstrip(expected, '0');

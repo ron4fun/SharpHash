@@ -80,44 +80,33 @@ namespace SharpHash.Utils
                 cdest[i] = value;
         } // end function MemSet
 
-        public static void memset(ref byte[] array, byte value)
+        public static unsafe void memset(ref byte[] array, byte value, Int32 index = 0, Int32 n = -1)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            if (array == null || array.Length == 0) return;
 
-            int block = 32, index = 0;
-            int length = Math.Min(block, array.Length);
-
-            //Fill the initial array
-            while (index < length)
+            fixed (byte* destPtr = &array[index])
             {
-                array[index++] = value;
-            }
-
-            length = array.Length;
-            while (index < length)
-            {
-                Buffer.BlockCopy(array, 0, array, index, Math.Min(block, length - index));
-                index += block;
-                block *= 2;
+                memset((IntPtr)destPtr, value, (n == -1 ? array.Length : n) * sizeof(byte));
             }
         } // end function MemSet
 
-        public static unsafe void memset(ref UInt32[] array, byte value)
+        public static unsafe void memset(ref UInt32[] array, byte value, Int32 index = 0, Int32 n = -1)
         {
-            fixed (UInt32* destPtr = array)
+            if (array == null || array.Length == 0) return;
+
+            fixed (UInt32* destPtr = &array[index])
             {
-                memset((IntPtr)destPtr, value, array.Length * sizeof(UInt32));
+                memset((IntPtr)destPtr, value, (n == -1 ? array.Length : n) * sizeof(UInt32));
             }
         } // end function memset
 
-        public static unsafe void memset(ref UInt64[] array, byte value)
+        public static unsafe void memset(ref UInt64[] array, byte value, Int32 index = 0, Int32 n = -1)
         {
-            fixed (UInt64* destPtr = array)
+            if (array == null || array.Length == 0) return;
+
+            fixed (UInt64* destPtr = &array[index])
             {
-                memset((IntPtr)destPtr, value, array.Length * sizeof(UInt64));
+                memset((IntPtr)destPtr, value, (n == -1 ? array.Length : n) * sizeof(UInt64));
             }
         } // end function memset
 

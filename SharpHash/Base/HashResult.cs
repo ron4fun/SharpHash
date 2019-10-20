@@ -36,7 +36,7 @@ namespace SharpHash.Base
         public HashResult(byte[] a_hash)
         {
             if (a_hash == null || a_hash.Length == 0)
-                hash = new byte[] { };
+                hash = new byte[0];
 
             else
             {

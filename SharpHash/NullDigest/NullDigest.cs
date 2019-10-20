@@ -65,12 +65,11 @@ namespace SharpHash
             Int32 size = (Int32)Out.Length;
 
             byte[] res = new byte[size];
-            Array.Resize(ref res, size);
 
             try
             {
                 Out.Position = 0;
-                if (!(res == null || res.Length == 0))
+                if (!(res.Length == 0))
                     Out.Read(res, 0, size);    
             } // end try
             finally

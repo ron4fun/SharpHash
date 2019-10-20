@@ -52,7 +52,7 @@ namespace SharpHash.Base
 
         private byte[] Aggregate()
         {
-            byte[] temp = null;
+            byte[] temp = new byte[0];
 
             if (Buffer.Length > 0)
             {

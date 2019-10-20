@@ -101,11 +101,8 @@ namespace SharpHash.Base
 
         public unsafe byte[] GetBytesZeroPadded()
         {
-            fixed (byte* bDest = &data[pos])
-            {
-                Utils.Utils.memset((IntPtr)bDest, 0, (data.Length - pos) * sizeof(byte));
-            }
-                        
+            Utils.Utils.memset(ref data, 0, pos, data.Length - pos);
+
             pos = 0;
 
             byte[] result = new byte[data.Length];

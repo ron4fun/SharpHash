@@ -32,8 +32,7 @@ namespace SharpHash.Crypto
             HashInstance.processed_bytes = processed_bytes;
 
             HashInstance.hash = new UInt32[hash.Length];
-            for (Int32 i = 0; i < hash.Length; i++)
-                HashInstance.hash[i] = hash[i];
+            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
 
             HashInstance.BufferSize = BufferSize;
 

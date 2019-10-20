@@ -4,6 +4,7 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Text;
 
 namespace SharpHash.XOFandKMAC.Tests
 {
@@ -32,7 +33,7 @@ namespace SharpHash.XOFandKMAC.Tests
             string Suffix;
 
             LKey = Converters.ConvertHexStringToBytes(a_Key);
-            LCustomization = Converters.ConvertStringToBytes(a_Customization);
+            LCustomization = Converters.ConvertStringToBytes(a_Customization, Encoding.UTF8);
             LData = Converters.ConvertHexStringToBytes(a_Data);
 
             if (IsXOF)

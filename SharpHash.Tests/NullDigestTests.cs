@@ -4,6 +4,7 @@ using SharpHash.Utils;
 using SharpHash.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Text;
 
 namespace SharpHash.Checksum.Tests
 {
@@ -17,12 +18,13 @@ namespace SharpHash.Checksum.Tests
         protected string ExpectedHashOfOnetoNine = "091E01DE";
         protected string ExpectedHashOfabcde = "05C801F0";
 
+     
         [TestMethod]
         public void TestBytesabcde()
         {
             byte[] BytesABCDE, Result;
 
-            BytesABCDE = Converters.ConvertStringToBytes("abcde");
+            BytesABCDE = Converters.ConvertStringToBytes("abcde", Encoding.UTF8);
             
             hash.Initialize();
             
@@ -41,7 +43,7 @@ namespace SharpHash.Checksum.Tests
         {
             byte[] BytesEmpty, Result;
             
-            BytesEmpty = Converters.ConvertStringToBytes("");
+            BytesEmpty = Converters.ConvertStringToBytes("", Encoding.UTF8);
 
             hash.Initialize();
 
@@ -56,11 +58,30 @@ namespace SharpHash.Checksum.Tests
         }
 
         [TestMethod]
+        public void TestNullBytes()
+        {
+            byte[] NullBytes, Result;
+
+            NullBytes = null;
+
+            hash.Initialize();
+
+            hash.TransformBytes(NullBytes);
+
+            Result = hash.TransformFinal().GetBytes();
+
+            Assert.IsTrue(Enumerable.SequenceEqual(new byte[0], Result));
+
+            Assert.ThrowsException<NotImplementedHashLibException>(() => hash.BlockSize);
+            Assert.ThrowsException<NotImplementedHashLibException>(() => hash.HashSize);
+        }
+
+        [TestMethod]
         public void TestIncrementalHash()
         {
             byte[] BytesZeroToNine, Result, Temp;
 
-            BytesZeroToNine = Converters.ConvertStringToBytes("0123456789");
+            BytesZeroToNine = Converters.ConvertStringToBytes("0123456789", Encoding.UTF8);
             
             hash.Initialize();
             
