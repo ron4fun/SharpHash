@@ -9,20 +9,25 @@ namespace SharpHash.Checksum
         private static readonly UInt32 MOD_ADLER = 65521;
         private UInt32 a = 1, b = 0;
 
-        public Adler32() 
+        public Adler32()
             : base(4, 1)
-        {} // end constructor
+        { } // end constructor
 
+<<<<<<< Updated upstream
         public override IHash Clone()
     	{
+=======
+        override public IHash Clone()
+        {
+>>>>>>> Stashed changes
             Adler32 HashInstance = new Adler32();
             HashInstance.a = a;
-		    HashInstance.b = b;
+            HashInstance.b = b;
 
             HashInstance.BufferSize = BufferSize;
 
-		    return HashInstance;
-	    } // end function Clone
+            return HashInstance;
+        } // end function Clone
 
         public override void Initialize()
         {
@@ -67,8 +72,6 @@ namespace SharpHash.Checksum
                 a = a % MOD_ADLER;
                 b = b % MOD_ADLER;
             } // end while
-
         } // end function TransformBlock
-   
     }
 }

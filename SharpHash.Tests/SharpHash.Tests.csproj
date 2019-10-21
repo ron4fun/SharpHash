@@ -10,6 +10,8 @@
     <OutputType>Library</OutputType>
 
     <StartupObject />
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

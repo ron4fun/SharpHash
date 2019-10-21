@@ -11,7 +11,5 @@ namespace SharpHash.Interfaces.IBlake2BConfigurations
         UInt32 LeafSize { get; set; }
         UInt64 NodeOffset { get; set; }
         bool IsLastNode { get; set; }
-
     } // end interface IBlake2BTreeConfig
-
 }

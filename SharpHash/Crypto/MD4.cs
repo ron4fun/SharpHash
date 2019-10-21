@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -149,9 +148,6 @@ namespace SharpHash.Crypto
             state[3] = state[3] + d;
 
             Utils.Utils.memset(ref data, 0);
-
         } // end function TransformBlock
-
     } // end class MD4
-
 }

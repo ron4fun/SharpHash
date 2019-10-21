@@ -9,7 +9,7 @@ namespace SharpHash.Crypto
     {
         protected UInt32[] state = null;
         protected UInt32[] data = null;
-                       
+
         public SHA2_256Base(Int32 a_hash_size)
             : base(a_hash_size, 64)
         {
@@ -858,9 +858,6 @@ namespace SharpHash.Crypto
             state[7] = state[7] + H;
 
             Utils.Utils.memset(ref data, 0);
-
         } // end function TransformBlock
-
     } // end class SHA2_256Base
-
 }

@@ -1,43 +1,23 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
-using SharpHash.Utils;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Base;
 using SharpHash.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Text;
 
 namespace SharpHash.Hash64.Tests
 {
     [TestClass]
-    public class SipHash2_4Tests
+    public class SipHash2_4Tests : Hash32BaseTests
     {
-        protected IHash hash = HashFactory.Hash64.CreateSipHash2_4();
+        private string ExpectedHashOfShortMessage { get; set; }
 
-        protected string ExpectedHashOfEmptyData = "726FDB47DD0E0E31";
-        protected string ExpectedHashOfDefaultData = "AA43C4288619D24E";
-        protected string ExpectedHashOfOnetoNine = "CA60FC96020EFEFD";
-        protected string ExpectedHashOfabcde = "A74563E1EA79B873";
-        protected string ExpectedHashOfShortMessage = "AE43DFAED1AB1C00";
-
-        [TestMethod]
-        public void TestEmptyString()
+        public SipHash2_4Tests()
         {
-            TestHelper.TestActualAndExpectedData(TestConstants.EmptyData,
-                ExpectedHashOfEmptyData, hash);
-        }
+            hash = HashFactory.Hash64.CreateSipHash2_4();
 
-        [TestMethod]
-        public void TestDefaultData()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.DefaultData,
-                ExpectedHashOfDefaultData, hash);
-        }
-
-        [TestMethod]
-        public void TestOnetoNine()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.OnetoNine,
-                ExpectedHashOfOnetoNine, hash);
+            ExpectedHashOfEmptyData = "726FDB47DD0E0E31";
+            ExpectedHashOfDefaultData = "AA43C4288619D24E";
+            ExpectedHashOfOnetoNine = "CA60FC96020EFEFD";
+            ExpectedHashOfabcde = "A74563E1EA79B873";
+            ExpectedHashOfShortMessage = "AE43DFAED1AB1C00";
         }
 
         [TestMethod]
@@ -46,66 +26,5 @@ namespace SharpHash.Hash64.Tests
             TestHelper.TestActualAndExpectedData(TestConstants.ShortMessage,
                 ExpectedHashOfShortMessage, hash);
         }
-
-        [TestMethod]
-        public void TestBytesabcde()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.Bytesabcde,
-                ExpectedHashOfabcde, hash);
-        }
-
-        [TestMethod]
-        public void TestEmptyStream()
-        {
-            TestHelper.TestEmptyStream(ExpectedHashOfEmptyData, hash);
-        }
-
-        [TestMethod]
-        public void TestIncrementalHash()
-        {
-            TestHelper.TestIncrementalHash(TestConstants.DefaultData,
-                ExpectedHashOfDefaultData, hash);
-        }
-
-        [TestMethod]
-        public void TestIndexChunkedDataIncrementalHash()
-        {
-            Int32 Count, i;
-            byte[] temp, ChunkedDataBytes;
-            string ActualString, ExpectedString;
-
-            ChunkedDataBytes = Converters.ConvertStringToBytes(TestConstants.ChunkedData,
-                Encoding.UTF8);
-            for (i = 0; i < ChunkedDataBytes.Length; i++)
-            {
-                Count = ChunkedDataBytes.Length - i;
-
-                temp = new byte[Count];
-                Utils.Utils.memcopy(ref temp, ChunkedDataBytes, Count, i);
-
-                hash.Initialize();
-
-                hash.TransformBytes(ChunkedDataBytes, i, Count);
-
-                ActualString = hash.TransformFinal().ToString();
-                ExpectedString = HashFactory.Hash64.CreateSipHash2_4().ComputeBytes(temp).ToString();
-
-                Assert.AreEqual(ExpectedString, ActualString);
-            }
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsCorrect()
-        {
-            TestHelper.TestHashCloneIsCorrect(hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsUnique()
-        {
-            TestHelper.TestHashCloneIsUnique(hash);
-        }
-
     }
-
 }

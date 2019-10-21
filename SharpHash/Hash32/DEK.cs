@@ -1,7 +1,6 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SharpHash.Hash32
@@ -27,7 +26,7 @@ namespace SharpHash.Hash32
         } // end function Clone
 
         override protected IHashResult ComputeAggregatedBytes(byte[] a_data)
-	    {
+        {
             UInt32 hash = 0;
 
             if (!(a_data == null || a_data.Length == 0))
@@ -37,9 +36,8 @@ namespace SharpHash.Hash32
                 for (Int32 i = 0; i < a_data.Length; i++)
                     hash = Utils.Bits.RotateLeft32(hash, 5) ^ a_data[i];
             } // end if
-                		
-		    return new HashResult(hash);
-	    } // end function ComputeAggregatedBytes
 
+            return new HashResult(hash);
+        } // end function ComputeAggregatedBytes
     } // end class DEK
 }

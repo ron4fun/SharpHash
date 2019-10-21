@@ -9,7 +9,7 @@ namespace SharpHash.Crypto
     {
         protected UInt64[] state = null;
         protected UInt64[] data = null;
-                       
+
         public SHA2_512Base(Int32 a_hash_size)
             : base(a_hash_size, 128)
         {
@@ -48,7 +48,6 @@ namespace SharpHash.Crypto
             padindex = padindex + 8;
 
             TransformBytes(pad, 0, padindex);
-
         } // end function Finish
 
         protected override unsafe void TransformBlock(IntPtr a_data,
@@ -60,7 +59,7 @@ namespace SharpHash.Crypto
             {
                 Converters.be64_copy(a_data, a_index, (IntPtr)dPtr, 0, 128);
             }
-            
+
             // Step 1
 
             T0 = data[16 - 15];
@@ -1127,9 +1126,6 @@ namespace SharpHash.Crypto
             state[7] = state[7] + h;
 
             Utils.Utils.memset(ref data, 0);
-
         } // end function TransformBlock
-
     } // end class SHA2_256Base
-
 }

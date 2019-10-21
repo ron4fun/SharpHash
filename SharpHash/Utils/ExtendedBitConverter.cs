@@ -5,14 +5,14 @@ namespace SharpHash.Utils
     internal static class ExtendedBitConverter
     {
         public static char GetHexValue(Int32 i)
-	    {
-		    if (i< 10)
-		    {
-			    return (char)(i + '0');
-		    } // end if
-		
-		    return (char)((i - 10) + 'A');
-	    } // end function GetHexValue
+        {
+            if (i < 10)
+            {
+                return (char)(i + '0');
+            } // end if
+
+            return (char)((i - 10) + 'A');
+        } // end function GetHexValue
 
         public static unsafe string ToString(IntPtr value, Int32 StartIndex, Int32 Length)
         {
@@ -36,7 +36,5 @@ namespace SharpHash.Utils
 
             return new string(chArray, 0, chArrayLength - 1);
         } // end function ToString
-
     } // end class ExtendedBitConverter
-
 }

@@ -29,7 +29,7 @@ namespace SharpHash.Crypto
             byte[] result = new byte[state.Length * sizeof(UInt32)];
 
             fixed (UInt32* statePtr = state)
-            {                
+            {
                 fixed (byte* resultPtr = result)
                 {
                     Converters.le32_copy((IntPtr)statePtr, 0, (IntPtr)resultPtr, 0,
@@ -73,7 +73,5 @@ namespace SharpHash.Crypto
 
             TransformBytes(pad, 0, padindex);
         } // end function Finish
-
     } // end class MDBase
-
 }

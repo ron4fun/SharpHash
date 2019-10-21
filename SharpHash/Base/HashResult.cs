@@ -1,7 +1,6 @@
 ﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Text;
 
 namespace SharpHash.Base
 {

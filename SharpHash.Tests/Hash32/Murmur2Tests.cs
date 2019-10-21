@@ -1,82 +1,34 @@
-﻿using SharpHash.Base;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Utils;
 using System;
 using System.Text;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
-    public class Murmur2Tests
+    public class Murmur2Tests : Hash32BaseTests
     {
-        protected IHash hash = HashFactory.Hash32.CreateMurmur2();
+        private string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
 
-        protected string ExpectedHashOfEmptyData = "00000000";
-        protected string ExpectedHashOfDefaultData = "30512DE6";
-        protected string ExpectedHashOfOnetoNine = "DCCB0167";
-        protected string ExpectedHashOfabcde = "5F09A8DE";
-        protected string ExpectedHashOfDefaultDataWithMaxUInt32AsKey = "B15D52F0";
-
-        [TestMethod]
-        public void TestEmptyString()
+        public Murmur2Tests()
         {
-            TestHelper.TestActualAndExpectedData(TestConstants.EmptyData,
-                ExpectedHashOfEmptyData, hash);
-        }
+            hash = HashFactory.Hash32.CreateMurmur2();
 
-        [TestMethod]
-        public void TestDefaultData()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.DefaultData,
-                ExpectedHashOfDefaultData, hash);
-        }
-
-        [TestMethod]
-        public void TestOnetoNine()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.OnetoNine,
-                ExpectedHashOfOnetoNine, hash);
-        }
-
-        [TestMethod]
-        public void TestBytesabcde()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.Bytesabcde,
-                ExpectedHashOfabcde, hash);
-        }
-
-        [TestMethod]
-        public void TestEmptyStream()
-        {
-            TestHelper.TestEmptyStream(ExpectedHashOfEmptyData, hash);
-        }
-
-        [TestMethod]
-        public void TestIncrementalHash()
-        {
-            TestHelper.TestIncrementalHash(TestConstants.DefaultData,
-                ExpectedHashOfDefaultData, hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsCorrect()
-        {
-            TestHelper.TestHashCloneIsCorrect(hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsUnique()
-        {
-            TestHelper.TestHashCloneIsUnique(hash);
+            ExpectedHashOfEmptyData = "00000000";
+            ExpectedHashOfDefaultData = "30512DE6";
+            ExpectedHashOfOnetoNine = "DCCB0167";
+            ExpectedHashOfabcde = "5F09A8DE";
+            ExpectedHashOfDefaultDataWithMaxUInt32AsKey = "B15D52F0";
         }
 
         [TestMethod]
         public void TestWithDifferentKey()
         {
             IHashWithKey LIHashWithKey;
-            
+
             string ExpectedString = ExpectedHashOfDefaultDataWithMaxUInt32AsKey;
             LIHashWithKey = (hash as IHashWithKey);
             LIHashWithKey.Key = Converters.ReadUInt32AsBytesLE(UInt32.MaxValue);
@@ -86,7 +38,5 @@ namespace SharpHash.Hash32.Tests
 
             Assert.AreEqual(ExpectedString, ActualString);
         }
-
     }
-
 }

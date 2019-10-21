@@ -1,16 +1,14 @@
-﻿using SharpHash.Base;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
-using SharpHash.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System.Text;
 
 namespace SharpHash.Tests
 {
     // ====================== PBKDF2_HMACSHA1TestCase ======================
     ////////////////////
-    // PBKDF2_HMACSHA1 
+    // PBKDF2_HMACSHA1
     ///////////////////
     [TestClass]
     public class PBKDF2_HMACSHA1TestCase
@@ -31,12 +29,11 @@ namespace SharpHash.Tests
 
             Assert.AreEqual(ExpectedString, ActualString);
         }
-
     }
 
     // ====================== PBKDF2_HMACSHA2_256TestCase ======================
     ////////////////////
-    // PBKDF2_HMACSHA2_256 
+    // PBKDF2_HMACSHA2_256
     ///////////////////
     [TestClass]
     public class PBKDF2_HMACSHA2_256TestCase
@@ -57,7 +54,5 @@ namespace SharpHash.Tests
 
             Assert.AreEqual(ExpectedString, ActualString);
         }
-
     }
-
 }

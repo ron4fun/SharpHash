@@ -2,7 +2,6 @@
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SharpHash.Hash64
@@ -53,7 +52,7 @@ namespace SharpHash.Hash64
                 return new HashResult((UInt64)0);
 
             Length = a_data.Length;
-            
+
             fixed (byte* ptr_a_data = a_data)
             {
                 h = working_key ^ (UInt64)Length;
@@ -72,7 +71,7 @@ namespace SharpHash.Hash64
 
                     current_index += 8;
                     Length -= 8;
-                } // end while               
+                } // end while
 
                 switch (Length)
                 {
@@ -163,15 +162,15 @@ namespace SharpHash.Hash64
         } // end function ComputeAggregatedBytes
 
         public Int32? KeyLength
-	    {
+        {
             get
             {
                 return 4;
             }
-	    } // end property KeyLength
+        } // end property KeyLength
 
-	    public byte[] Key
-	    {
+        public byte[] Key
+        {
             get
             {
                 return Converters.ReadUInt32AsBytesLE(key);
@@ -192,12 +191,8 @@ namespace SharpHash.Hash64
                             key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
                         }
                     }
-
                 } // end else
-            } 
-        
+            }
         } // end property Key
-
     } // end class Murmur2_64
-
 }

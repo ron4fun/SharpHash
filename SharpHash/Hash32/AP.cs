@@ -11,18 +11,18 @@ namespace SharpHash.Hash32
 
         public AP()
             : base(4, 1)
-        {} // end constructor
+        { } // end constructor
 
         override public IHash Clone()
-    	{
+        {
             AP HashInstance = new AP();
             HashInstance.hash = hash;
-		    HashInstance.index = index;
+            HashInstance.index = index;
 
             HashInstance.BufferSize = BufferSize;
 
-		    return HashInstance;
-	    } // end function Clone
+            return HashInstance;
+        } // end function Clone
 
         override public void Initialize()
         {
@@ -55,7 +55,5 @@ namespace SharpHash.Hash32
                 a_length--;
             } // end while
         } // end function TransformBytes
-
     } // end class AP
-
 }

@@ -1,12 +1,12 @@
-﻿using SharpHash.Interfaces;
-using SharpHash.Checksum;
-using System;
+﻿using SharpHash.Checksum;
+using SharpHash.Crypto;
+using SharpHash.Hash128;
+using SharpHash.Hash32;
+using SharpHash.Hash64;
+using SharpHash.Interfaces;
 using SharpHash.KDF;
 using SharpHash.Utils;
-using SharpHash.Hash128;
-using SharpHash.Hash64;
-using SharpHash.Hash32;
-using SharpHash.Crypto;
+using System;
 
 namespace SharpHash.Base
 {
@@ -18,13 +18,12 @@ namespace SharpHash.Base
             {
                 return new NullDigest();
             } // end function CreateNullDigest
-
         } // end class NullDigestFactory
 
         public static class Checksum
         {
-            public static IHash CreateCRC(Int32 width, UInt64 polynomial, UInt64 initialValue, 
-                bool reflectIn, bool reflectOut, UInt64 outputXor, UInt64 checkValue, 
+            public static IHash CreateCRC(Int32 width, UInt64 polynomial, UInt64 initialValue,
+                bool reflectIn, bool reflectOut, UInt64 outputXor, UInt64 checkValue,
                 string[] Names)
             {
                 return new CRC(width, polynomial, initialValue, reflectIn,
@@ -95,12 +94,11 @@ namespace SharpHash.Base
             {
                 return new CRC64_ECMA_182();
             } // end function CreateCRC64_ECMA_182
-            
+
             public static IHash CreateAdler32()
             {
                 return new Adler32();
             } // end function CreateAdler32
-
         } // end class Checksum
 
         public static class Crypto
@@ -115,13 +113,11 @@ namespace SharpHash.Base
                 return new Panama();
             } // end function CreatePanama
 
-
             ///////////////////////////////////////////
             /// <summary>
             /// Grindahl Hash Family
             /// </summary>
             ////////////////////////////////////////////
-
 
             public static IHash CreateGrindahl256()
             {
@@ -133,13 +129,11 @@ namespace SharpHash.Base
                 return new Grindahl512();
             } // end function CreateGrindahl512
 
-
             ///////////////////////////////////////////
             /// <summary>
             /// RIPEMD Hash Family
             /// </summary>
             ////////////////////////////////////////////
-
 
             public static IHash CreateRIPEMD()
             {
@@ -166,13 +160,11 @@ namespace SharpHash.Base
                 return new RIPEMD320();
             } // end function CreateRIPEMD320
 
-
             ///////////////////////////////////////////
             /// <summary>
             /// MD Hash Family
             /// </summary>
             ////////////////////////////////////////////
-
 
             public static IHash CreateMD2()
             {
@@ -189,13 +181,11 @@ namespace SharpHash.Base
                 return new MD5();
             } // end function CreateMD5
 
-
             ///////////////////////////////////////////
             /// <summary>
             /// SHA Hash Family
             /// </summary>
             ////////////////////////////////////////////
-            
 
             public static IHash CreateSHA0()
             {
@@ -281,7 +271,6 @@ namespace SharpHash.Base
             {
                 return new Keccak_512();
             } // end function CreateKeccak_512
-
         } // end class Crypto
 
         public static class Hash32
@@ -390,7 +379,6 @@ namespace SharpHash.Base
             {
                 return new XXHash32();
             } // end function CreateXXHash32
-
         } // end class Hash32
 
         public static class Hash64
@@ -419,7 +407,6 @@ namespace SharpHash.Base
             {
                 return new XXHash64();
             } // end function CreateXXHash64
-
         } // end class Hash64
 
         public static class Hash128
@@ -433,7 +420,6 @@ namespace SharpHash.Base
             {
                 return new MurmurHash3_x64_128();
             } // end function CreateMurmurHash3_x64_128
-
         } // end class Hash128
 
         public static class XOF
@@ -470,7 +456,7 @@ namespace SharpHash.Base
                 return Xof as IHash;
             } // end function CreateCShake_256
 
-            public static IHash CreateKMAC128XOF(byte[] a_KMACKey, byte[] a_Customization, 
+            public static IHash CreateKMAC128XOF(byte[] a_KMACKey, byte[] a_Customization,
                 UInt64 a_XofSizeInBits)
             {
                 return KMAC128XOF.CreateKMAC128XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
@@ -481,7 +467,6 @@ namespace SharpHash.Base
             {
                 return KMAC256XOF.CreateKMAC256XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
             } // end function CreateKMAC256XOF
-
         } // end class XOF
 
         public static class KMAC
@@ -497,7 +482,6 @@ namespace SharpHash.Base
             {
                 return KMAC256.CreateKMAC256(a_KMACKey, a_Customization, a_OutputLengthInBits);
             } // end function CreateKMAC256
-
         } // end class KMAC
 
         public static class HMAC
@@ -506,9 +490,8 @@ namespace SharpHash.Base
             {
                 return new HMACNotBuildInAdapter(hash);
             } // end function CreateHMAC
-
         } // end class HMAC
-        
+
         public static class PBKDF2_HMAC
         {
             /// <summary>
@@ -520,7 +503,7 @@ namespace SharpHash.Base
             /// <param name="a_iterations">The number of iterations to use to derive the key.</param>
             /// <exception cref="ArgumentNilHashLibException">The password, salt or algorithm is Nil.</exception>
             /// <exception cref="ArgumentHashLibException">The iteration is less than 1.</exception>
-            public static IPBKDF2_HMAC CreatePBKDF2_HMAC(IHash a_hash, byte[] a_password, 
+            public static IPBKDF2_HMAC CreatePBKDF2_HMAC(IHash a_hash, byte[] a_password,
                 byte[] a_salt, UInt32 a_iterations)
             {
                 if (a_hash == null)
@@ -537,9 +520,6 @@ namespace SharpHash.Base
 
                 return new PBKDF2_HMACNotBuildInAdapter(a_hash, a_password, a_salt, a_iterations);
             } // end function CreatePBKDF2_HMAC
-
         } // end class PBKDF2_HMAC
-
     } // end class HashFactory
-
 }

@@ -47,6 +47,5 @@ namespace SharpHash.Hash64
                 a_length--;
             } // end while
         } // end function TransformBytes
-
     } // end class FNV1a64
 }

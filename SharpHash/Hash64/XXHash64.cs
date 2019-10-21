@@ -17,7 +17,7 @@ namespace SharpHash.Hash64
         static private readonly UInt64 PRIME64_4 = 9650029242287828579;
         static private readonly UInt64 PRIME64_5 = 2870177450012600261;
 
-        struct XXH_State
+        private struct XXH_State
         {
             public UInt64 total_len, v1, v2, v3, v4;
             public UInt32 memsize;
@@ -38,10 +38,9 @@ namespace SharpHash.Hash64
                     result.memory = new byte[memory.Length];
                     Utils.Utils.memcopy(ref result.memory, memory, memory.Length);
                 } // end if
-                    
+
                 return result;
             } // end function Clone
-
         } // end struct XXH_State
 
         private XXH_State state;
@@ -64,7 +63,6 @@ namespace SharpHash.Hash64
             state.v4 = key - PRIME64_1;
             state.total_len = 0;
             state.memsize = 0;
-
         } // end function Initialize
 
         public override IHash Clone()
@@ -81,13 +79,13 @@ namespace SharpHash.Hash64
         } // end function Clone
 
         public override unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
-	    {
+        {
             UInt64 _v1, _v2, _v3, _v4;
             byte* ptrTemp;
 
             state.total_len = state.total_len + (UInt64)a_length;
 
-            fixed(byte* ptrAData = a_data, ptrMemory = state.memory)
+            fixed (byte* ptrAData = a_data, ptrMemory = state.memory)
             {
                 byte* ptrBuffer = ptrAData + a_index;
 
@@ -178,7 +176,7 @@ namespace SharpHash.Hash64
 
                     _v4 = Bits.RotateLeft64(_v4 * PRIME64_2, 31) * PRIME64_1;
                     hash = (hash ^ _v4) * PRIME64_1 + PRIME64_4;
-                } // end if				 
+                } // end if
                 else
                     hash = key + PRIME64_5;
 
@@ -213,7 +211,7 @@ namespace SharpHash.Hash64
                 hash = hash ^ (hash >> 29);
                 hash = hash * PRIME64_3;
                 hash = hash ^ (hash >> 32);
-            }      
+            }
 
             IHashResult result = new HashResult(hash);
 
@@ -223,7 +221,7 @@ namespace SharpHash.Hash64
         } // end function TransformFinal
 
         public Int32? KeyLength
-	    {
+        {
             get
             {
                 return 8;
@@ -231,7 +229,7 @@ namespace SharpHash.Hash64
         } // end property KeyLength
 
         public byte[] Key
-	    {
+        {
             get
             {
                 return Converters.ReadUInt64AsBytesLE(key);
@@ -252,11 +250,8 @@ namespace SharpHash.Hash64
                             key = Converters.ReadBytesAsUInt64LE((IntPtr)vPtr, 0);
                         }
                     }
-
                 } // end else
             }
         } // end property GetKey
-
     } // end class XXHash64
-
 }

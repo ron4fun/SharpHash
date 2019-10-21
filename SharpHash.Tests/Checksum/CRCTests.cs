@@ -1,8 +1,8 @@
-﻿using SharpHash.Base;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace SharpHash.Checksum.Tests
         public void TestAnotherChunkedDataIncrementalHash()
         {
             string temp, ActualString, ExpectedString;
-            Int32 x, size, i;            
+            Int32 x, size, i;
 
             for (x = 0; x < TestConstants.chunkSize.Length / sizeof(Int32); x++)
             {
@@ -53,13 +53,12 @@ namespace SharpHash.Checksum.Tests
 
                     ActualString = crcObj.TransformFinal().ToString();
 
-                    ExpectedString = HashFactory.Checksum.CreateCRC(Idx) 
+                    ExpectedString = HashFactory.Checksum.CreateCRC(Idx)
                         .ComputeString(TestConstants.ChunkedData, Encoding.UTF8).ToString();
 
                     Assert.AreEqual(ExpectedString, ActualString);
                 } // end for
             } // end for
-
         }
 
         [TestMethod]
@@ -73,10 +72,20 @@ namespace SharpHash.Checksum.Tests
 
                 ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
 
-                ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine, Encoding.UTF8).ToString(), '0');
-                
+                ActualString = TestHelper.LeftStrip(crcObj.ComputeString(TestConstants.OnetoNine, Encoding.UTF8).ToString(), '0');
+
                 Assert.AreEqual(ExpectedString, ActualString);
-              } // end foreach
+            } // end foreach
+        }
+
+        [TestMethod]
+        public void TestForNullBytes()
+        {
+            foreach (CRCStandard Idx in CRCStandardValues)
+            {
+                crcObj = HashFactory.Checksum.CreateCRC(Idx);
+                TestHelper.TestForNullBytes(crcObj);
+            } // end foreach
         }
 
         [TestMethod]
@@ -89,11 +98,10 @@ namespace SharpHash.Checksum.Tests
                 crcObj = HashFactory.Checksum.CreateCRC(Idx);
 
                 ExpectedString = ((crcObj as ICRC).CheckValue.ToString("X"));
-                
+
                 TestHelper.TestIncrementalHash(TestConstants.OnetoNine,
                 ExpectedString, crcObj);
             }
-
         }
 
         [TestMethod]
@@ -148,9 +156,7 @@ namespace SharpHash.Checksum.Tests
                 Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
             } // end foreach
         }
-
     } // end class CRCTests
-
 
     [TestClass]
     public class CRC32FastTests
@@ -159,7 +165,7 @@ namespace SharpHash.Checksum.Tests
 
         protected UInt32 CRC32_PKZIP_Check_Value = 0xCBF43926;
         protected UInt32 CRC32_CASTAGNOLI_Check_Value = 0xE3069283;
-        protected Int32[] WorkingIndex = new Int32[] {0, 1};
+        protected Int32[] WorkingIndex = new Int32[] { 0, 1 };
 
         protected UInt32 GetWorkingValue(Int32 a_index)
         {
@@ -173,7 +179,6 @@ namespace SharpHash.Checksum.Tests
                     crcObj = HashFactory.Checksum.CreateCRC32_CASTAGNOLI();
                     return CRC32_CASTAGNOLI_Check_Value;
             } // end switch
-  
 
             throw new Exception($"Invalid Index, \"{a_index }\"");
         } // end function GetWorkingValue
@@ -209,11 +214,10 @@ namespace SharpHash.Checksum.Tests
 
                     ExpectedString = crcObj.ComputeString(TestConstants.ChunkedData, Encoding.UTF8)
                         .ToString();
-                    
+
                     Assert.AreEqual(ExpectedString, ActualString);
                 } // end for
             } // end for
-
         }
 
         [TestMethod]
@@ -228,9 +232,19 @@ namespace SharpHash.Checksum.Tests
 
                 ExpectedString = Check_Value.ToString("X");
 
-                ActualString = TestHelper.lstrip(crcObj.ComputeString(TestConstants.OnetoNine, Encoding.UTF8).ToString(), '0');
+                ActualString = TestHelper.LeftStrip(crcObj.ComputeString(TestConstants.OnetoNine, Encoding.UTF8).ToString(), '0');
 
                 Assert.AreEqual(ExpectedString, ActualString);
+            } // end foreach
+        }
+
+        [TestMethod]
+        public void TestForNullBytes()
+        {
+            foreach (var Idx in WorkingIndex)
+            {
+                GetWorkingValue(Idx);
+                TestHelper.TestForNullBytes(crcObj);
             } // end foreach
         }
 
@@ -250,7 +264,6 @@ namespace SharpHash.Checksum.Tests
                 TestHelper.TestIncrementalHash(TestConstants.OnetoNine,
                 ExpectedString, crcObj);
             }
-
         }
 
         [TestMethod]
@@ -307,7 +320,5 @@ namespace SharpHash.Checksum.Tests
                 Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize);
             } // end foreach
         }
-
     } // end class CRC32FastTests
-
 }

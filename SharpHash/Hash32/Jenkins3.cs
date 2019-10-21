@@ -2,7 +2,6 @@
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SharpHash.Hash32
@@ -37,7 +36,7 @@ namespace SharpHash.Hash32
         {
             Int32 length, currentIndex, i1, i2, i3, i4;
             UInt32 a, b, c;
-            
+
             if (a_data == null || a_data.Length == 0)
                 return new HashResult((UInt32)0);
 
@@ -348,7 +347,6 @@ namespace SharpHash.Hash32
 
                     a = a + (UInt32)(i1);
                     break;
-
             } // end switch
 
             c = c ^ b;
@@ -368,7 +366,5 @@ namespace SharpHash.Hash32
 
             return new HashResult(c);
         } // end function ComputeAggregatedBytes
-
     } // end class Jenkins3
-
 }

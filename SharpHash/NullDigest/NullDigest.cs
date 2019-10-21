@@ -13,7 +13,7 @@ namespace SharpHash
         private static readonly string HashSizeNotImplemented = "HashSize Not Implemented For \"{0}\"";
         private static readonly string BlockSizeNotImplemented = "BlockSize Not Implemented For \"{0}\"";
 
-        public NullDigest() : base(-1,-1) // Dummy State
+        public NullDigest() : base(-1, -1) // Dummy State
         {
             Out = new MemoryStream();
         } // end constructor
@@ -41,7 +41,7 @@ namespace SharpHash
         } // end property HashSize
 
         override public IHash Clone()
-    	{
+        {
             NullDigest HashInstance = new NullDigest();
 
             byte[] buf = Out.ToArray();
@@ -51,8 +51,8 @@ namespace SharpHash
 
             HashInstance.BufferSize = BufferSize;
 
-		    return HashInstance;
-	    }
+            return HashInstance;
+        }
 
         override public void Initialize()
         {
@@ -70,7 +70,7 @@ namespace SharpHash
             {
                 Out.Position = 0;
                 if (!(res.Length == 0))
-                    Out.Read(res, 0, size);    
+                    Out.Read(res, 0, size);
             } // end try
             finally
             {
@@ -89,6 +89,5 @@ namespace SharpHash
                 Out.Write(a_data, a_index, a_length);
             } // end if
         } // end function TransformBytes
-
     }
 }

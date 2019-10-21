@@ -2,7 +2,6 @@
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SharpHash.Hash32
@@ -50,12 +49,12 @@ namespace SharpHash.Hash32
         } // end function ComputeAggregatedBytes
 
         private Int32 InternalComputeBytes(byte[] a_data)
-	    {
-		    Int32 Length, current_index;
-		    UInt32 k;
-            
-		    if (a_data == null || a_data.Length == 0)
-			    return 0;
+        {
+            Int32 Length, current_index;
+            UInt32 k;
+
+            if (a_data == null || a_data.Length == 0)
+                return 0;
 
             Length = a_data.Length;
 
@@ -94,7 +93,6 @@ namespace SharpHash.Hash32
                             h = h ^ (a_data[current_index]);
                             h = h * M;
                             break;
-
                     } // end switch
                 }
             }
@@ -105,9 +103,9 @@ namespace SharpHash.Hash32
             h = h ^ (h >> 15);
 
             return (Int32)h;
-	    } // end function InternalComputeBytes
+        } // end function InternalComputeBytes
 
-	    private void TransformUInt32Fast(UInt32 a_data)
+        private void TransformUInt32Fast(UInt32 a_data)
         {
             a_data = a_data * M;
             a_data = a_data ^ (a_data >> R);
@@ -118,15 +116,15 @@ namespace SharpHash.Hash32
         } // end function TransformUInt32Fast
 
         public Int32? KeyLength
-	    {
+        {
             get
             {
                 return 4;
             }
-	    } // end property KeyLength
+        } // end property KeyLength
 
-	    public byte[] Key
-	    {
+        public byte[] Key
+        {
             get
             {
                 return Converters.ReadUInt32AsBytesLE(key);
@@ -147,12 +145,8 @@ namespace SharpHash.Hash32
                             key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
                         }
                     }
-
                 } // end else
-            } 
-        
+            }
         } // end property Key
-        
     } // end class Murmur2
-
 }

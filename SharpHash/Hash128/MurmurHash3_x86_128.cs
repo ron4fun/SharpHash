@@ -2,8 +2,6 @@ using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace SharpHash.Hash128
 {
@@ -11,7 +9,7 @@ namespace SharpHash.Hash128
     {
         private UInt32 key, h1, h2, h3, h4, total_length;
         private Int32 idx;
-        byte[] buf = null;
+        private byte[] buf = null;
 
         static private readonly UInt32 CKEY = 0x0;
 
@@ -89,7 +87,6 @@ namespace SharpHash.Hash128
                     return result;
                 }
             }
-
         } // end function TransformFinal
 
         override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
@@ -101,8 +98,8 @@ namespace SharpHash.Hash128
             i = a_index;
             lIdx = 0;
             total_length += (UInt32)len;
-            
-            fixed(byte* ptr_a_data = a_data)
+
+            fixed (byte* ptr_a_data = a_data)
             {
                 //consume last pending bytes
                 if (idx != 0 && len != 0)
@@ -184,7 +181,6 @@ namespace SharpHash.Hash128
                     offset++;
                 } // end while
             }
-
         } // end function TransformBytes
 
         public Int32? KeyLength
@@ -217,16 +213,14 @@ namespace SharpHash.Hash128
                             key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
                         }
                     }
-
                 } // end else
             }
-
         } // end property Key
 
         private void ByteUpdate(byte a_b)
-	    {
+        {
             buf[idx] = a_b;
-		    idx++;
+            idx++;
             ProcessPendings();
         } // end function ByteUpdate
 
@@ -238,7 +232,6 @@ namespace SharpHash.Hash128
             {
                 if (idx >= 16)
                 {
-                    
                     k1 = Converters.ReadBytesAsUInt32LE((IntPtr)ptr_Fm_buf, 0);
                     k2 = Converters.ReadBytesAsUInt32LE((IntPtr)ptr_Fm_buf, 4);
                     k3 = Converters.ReadBytesAsUInt32LE((IntPtr)ptr_Fm_buf, 8);
@@ -287,7 +280,6 @@ namespace SharpHash.Hash128
                     idx = 0;
                 } // end if
             }
-
         } // end function ProcessPendings
 
         private unsafe void Finish()
@@ -381,7 +373,6 @@ namespace SharpHash.Hash128
                         k3 = k3 * C4;
                         h3 = h3 ^ k3;
                         break;
-
                 } // end switch
 
                 if (Length > 8)
@@ -430,7 +421,6 @@ namespace SharpHash.Hash128
                         k2 = k2 * C3;
                         h2 = h2 ^ k2;
                         break;
-
                 } // end switch
 
                 if (Length > 4)
@@ -479,7 +469,6 @@ namespace SharpHash.Hash128
                         k1 = k1 * C2;
                         h1 = h1 ^ k1;
                         break;
-
                 } // end switch
             } // end if
 
@@ -528,7 +517,5 @@ namespace SharpHash.Hash128
             h3 = h3 + h1;
             h4 = h4 + h1;
         } // end function Finish
-
     } // end class MurmurHash3_x86_128
-
 }

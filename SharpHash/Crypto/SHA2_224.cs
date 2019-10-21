@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -9,7 +8,7 @@ namespace SharpHash.Crypto
     {
         public SHA2_224() :
             base(28)
-        {} // end constructor
+        { } // end constructor
 
         public override IHash Clone()
         {
@@ -53,7 +52,5 @@ namespace SharpHash.Crypto
 
             return result;
         } // end function GetResult
-
     } // end class SHA2_224
-
 }

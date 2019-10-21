@@ -1,5 +1,4 @@
-﻿
-namespace SharpHash.Base
+﻿namespace SharpHash.Base
 {
     // Note: The name HashSizeEnum was given considering the name conflict
     // between the enum and the Hash property for getting hash_size.

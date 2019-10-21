@@ -20,7 +20,7 @@ namespace SharpHash.Hash128
 
         static private readonly UInt64 C2 = 0x4CF5AD432745937F;
         static private readonly UInt32 C3 = 0x52DCE729;
-        static private readonly UInt32 C4 = 0x38495AB5;      
+        static private readonly UInt32 C4 = 0x38495AB5;
 
         static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
@@ -80,7 +80,6 @@ namespace SharpHash.Hash128
                     return result;
                 }
             }
-
         } // end function TransformFinal
 
         override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
@@ -92,8 +91,8 @@ namespace SharpHash.Hash128
             i = a_index;
             lIdx = 0;
             total_length += (UInt32)len;
-            
-            fixed(byte* ptr_a_data = a_data)
+
+            fixed (byte* ptr_a_data = a_data)
             {
                 //consume last pending bytes
                 if (idx != 0 && a_length != 0)
@@ -150,7 +149,6 @@ namespace SharpHash.Hash128
                     offset++;
                 } // end while
             }
-
         } // end function TransformBytes
 
         public Int32? KeyLength
@@ -183,14 +181,12 @@ namespace SharpHash.Hash128
                             key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
                         }
                     }
-
                 } // end else
             }
-
         } // end property Key
 
         private void ByteUpdate(byte a_b)
-	    {
+        {
             buf[idx++] = a_b;
             ProcessPendings();
         } // end function ByteUpdate
@@ -227,7 +223,6 @@ namespace SharpHash.Hash128
                     idx = 0;
                 } // end if
             }
-
         } // end function ProcessPendings
 
         private unsafe void Finish()
@@ -418,9 +413,7 @@ namespace SharpHash.Hash128
                         k1 = k1 * C2;
                         h1 = h1 ^ k1;
                         break;
-
                 } // end switch
-
             } // end if
 
             // finalization
@@ -445,9 +438,6 @@ namespace SharpHash.Hash128
 
             h1 = h1 + h2;
             h2 = h2 + h1;
-
         } // end function Finish
-
     } // end class MurmurHash3_x64_128
-
 }

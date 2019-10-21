@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -50,7 +49,7 @@ namespace SharpHash.Crypto
             {
                 Converters.le32_copy(a_data, a_index, (IntPtr)dPtr, 0, 64);
             }
-            
+
             a = state[0];
             b = state[1];
             c = state[2];
@@ -563,11 +562,7 @@ namespace SharpHash.Crypto
             state[8] = state[8] + d;
             state[9] = state[9] + e;
 
-
             Utils.Utils.memset(ref data, 0);
-           
         } // end function TransformBlock
-
     } // end class RIPEMD320
-
 }

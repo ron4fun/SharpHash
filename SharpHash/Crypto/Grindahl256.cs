@@ -61,7 +61,6 @@ namespace SharpHash.Crypto
             0x824141C3, 0x299999B0, 0x5A2D2D77, 0x1E0F0F11, 0x7BB0B0CB, 0xA85454FC,
             0x6DBBBBD6, 0x2C16163A};
 
-
         static unsafe Grindahl256()
         {
             fixed (UInt32* t0Ptr = table_0, t1Ptr = table_1, t2Ptr = table_2,
@@ -142,7 +141,7 @@ namespace SharpHash.Crypto
             {
                 state[0] = Converters.ReadBytesAsUInt32LE((IntPtr)pPtr, padding_size - 4);
                 state[0] = Converters.be2me_32(state[0]);
-            }           
+            }
 
             InjectMsg(true);
 
@@ -150,7 +149,6 @@ namespace SharpHash.Crypto
             {
                 InjectMsg(true);
             } // end while
-
         } // end function Finish
 
         protected override unsafe void TransformBlock(IntPtr a_data,
@@ -233,7 +231,5 @@ namespace SharpHash.Crypto
             temp = state;
             state = t;
         } // end function InjectMsg
-
     } // end class Grindahl256
-
 }

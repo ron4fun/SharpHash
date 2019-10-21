@@ -15,6 +15,5 @@ namespace SharpHash.Base
         /// <exception cref="ArgumentOutOfRangeHashLibException">bc must be greater than zero.</exception>
         /// <exception cref="ArgumentHashLibException">invalid start index or end index of internal buffer.</exception>
         public abstract byte[] GetBytes(Int32 bc);
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using SharpHash.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SharpHash.Base
@@ -10,7 +9,7 @@ namespace SharpHash.Base
         protected MemoryStream Buffer = null;
 
         public MultipleTransformNonBlock(Int32 a_hash_size, Int32 a_block_size)
-		: base(a_hash_size, a_block_size)
+        : base(a_hash_size, a_block_size)
         {
             Buffer = new MemoryStream();
         } // end constructor
@@ -27,8 +26,14 @@ namespace SharpHash.Base
             Buffer.SetLength(0);
         } // end fucntion Initialize
 
+<<<<<<< Updated upstream
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
 	    {
+=======
+        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        {
+            if (a_data == null || a_data.Length == 0) return;
+>>>>>>> Stashed changes
             Buffer.Write(a_data, a_index, a_length);
         } // end function TransformBytes
 
@@ -48,7 +53,7 @@ namespace SharpHash.Base
             return ComputeAggregatedBytes(a_data);
         } // end function ComputeBytes
 
-	    protected abstract IHashResult ComputeAggregatedBytes(byte[] a_data);
+        protected abstract IHashResult ComputeAggregatedBytes(byte[] a_data);
 
         private byte[] Aggregate()
         {
@@ -63,6 +68,5 @@ namespace SharpHash.Base
 
             return temp;
         } // end function Aggregate
-
     }
 }

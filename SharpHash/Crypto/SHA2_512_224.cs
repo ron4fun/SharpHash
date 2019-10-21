@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -55,7 +54,5 @@ namespace SharpHash.Crypto
 
             return result;
         } // end function GetResult
-
     } // end class SHA2_512_224
-
 }

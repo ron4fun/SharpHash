@@ -1,13 +1,12 @@
-using SharpHash.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using SharpHash.Base;
-using System.IO;
+using SharpHash.Interfaces;
 using SharpHash.Utils;
-using System.Linq;
+using System;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SharpHash.Tests
 {
@@ -38,6 +37,7 @@ namespace SharpHash.Tests
             220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234,
             235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249,
             250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260 };
+
         // , 261, 262, 263, 264,
         // 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279,
         // 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294,
@@ -100,14 +100,16 @@ namespace SharpHash.Tests
         public static readonly string OnetoNine = "123456789";
         public static readonly string FEEAABEEF = "EEAABEEF";
         public static readonly string ZeroToThreeInHex = "00010203";
-        public static readonly string ZeroToOneHundredAndNinetyNineInHex = 
-            "000102030405060708090A0B0C0D0E0F" + "101112131415161718191A1B1C1D1E1F" + 
-            "202122232425262728292A2B2C2D2E2F" + "303132333435363738393A3B3C3D3E3F" + 
-            "404142434445464748494A4B4C4D4E4F" + "505152535455565758595A5B5C5D5E5F" + 
-            "606162636465666768696A6B6C6D6E6F" + "707172737475767778797A7B7C7D7E7F" + 
-            "808182838485868788898A8B8C8D8E8F" + "909192939495969798999A9B9C9D9E9F" + 
-            "A0A1A2A3A4A5A6A7A8A9AAABACADAEAF" + "B0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF" + 
+
+        public static readonly string ZeroToOneHundredAndNinetyNineInHex =
+            "000102030405060708090A0B0C0D0E0F" + "101112131415161718191A1B1C1D1E1F" +
+            "202122232425262728292A2B2C2D2E2F" + "303132333435363738393A3B3C3D3E3F" +
+            "404142434445464748494A4B4C4D4E4F" + "505152535455565758595A5B5C5D5E5F" +
+            "606162636465666768696A6B6C6D6E6F" + "707172737475767778797A7B7C7D7E7F" +
+            "808182838485868788898A8B8C8D8E8F" + "909192939495969798999A9B9C9D9E9F" +
+            "A0A1A2A3A4A5A6A7A8A9AAABACADAEAF" + "B0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF" +
             "C0C1C2C3C4C5C6C7";
+
         public static readonly string RandomStringRecord = "I will not buy this record, it is scratched.";
         public static readonly string RandomStringTobacco = "I will not buy this tobacconist's, it is scratched.";
         public static readonly string QuickBrownDog = "The quick brown fox jumps over the lazy dog";
@@ -115,12 +117,11 @@ namespace SharpHash.Tests
         public static readonly string HexStringAsKey = "000102030405060708090A0B0C0D0E0F";
         public static readonly string HMACLongStringKey = "I need an Angel";
         public static readonly string HMACShortStringKey = "Hash";
-
     } // end class TestConstants
 
     public static class TestHelper
     {
-        static byte[] ChunkOne, ChunkTwo;
+        private static byte[] ChunkOne, ChunkTwo;
 
         static TestHelper()
         {
@@ -141,23 +142,22 @@ namespace SharpHash.Tests
                 Thread.Sleep(250);
                 result = hash.ComputeString(result, Encoding.UTF8).ToString();
             } // end for
-                
-        } // end function ComputeHash
+        } // end function MultithreadComputeHash
 
-        public static string lstrip(string str, char value)
+        public static string LeftStrip(string str, char value)
         {
             Int32 s_pos = 0;
-	        for (Int32 i = 0; i < str.Length; i++, s_pos++)
-	        {
-		        if (str[i] != value) break;
-	        }// end if
+            for (Int32 i = 0; i < str.Length; i++, s_pos++)
+            {
+                if (str[i] != value) break;
+            }// end if
 
             str = str.Substring(s_pos);
 
             if (str.Length == 0) return "0";
 
             return str;
-        } // end lstrip
+        } // end LeftStrip
 
         /// <summary>
         /// Compares two byte[] and returns true if equal contents
@@ -167,15 +167,31 @@ namespace SharpHash.Tests
         /// <returns>Boolean</returns>
         public static bool Compare(byte[] x, byte[] y)
         {
-            return Enumerable.SequenceEqual(x, y);
+            if (x == null)
+            {
+                if (y == null) return true;
+                return false;
+            } // end if
+
+            if (y == null) return false;
+
+            if (x.Length != y.Length) return false;
+
+            // At this point their length are equal
+            for (Int32 i = 0; i < x.Length; i++)
+            {
+                if (x[i] != y[i]) return false;
+            } // end for
+
+            return true;
         } // edn function Compare
 
         public static string StringOfChar(char value, Int32 count)
         {
             string temp = "";
-	        for (Int32 i = 0; i < count; i++)
-		        temp += value;
-	        return temp;
+            for (Int32 i = 0; i < count; i++)
+                temp += value;
+            return temp;
         } // end function StringOfChar
 
         public static void TestMultithreadingAndCloneCorrect(IHash hash)
@@ -196,10 +212,28 @@ namespace SharpHash.Tests
             Task.WaitAll(t1, t2, t3, t4, t5);
 
             bool allEqual = a == b ? b == c ? c == d ? d == e ? true : false : false : false : false;
-           
+
             Assert.IsTrue(allEqual,
                 $"Multithreading test failed for [{hash.Name}]");
+        } // end function
 
+        public static void TestForNullBytes(IHash hash)
+        {
+            string ActualString, ExpectedString;
+
+            //
+            ActualString = hash.ComputeBytes(null).ToString();
+
+            //
+            hash.Initialize();
+            hash.TransformBytes(null, 0, 0);
+            hash.TransformBytes(new byte[0], 0, 0);
+            ExpectedString = hash.TransformFinal().ToString();
+
+            //
+            Assert.AreEqual(ExpectedString, ActualString,
+                String.Format("Expected {0} but got {1}.",
+                ExpectedString, ActualString));
         } // end function
 
         public static void TestEmptyStream(string expected, IHash hash)
@@ -216,7 +250,7 @@ namespace SharpHash.Tests
                 expected, ActualString));
 
             stream.Close(); // close stream
-        } // end function 
+        } // end function
 
         public static void TestHashCloneIsCorrect(IHash hash)
         {
@@ -257,7 +291,7 @@ namespace SharpHash.Tests
                 (Original as IXOF).XOFSizeInBits = 128;
                 (Copy as IXOF).XOFSizeInBits = 256;
             } // end if
-                
+
             Assert.AreNotEqual(Original.BufferSize, Copy.BufferSize,
                 String.Format("Expected {0} but got {1}.",
                 Original.BufferSize, Copy.BufferSize));
@@ -267,7 +301,6 @@ namespace SharpHash.Tests
                     (Copy as IXOF).XOFSizeInBits,
                     String.Format("Expected {0} but got {1}.",
                 (Original as IXOF).XOFSizeInBits, (Copy as IXOF).XOFSizeInBits));
-
         }
 
         public static void TestHMACCloneIsCorrect(IHash hash)
@@ -275,7 +308,7 @@ namespace SharpHash.Tests
             IHMAC Original, Copy;
 
             Original = HashFactory.HMAC.CreateHMAC(hash);
-	        Original.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
+            Original.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
                 Encoding.UTF8);
             Original.Initialize();
             Original.TransformBytes(ChunkOne);
@@ -324,18 +357,15 @@ namespace SharpHash.Tests
                 hash.TransformString(actual.Substring(from, part), Encoding.UTF8);
                 from += part;
             } // end while
-            
+
             hash.TransformString(actual.Substring(from), Encoding.UTF8); // hash the remaining part
 
-            string ActualString = lstrip(hash.TransformFinal().ToString(), '0');
-            expected = lstrip(expected, '0');
+            string ActualString = LeftStrip(hash.TransformFinal().ToString(), '0');
+            expected = LeftStrip(expected, '0');
 
             Assert.AreEqual(expected, ActualString,
                 String.Format("Expected {0} but got {1}.",
                 expected, ActualString));
-
         } // end function TestIncrementalHash
-
     } // end class TestHelper
-
 }

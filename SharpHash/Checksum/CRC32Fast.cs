@@ -31,7 +31,7 @@ namespace SharpHash.Checksum
             UInt32 LCRC, LA, LB, LC, LD;
             UInt32[] LCRCTable;
 
-            LCRC = ~ CurrentCRC; // LCRC := System.High(UInt32) xor FCurrentCRC;
+            LCRC = ~CurrentCRC; // LCRC := System.High(UInt32) xor FCurrentCRC;
             LCRCTable = a_CRCTable;
             while (a_length >= 16)
             {
@@ -69,7 +69,7 @@ namespace SharpHash.Checksum
                 a_length--;
             } // end while
 
-            CurrentCRC = ~ LCRC; // FCurrentCRC := LCRC xor System.High(UInt32);
+            CurrentCRC = ~LCRC; // FCurrentCRC := LCRC xor System.High(UInt32);
         } // end function LocalCRCCompute
 
         public static UInt32[] Init_CRC_Table(UInt32 a_polynomial)
@@ -97,7 +97,6 @@ namespace SharpHash.Checksum
 
             return res;
         } // end function Init_CRC_Table
-                
     } // end class CRC32Fast
 
     internal sealed class CRC32_PKZIP_Fast : CRC32Fast
@@ -126,7 +125,6 @@ namespace SharpHash.Checksum
         {
             LocalCRCCompute(CRC32_PKZIP_Table, a_data, a_index, a_length);
         } // end function TransformBytes
-
     } // end class CRC32_PKZIP
 
     internal sealed class CRC32_CASTAGNOLI_Fast : CRC32Fast
@@ -155,7 +153,5 @@ namespace SharpHash.Checksum
         {
             LocalCRCCompute(CRC32_CASTAGNOLI_Table, a_data, a_index, a_length);
         } // end function TransformBytes
-
     } // end class CRC32_CASTAGNOLI
-
 }

@@ -20,24 +20,23 @@ namespace SharpHash.KDF
         public static string EmptySalt = "Salt can't be empty.";
         public static string IterationtooSmall = "Iteration must be greater than zero.";
 
-        public PBKDF2_HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_password, 
+        public PBKDF2_HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_password,
             byte[] a_salt, UInt32 a_iterations)
-	    {
-
+        {
             hash = a_underlyingHash.Clone();
 
             buffer = new byte[0];
-		    Password = new byte[a_password.Length];
+            Password = new byte[a_password.Length];
             // Copy Password
             Utils.Utils.memcopy(ref Password, a_password, a_password.Length);
 
-		    Salt = new byte[a_salt.Length];
+            Salt = new byte[a_salt.Length];
             // Copy Salt
             Utils.Utils.memcopy(ref Salt, a_salt, a_salt.Length);
 
             IterationCount = a_iterations;
 
-		    Initialize();
+            Initialize();
         } // end constructor
 
         public override void Clear()
@@ -68,7 +67,7 @@ namespace SharpHash.KDF
                             Utils.Utils.memmove((IntPtr)dPtr, (IntPtr)sPtr, LSize);
                         }
                     }
-                    
+
                     startIndex = 0;
                     endIndex = 0;
                     LOffset = LOffset + LSize;
@@ -127,8 +126,8 @@ namespace SharpHash.KDF
             return LKey;
         } // end function GetBytes
 
-	    // initializes the state of the operation.
-	    private void Initialize()
+        // initializes the state of the operation.
+        private void Initialize()
         {
             if (!(buffer == null || buffer.Length == 0))
                 Utils.Utils.memset(ref buffer, 0);
@@ -182,13 +181,12 @@ namespace SharpHash.KDF
         /// <param name="i">The integer to encode.</param>
         /// <returns>array of bytes, in big endian.</returns>
         private static byte[] GetBigEndianBytes(UInt32 i)
-	    {
+        {
             byte[] b = BitConverter.GetBytes(i);
             byte[] invertedBytes = new byte[] { b[3], b[2], b[1], b[0] };
-		    if (BitConverter.IsLittleEndian)
-			    return invertedBytes;
-		    return b;
-	    } // end function GetBigEndianBytes
-
+            if (BitConverter.IsLittleEndian)
+                return invertedBytes;
+            return b;
+        } // end function GetBigEndianBytes
     }
 }

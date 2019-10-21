@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -331,11 +330,7 @@ namespace SharpHash.Crypto
             state[6] = state[6] + c;
             state[7] = state[7] + d;
 
-
             Utils.Utils.memset(ref data, 0);
-           
         } // end function TransformBlock
-
     } // end class RIPEMD256
-
 }

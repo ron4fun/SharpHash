@@ -1,14 +1,13 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
 namespace SharpHash.Crypto
 {
     internal sealed class SHA1 : SHA0
-    {               
+    {
         public SHA1()
-        {} // end constructor
+        { } // end constructor
 
         public override IHash Clone()
         {
@@ -157,7 +156,5 @@ namespace SharpHash.Crypto
             T = a_data[79 - 3] ^ a_data[79 - 8] ^ a_data[79 - 14] ^ a_data[79 - 16];
             a_data[79] = Bits.RotateLeft32(T, 1);
         } // end function Expand
-
     } // end class SHA1
-
 }

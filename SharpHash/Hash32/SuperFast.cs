@@ -1,7 +1,6 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SharpHash.Hash32
@@ -95,7 +94,5 @@ namespace SharpHash.Hash32
 
             return new HashResult(hash);
         } // end function ComputeAggregatedBytes
-
     } // end class SuperFast
-
 }

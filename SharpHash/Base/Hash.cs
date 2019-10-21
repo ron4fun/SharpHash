@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SharpHash.Interfaces;
+using SharpHash.Utils;
+using System;
 using System.IO;
 using System.Text;
-using SharpHash.Interfaces;
-using SharpHash.Utils;
 
 namespace SharpHash.Base
 {
@@ -14,7 +14,11 @@ namespace SharpHash.Base
 
         public virtual string Name => GetType().Name;
 
+<<<<<<< Updated upstream
         public virtual Int32 BufferSize 
+=======
+        virtual public Int32 BufferSize
+>>>>>>> Stashed changes
         {
             get => buffer_size;
             set
@@ -51,12 +55,21 @@ namespace SharpHash.Base
 
         public abstract void Initialize();
 
+<<<<<<< Updated upstream
         public virtual IHash Clone()
 	    {
 		    throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
 	    } // end function Clone
 
 	    public virtual IHashResult ComputeString(string a_data, Encoding encoding)
+=======
+        virtual public IHash Clone()
+        {
+            throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
+        } // end function Clone
+
+        virtual public IHashResult ComputeString(string a_data, Encoding encoding)
+>>>>>>> Stashed changes
         {
             return ComputeBytes(Converters.ConvertStringToBytes(a_data, encoding));
         } // end function ComputeString
@@ -70,7 +83,8 @@ namespace SharpHash.Base
 
         public virtual void TransformUntyped(IntPtr a_data, Int64 a_length)
         {
-            unsafe {
+            unsafe
+            {
                 byte* PtrBuffer, PtrEnd;
                 byte[] ArrBuffer = new byte[] { };
                 Int32 LBufferSize;
@@ -92,7 +106,7 @@ namespace SharpHash.Base
                             {
                                 Utils.Utils.memmove((IntPtr)bDest, (IntPtr)PtrBuffer, LBufferSize);
                             }
-                            
+
                             TransformBytes(ArrBuffer);
                             PtrBuffer += LBufferSize;
                         } // end if
@@ -108,7 +122,6 @@ namespace SharpHash.Base
                             break;
                         } // end else
                     } // end while
-
                 } // end if
             }
         } // end function TransformUntyped
@@ -120,8 +133,13 @@ namespace SharpHash.Base
             return TransformFinal();
         } // end function ComputeStream
 
+<<<<<<< Updated upstream
         public virtual IHashResult ComputeFile(string a_file_name,
 		        Int64 a_from = 0, Int64 a_length = -1)
+=======
+        virtual public IHashResult ComputeFile(string a_file_name,
+                Int64 a_from = 0, Int64 a_length = -1)
+>>>>>>> Stashed changes
         {
             Initialize();
             TransformFile(a_file_name, a_from, a_length);
@@ -157,7 +175,11 @@ namespace SharpHash.Base
 
         public abstract void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length);
 
+<<<<<<< Updated upstream
 	    public virtual void TransformStream(Stream a_stream, Int64 a_length = -1)
+=======
+        virtual public void TransformStream(Stream a_stream, Int64 a_length = -1)
+>>>>>>> Stashed changes
         {
             Int32 readed = 0, LBufferSize;
             UInt64 size, new_size;
@@ -179,7 +201,6 @@ namespace SharpHash.Base
             } // end if
             else
                 throw new ArgumentNilHashLibException(UnAssignedStream);
-
 
             if ((Int32)size > BUFFER_SIZE)
             {
@@ -221,15 +242,13 @@ namespace SharpHash.Base
                     {
                         new_size = (UInt64)(a_length - total);
                         Array.Resize(ref data, (int)new_size);
-                            
+
                         a_stream.Read(data, 0, (int)new_size);
 
                         TransformBytes(data, 0, (int)new_size);
                         break;
                     }
-
                 } // end while
-                
             }
             else
             {
@@ -239,8 +258,13 @@ namespace SharpHash.Base
             }
         } // end function TransformStream
 
+<<<<<<< Updated upstream
         public virtual void TransformFile(string a_file_name,
 		        Int64 a_from = 0, Int64 a_length = -1)
+=======
+        virtual public void TransformFile(string a_file_name,
+                Int64 a_from = 0, Int64 a_length = -1)
+>>>>>>> Stashed changes
         {
             Stream ReadFile = File.OpenRead(a_file_name);
 
@@ -255,6 +279,5 @@ namespace SharpHash.Base
         } // end function TransformFile
 
         public abstract IHashResult TransformFinal();
-
     }
 }

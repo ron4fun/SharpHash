@@ -10,7 +10,7 @@ namespace SharpHash.Base
         private byte[] opad = null, ipad = null, key = null;
         private Int32 blocksize;
 
-        public HMACNotBuildInAdapter(IHash a_underlyingHash) 
+        public HMACNotBuildInAdapter(IHash a_underlyingHash)
             : base(a_underlyingHash.HashSize, a_underlyingHash.BlockSize)
         {
             hash = a_underlyingHash.Clone();
@@ -25,8 +25,13 @@ namespace SharpHash.Base
             Utils.Utils.memset(ref key, 0);
         } // end function Clear
 
+<<<<<<< Updated upstream
         public override IHash Clone()
     	{
+=======
+        override public IHash Clone()
+        {
+>>>>>>> Stashed changes
             HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash);
             hmac.blocksize = blocksize;
 
@@ -48,8 +53,8 @@ namespace SharpHash.Base
                 Utils.Utils.memcopy(ref hmac.key, key, key.Length);
             } //
 
-		    return hmac;
-	    }
+            return hmac;
+        }
 
         public override void Initialize()
         {
@@ -74,10 +79,23 @@ namespace SharpHash.Base
             hash.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
 
+<<<<<<< Updated upstream
 	    public override string Name => $"HMAC({hash.Name})";
 
 	    public virtual byte[] Key
 	    {
+=======
+        override public string Name
+        {
+            get
+            {
+                return $"HMAC({hash.Name})";
+            }
+        } // end property GetName
+
+        virtual public byte[] Key
+        {
+>>>>>>> Stashed changes
             get
             {
                 if (key != null)
@@ -99,12 +117,22 @@ namespace SharpHash.Base
                     key = new byte[value.Length];
                     Utils.Utils.memcopy(ref key, value, value.Length);
                 } // end else
-                    
             }
         } // end property Key
 
+<<<<<<< Updated upstream
         public virtual Int32? KeyLength => null;
         
+=======
+        virtual public Int32? KeyLength
+        {
+            get
+            {
+                return null;
+            }
+        } // end property KeyLength
+
+>>>>>>> Stashed changes
         protected void UpdatePads()
         {
             byte[] LKey;
@@ -120,7 +148,7 @@ namespace SharpHash.Base
                     Utils.Utils.memset((IntPtr)opadPtr, 0x5C, blocksize * sizeof(byte));
                 }
             }
-           
+
             Idx = 0;
             while ((Idx < LKey.Length) && (Idx < blocksize))
             {
@@ -129,6 +157,5 @@ namespace SharpHash.Base
                 Idx++;
             } // end while
         } // end function UpdatePads
-
     }
 }

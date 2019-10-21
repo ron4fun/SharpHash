@@ -1,8 +1,8 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using SharpHash.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Utils;
 using System;
 using System.Text;
 
@@ -21,10 +21,9 @@ namespace SharpHash.XOFandKMAC.Tests
                 temp[LIdx] = (byte)LIdx;
 
             Data = Converters.ConvertBytesToHexString(temp, false);
-
         } //
 
-        private void DoComputeKMAC256(string a_Key, string a_Customization, string a_Data, 
+        private void DoComputeKMAC256(string a_Key, string a_Customization, string a_Data,
             string a_ExpectedResult, UInt64 a_OutputSizeInBits, bool IsXOF)
         {
             IHash LHash, LClone;
@@ -49,9 +48,9 @@ namespace SharpHash.XOFandKMAC.Tests
 
             LHash.Initialize();
 
-            for (LIdx = 0; LIdx < LData.Length; LIdx++) 
+            for (LIdx = 0; LIdx < LData.Length; LIdx++)
                 LHash.TransformBytes(new byte[] { LData[LIdx] }); // do incremental hashing
-          
+
             LClone = LHash.Clone();
 
             if (IsXOF)
@@ -61,7 +60,7 @@ namespace SharpHash.XOFandKMAC.Tests
 
                 ((LHash as IKMAC) as IXOF).DoOutput(ref ActualResult, 0, a_OutputSizeInBits >> 3);
 
-                ((LClone as IKMAC) as IXOF).DoOutput(ref ActualResultClone, 0, 
+                ((LClone as IKMAC) as IXOF).DoOutput(ref ActualResultClone, 0,
                     a_OutputSizeInBits >> 3);
 
                 LHash.Initialize();
@@ -75,22 +74,21 @@ namespace SharpHash.XOFandKMAC.Tests
 
             Assert.AreEqual(a_ExpectedResult,
                 Converters.ConvertBytesToHexString(ActualResult, false),
-                String.Format("Expected {0} But got {1}", a_ExpectedResult, 
+                String.Format("Expected {0} But got {1}", a_ExpectedResult,
                 Converters.ConvertBytesToHexString(ActualResult, false)));
 
             Assert.AreEqual(a_ExpectedResult,
                 Converters.ConvertBytesToHexString(ActualResultClone, false),
                 String.Format("KMAC256{0} mismatch on test vector test vector against a clone, Expected \"{1}\" but got \"{2}\"",
-                Suffix, a_ExpectedResult, 
+                Suffix, a_ExpectedResult,
                 Converters.ConvertBytesToHexString(ActualResultClone, false)));
-            
         } // end function DoComputeKMAC256
 
         [TestMethod]
         public void TestKMAC256NISTSample1()
         {
-            DoComputeKMAC256(RawKeyInHex, CustomizationMessage, TestConstants.ZeroToThreeInHex, 
-                "20C570C31346F703C9AC36C61C03CB64C3970D0CFC787E9B79599D273A68D2F7F69D4CC3DE9D104A351689F27CF6F5951F0103F33F4F24871024D9C27773A8DD", 
+            DoComputeKMAC256(RawKeyInHex, CustomizationMessage, TestConstants.ZeroToThreeInHex,
+                "20C570C31346F703C9AC36C61C03CB64C3970D0CFC787E9B79599D273A68D2F7F69D4CC3DE9D104A351689F27CF6F5951F0103F33F4F24871024D9C27773A8DD",
                 OutputSizeInBits, false);
         }
 
@@ -133,7 +131,5 @@ namespace SharpHash.XOFandKMAC.Tests
                  "D5BE731C954ED7732846BB59DBE3A8E30F83E77A4BFF4459F2F1C2B4ECEBB8CE67BA01C62E8AB8578D2D499BD1BB276768781190020A306A97DE281DCC30305D",
                  OutputSizeInBits, true);
         }
-
     }
-
 }

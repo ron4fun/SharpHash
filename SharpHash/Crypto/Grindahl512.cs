@@ -149,7 +149,6 @@ namespace SharpHash.Crypto
             0x1E0F0F3C0F782244, 0x7BB0B0F6B0F78D01,
             0xA854544B5496E3DD, 0x6DBBBBDABBAFB775,
             0x2C16165816B074E8 };
-        
 
         static unsafe Grindahl512()
         {
@@ -244,7 +243,6 @@ namespace SharpHash.Crypto
             {
                 InjectMsg(true);
             } // end while
-
         } // end function Finish
 
         protected override unsafe void TransformBlock(IntPtr a_data,
@@ -276,7 +274,6 @@ namespace SharpHash.Crypto
                 [(byte)(state[8] >> 24)] ^ table_5[(byte)(state[7] >> 16)
                 ] ^ table_6[(byte)(state[6] >> 8)] ^ table_7
                 [(byte)(state[5])];
-
 
             temp[1] = table_0[(byte)(state[0] >> 56)] ^ table_1
                 [(byte)(state[12] >> 48)] ^ table_2[(byte)(state[11] >> 40)
@@ -354,13 +351,10 @@ namespace SharpHash.Crypto
                 [(byte)(state[7] >> 24)] ^ table_5[(byte)(state[6] >> 16)
                 ] ^ table_6[(byte)(state[5] >> 8)] ^ table_7[(byte)(state[4])];
 
-
             // Swap memory pointers
             UInt64[] t = temp;
             temp = state;
             state = t;
         } // end function InjectMsg
-
     } // end class Grindahl512
-
 }

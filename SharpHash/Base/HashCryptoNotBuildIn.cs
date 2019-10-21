@@ -9,7 +9,7 @@ namespace SharpHash.Base
         protected UInt64 processed_bytes = 0;
 
         public BlockHash(Int32 a_hash_size, Int32 a_block_size, Int32 a_buffer_size = -1)
-		: base(a_hash_size, a_block_size)
+        : base(a_hash_size, a_block_size)
         {
             if (a_buffer_size == -1)
                 a_buffer_size = a_block_size;
@@ -17,8 +17,13 @@ namespace SharpHash.Base
             buffer = new HashBuffer(a_buffer_size);
         } // end constructor
 
+<<<<<<< Updated upstream
         public override unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
 	    {
+=======
+        override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        {
+>>>>>>> Stashed changes
             fixed (byte* ptr_a_data = a_data)
             {
                 if (!buffer.IsEmpty)
@@ -38,15 +43,24 @@ namespace SharpHash.Base
                 if (a_length > 0)
                     buffer.Feed((IntPtr)ptr_a_data, (Int32)a_data.Length, ref a_index, ref a_length, ref processed_bytes);
             }
-	    } // end function TransformBytes
+        } // end function TransformBytes
 
+<<<<<<< Updated upstream
 	    public override void Initialize()
+=======
+        override public void Initialize()
+>>>>>>> Stashed changes
         {
             buffer.Initialize();
             processed_bytes = 0;
         } // end function Initialize
+<<<<<<< Updated upstream
         
         public override IHashResult TransformFinal()
+=======
+
+        override public IHashResult TransformFinal()
+>>>>>>> Stashed changes
         {
             Finish();
 
@@ -63,15 +77,14 @@ namespace SharpHash.Base
             fixed (byte* bPtr = temp)
             {
                 TransformBlock((IntPtr)bPtr, buffer.Length, 0);
-            }            
+            }
         } // end function TransformBuffer
 
         protected abstract void Finish();
 
-	    protected abstract void TransformBlock(IntPtr a_data,
-		        Int32 a_data_length, Int32 a_index);
+        protected abstract void TransformBlock(IntPtr a_data,
+                Int32 a_data_length, Int32 a_index);
 
-	    protected abstract byte[] GetResult();
-
+        protected abstract byte[] GetResult();
     }
 }

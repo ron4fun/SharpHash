@@ -11,9 +11,7 @@ namespace SharpHash.Crypto
         public static readonly string InvalidXOFSize = "XOFSize in Bits must be Multiples of 8 & be Greater than Zero Bytes";
         public static readonly string OutputLengthInvalid = "Output Length is above the Digest Length";
         public static readonly string OutputBufferTooShort = "Output Buffer Too Short";
-
     } // end class Global
-
 
     internal enum HashMode
     {
@@ -22,7 +20,6 @@ namespace SharpHash.Crypto
         Shake = 0x1F,
         CShake = 0x04
     }; // end enum HashMode
-
 
     internal abstract class SHA3 : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
@@ -50,7 +47,7 @@ namespace SharpHash.Crypto
             {
                 Utils.Utils.memset((IntPtr)sPtr, 0, state.Length * sizeof(UInt64));
             }
-            
+
             base.Initialize();
         } // end function Initialize
 
@@ -63,12 +60,15 @@ namespace SharpHash.Crypto
                     case HashMode.Keccak:
                         return String.Format("{0}_{1}",
                             "Keccak", hash_size * 8);
+
                     case HashMode.SHA3:
-                        return Name;
+                        return this.GetType().Name;
+
                     case HashMode.Shake:
                     case HashMode.CShake:
-                        return String.Format("{0}_{1}_{2}", Name, "XOFSizeInBytes",
+                        return String.Format("{0}_{1}_{2}", this.GetType().Name, "XOFSizeInBytes",
                             (this as IXOF).XOFSizeInBits >> 3);
+
                     default:
                         throw new ArgumentInvalidHashLibException(
                             String.Format(Global.InvalidHashMode, "Keccak, SHA3, Shake, CShake"));
@@ -79,7 +79,7 @@ namespace SharpHash.Crypto
         protected void KeccakF1600_StatePermute()
         {
             UInt64 Da, De, Di, Do, Du;
-            UInt64 Aba, Abe, Abi, Abo, Abu, Aga, Age, Agi, Ago, Agu, Aka, Ake, Aki, Ako, Aku, 
+            UInt64 Aba, Abe, Abi, Abo, Abu, Aga, Age, Agi, Ago, Agu, Aka, Ake, Aki, Ako, Aku,
                 Ama, Ame, Ami, Amo, Amu, Asa, Ase, Asi, Aso, Asu, BCa, BCe, BCi, BCo, BCu,
                 Eba, Ebe, Ebi, Ebo, Ebu, Ega, Ege, Egi, Ego, Egu, Eka, Eke, Eki, Eko, Eku,
                 Ema, Eme, Emi, Emo, Emu, Esa, Ese, Esi, Eso, Esu;
@@ -138,12 +138,12 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Amo, 21);
                 Asu = Asu ^ Du;
                 BCu = Bits.RotateLeft64(Asu, 14);
-                Eba = BCa ^((~ BCe) & BCi);
+                Eba = BCa ^ ((~BCe) & BCi);
                 Eba = Eba ^ RC[LRound];
-                Ebe = BCe ^((~ BCi) & BCo);
-                Ebi = BCi ^((~ BCo) & BCu);
-                Ebo = BCo ^((~ BCu) & BCa);
-                Ebu = BCu ^((~ BCa) & BCe);
+                Ebe = BCe ^ ((~BCi) & BCo);
+                Ebi = BCi ^ ((~BCo) & BCu);
+                Ebo = BCo ^ ((~BCu) & BCa);
+                Ebu = BCu ^ ((~BCa) & BCe);
 
                 Abo = Abo ^ Do;
                 BCa = Bits.RotateLeft64(Abo, 28);
@@ -155,11 +155,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Ame, 45);
                 Asi = Asi ^ Di;
                 BCu = Bits.RotateLeft64(Asi, 61);
-                Ega = BCa ^((~ BCe) & BCi);
-                Ege = BCe ^((~ BCi) & BCo);
-                Egi = BCi ^((~ BCo) & BCu);
-                Ego = BCo ^((~ BCu) & BCa);
-                Egu = BCu ^((~ BCa) & BCe);
+                Ega = BCa ^ ((~BCe) & BCi);
+                Ege = BCe ^ ((~BCi) & BCo);
+                Egi = BCi ^ ((~BCo) & BCu);
+                Ego = BCo ^ ((~BCu) & BCa);
+                Egu = BCu ^ ((~BCa) & BCe);
 
                 Abe = Abe ^ De;
                 BCa = Bits.RotateLeft64(Abe, 1);
@@ -171,11 +171,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Amu, 8);
                 Asa = Asa ^ Da;
                 BCu = Bits.RotateLeft64(Asa, 18);
-                Eka = BCa ^((~ BCe) & BCi);
-                Eke = BCe ^((~ BCi) & BCo);
-                Eki = BCi ^((~ BCo) & BCu);
-                Eko = BCo ^((~ BCu) & BCa);
-                Eku = BCu ^((~ BCa) & BCe);
+                Eka = BCa ^ ((~BCe) & BCi);
+                Eke = BCe ^ ((~BCi) & BCo);
+                Eki = BCi ^ ((~BCo) & BCu);
+                Eko = BCo ^ ((~BCu) & BCa);
+                Eku = BCu ^ ((~BCa) & BCe);
 
                 Abu = Abu ^ Du;
                 BCa = Bits.RotateLeft64(Abu, 27);
@@ -187,11 +187,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Ami, 15);
                 Aso = Aso ^ Do;
                 BCu = Bits.RotateLeft64(Aso, 56);
-                Ema = BCa ^((~ BCe) & BCi);
-                Eme = BCe ^((~ BCi) & BCo);
-                Emi = BCi ^((~ BCo) & BCu);
-                Emo = BCo ^((~ BCu) & BCa);
-                Emu = BCu ^((~ BCa) & BCe);
+                Ema = BCa ^ ((~BCe) & BCi);
+                Eme = BCe ^ ((~BCi) & BCo);
+                Emi = BCi ^ ((~BCo) & BCu);
+                Emo = BCo ^ ((~BCu) & BCa);
+                Emu = BCu ^ ((~BCa) & BCe);
 
                 Abi = Abi ^ Di;
                 BCa = Bits.RotateLeft64(Abi, 62);
@@ -203,11 +203,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Ama, 41);
                 Ase = Ase ^ De;
                 BCu = Bits.RotateLeft64(Ase, 2);
-                Esa = BCa ^((~ BCe) & BCi);
-                Ese = BCe ^((~ BCi) & BCo);
-                Esi = BCi ^((~ BCo) & BCu);
-                Eso = BCo ^((~ BCu) & BCa);
-                Esu = BCu ^((~ BCa) & BCe);
+                Esa = BCa ^ ((~BCe) & BCi);
+                Ese = BCe ^ ((~BCi) & BCo);
+                Esi = BCi ^ ((~BCo) & BCu);
+                Eso = BCo ^ ((~BCu) & BCa);
+                Esu = BCu ^ ((~BCa) & BCe);
 
                 // prepareTheta
                 BCa = Eba ^ Ega ^ Eka ^ Ema ^ Esa;
@@ -233,12 +233,12 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Emo, 21);
                 Esu = Esu ^ Du;
                 BCu = Bits.RotateLeft64(Esu, 14);
-                Aba = BCa ^((~ BCe) & BCi);
+                Aba = BCa ^ ((~BCe) & BCi);
                 Aba = Aba ^ RC[LRound + 1];
-                Abe = BCe ^((~ BCi) & BCo);
-                Abi = BCi ^((~ BCo) & BCu);
-                Abo = BCo ^((~ BCu) & BCa);
-                Abu = BCu ^((~ BCa) & BCe);
+                Abe = BCe ^ ((~BCi) & BCo);
+                Abi = BCi ^ ((~BCo) & BCu);
+                Abo = BCo ^ ((~BCu) & BCa);
+                Abu = BCu ^ ((~BCa) & BCe);
 
                 Ebo = Ebo ^ Do;
                 BCa = Bits.RotateLeft64(Ebo, 28);
@@ -250,11 +250,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Eme, 45);
                 Esi = Esi ^ Di;
                 BCu = Bits.RotateLeft64(Esi, 61);
-                Aga = BCa ^((~ BCe) & BCi);
-                Age = BCe ^((~ BCi) & BCo);
-                Agi = BCi ^((~ BCo) & BCu);
-                Ago = BCo ^((~ BCu) & BCa);
-                Agu = BCu ^((~ BCa) & BCe);
+                Aga = BCa ^ ((~BCe) & BCi);
+                Age = BCe ^ ((~BCi) & BCo);
+                Agi = BCi ^ ((~BCo) & BCu);
+                Ago = BCo ^ ((~BCu) & BCa);
+                Agu = BCu ^ ((~BCa) & BCe);
 
                 Ebe = Ebe ^ De;
                 BCa = Bits.RotateLeft64(Ebe, 1);
@@ -266,11 +266,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Emu, 8);
                 Esa = Esa ^ Da;
                 BCu = Bits.RotateLeft64(Esa, 18);
-                Aka = BCa ^((~ BCe) & BCi);
-                Ake = BCe ^((~ BCi) & BCo);
-                Aki = BCi ^((~ BCo) & BCu);
-                Ako = BCo ^((~ BCu) & BCa);
-                Aku = BCu ^((~ BCa) & BCe);
+                Aka = BCa ^ ((~BCe) & BCi);
+                Ake = BCe ^ ((~BCi) & BCo);
+                Aki = BCi ^ ((~BCo) & BCu);
+                Ako = BCo ^ ((~BCu) & BCa);
+                Aku = BCu ^ ((~BCa) & BCe);
 
                 Ebu = Ebu ^ Du;
                 BCa = Bits.RotateLeft64(Ebu, 27);
@@ -282,11 +282,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Emi, 15);
                 Eso = Eso ^ Do;
                 BCu = Bits.RotateLeft64(Eso, 56);
-                Ama = BCa ^((~ BCe) & BCi);
-                Ame = BCe ^((~ BCi) & BCo);
-                Ami = BCi ^((~ BCo) & BCu);
-                Amo = BCo ^((~ BCu) & BCa);
-                Amu = BCu ^((~ BCa) & BCe);
+                Ama = BCa ^ ((~BCe) & BCi);
+                Ame = BCe ^ ((~BCi) & BCo);
+                Ami = BCi ^ ((~BCo) & BCu);
+                Amo = BCo ^ ((~BCu) & BCa);
+                Amu = BCu ^ ((~BCa) & BCe);
 
                 Ebi = Ebi ^ Di;
                 BCa = Bits.RotateLeft64(Ebi, 62);
@@ -298,11 +298,11 @@ namespace SharpHash.Crypto
                 BCo = Bits.RotateLeft64(Ema, 41);
                 Ese = Ese ^ De;
                 BCu = Bits.RotateLeft64(Ese, 2);
-                Asa = BCa ^((~ BCe) & BCi);
-                Ase = BCe ^((~ BCi) & BCo);
-                Asi = BCi ^((~ BCo) & BCu);
-                Aso = BCo ^((~ BCu) & BCa);
-                Asu = BCu ^((~ BCa) & BCe);
+                Asa = BCa ^ ((~BCe) & BCi);
+                Ase = BCe ^ ((~BCi) & BCo);
+                Asi = BCi ^ ((~BCo) & BCu);
+                Aso = BCo ^ ((~BCu) & BCa);
+                Asu = BCu ^ ((~BCa) & BCe);
 
                 LRound += 2;
             } // end while
@@ -333,7 +333,6 @@ namespace SharpHash.Crypto
             state[22] = Asi;
             state[23] = Aso;
             state[24] = Asu;
-
         } // end function KeccakF1600_StatePermute
 
         protected override unsafe void Finish()
@@ -349,7 +348,6 @@ namespace SharpHash.Crypto
             {
                 TransformBlock((IntPtr)bPtr, block.Length, 0);
             }
-            
         } // end function Finish
 
         protected override unsafe byte[] GetResult()
@@ -358,12 +356,12 @@ namespace SharpHash.Crypto
 
             fixed (UInt64* sPtr = state)
             {
-                fixed(byte* bPtr= result)
+                fixed (byte* bPtr = result)
                 {
                     Converters.le64_copy((IntPtr)sPtr, 0, (IntPtr)bPtr, 0, result.Length);
                 }
             }
-            
+
             return result;
         } // end function GetResult
 
@@ -371,7 +369,7 @@ namespace SharpHash.Crypto
                 Int32 a_data_length, Int32 a_index)
         {
             UInt64[] data = new UInt64[21];
-            Int32 j, blockCount;           
+            Int32 j, blockCount;
 
             fixed (UInt64* dPtr = data)
             {
@@ -389,9 +387,7 @@ namespace SharpHash.Crypto
             KeccakF1600_StatePermute();
 
             Utils.Utils.memset(ref data, 0);
-
         } // end function TransformBlock
-
     } // end class SHA3
 
     internal sealed class SHA3_224 : SHA3
@@ -415,7 +411,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-        
     } // end class SHA3_224
 
     internal sealed class SHA3_256 : SHA3
@@ -439,7 +434,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class SHA3_256
 
     internal sealed class SHA3_384 : SHA3
@@ -463,7 +457,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class SHA3_384
 
     internal sealed class SHA3_512 : SHA3
@@ -487,9 +480,7 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class SHA3_512
-
 
     internal sealed class Keccak_224 : SHA3
     {
@@ -512,7 +503,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class SHA3_224
 
     internal sealed class Keccak_256 : SHA3
@@ -536,7 +526,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class Keccak_256
 
     internal sealed class Keccak_288 : SHA3
@@ -560,7 +549,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class Keccak_288
 
     internal sealed class Keccak_384 : SHA3
@@ -584,7 +572,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class Keccak_384
 
     internal sealed class Keccak_512 : SHA3
@@ -608,9 +595,7 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class Keccak_512
-
 
     internal abstract class Shake : SHA3, IXOF
     {
@@ -637,12 +622,12 @@ namespace SharpHash.Crypto
             ShakeBufferPosition = 8;
             Finalized = false;
             Utils.Utils.memset(ref ShakeBuffer, 0);
-        } // end function 
+        } // end function
 
         public override IHashResult TransformFinal()
-        {         
+        {
             byte[] temp = GetResult();
-            
+
             Initialize();
 
             return new HashResult(temp);
@@ -671,7 +656,8 @@ namespace SharpHash.Crypto
             return this;
         } // end function SetXOFSizeInBitsInternal
 
-        public virtual UInt64 XOFSizeInBits {
+        public virtual UInt64 XOFSizeInBits
+        {
             get => xofSizeInBits;
             set => SetXOFSizeInBitsInternal(value);
         }
@@ -680,10 +666,10 @@ namespace SharpHash.Crypto
             UInt64 a_outputLength)
         {
             UInt64 DestinationOffset;
-            
+
             if (((UInt64)a_destination.Length - a_destinationOffset) < a_outputLength)
                 throw new ArgumentOutOfRangeHashLibException(Global.OutputBufferTooShort);
-           
+
             if ((DigestPosition + a_outputLength) > (XOFSizeInBits >> 3))
                 throw new ArgumentOutOfRangeHashLibException(Global.OutputLengthInvalid);
 
@@ -706,7 +692,7 @@ namespace SharpHash.Crypto
                     } // end if
 
                     Converters.ReadUInt64AsBytesLE(state[BufferPosition], ref ShakeBuffer, 0);
-                    
+
                     BufferPosition++;
                     ShakeBufferPosition = 0;
                 } // end if
@@ -718,9 +704,7 @@ namespace SharpHash.Crypto
                 DigestPosition++;
                 DestinationOffset++;
             } // end while
-
         } // end function DoOutput
-
     } // end class Shake
 
     internal sealed class Shake_128 : Shake
@@ -756,7 +740,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class Shake_128
 
     internal sealed class Shake_256 : Shake
@@ -792,9 +775,7 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class Shake_256
-  
 
     internal abstract class CShake : Shake
     {
@@ -852,7 +833,7 @@ namespace SharpHash.Crypto
                 LN++;
                 LV = LV >> 8;
             } // end while
-            
+
             byte[] result = new byte[LN + 1];
             result[0] = LN;
 
@@ -868,7 +849,6 @@ namespace SharpHash.Crypto
 
             if (InitBlock != null)
                 TransformBytes(BytePad(InitBlock, BlockSize));
-
         } // end function Initialize
 
         public static byte[] RightEncode(UInt64 a_input)
@@ -908,7 +888,6 @@ namespace SharpHash.Crypto
 
             return Utils.Utils.Concat(LeftEncode((UInt64)a_input.Length * 8), a_input);
         } // end function EncodeString
-
     } // end function CShake
 
     internal sealed class CShake_128 : CShake
@@ -940,7 +919,6 @@ namespace SharpHash.Crypto
             HashInstance.ShakeBuffer = new byte[ShakeBuffer.Length];
             Utils.Utils.memcopy(ref HashInstance.ShakeBuffer, ShakeBuffer, ShakeBuffer.Length);
 
-
             // Internal SHA3 Cloning
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
@@ -952,7 +930,6 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class CShake_128
 
     internal sealed class CShake_256 : CShake
@@ -983,7 +960,7 @@ namespace SharpHash.Crypto
 
             HashInstance.ShakeBuffer = new byte[ShakeBuffer.Length];
             Utils.Utils.memcopy(ref HashInstance.ShakeBuffer, ShakeBuffer, ShakeBuffer.Length);
-          
+
             // Internal SHA3 Cloning
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
@@ -995,20 +972,18 @@ namespace SharpHash.Crypto
 
             return HashInstance;
         } // end function Clone
-
     } // end class CShake_256
-
 
     internal abstract class KMACNotBuildInAdapter : Hash, IKMAC, IKMACNotBuildIn, ICrypto, ICryptoNotBuildIn
     {
         protected IHash hash;
         protected byte[] key, Customization;
 
-        protected static readonly byte[] KMAC_Bytes =  new byte[] { 75, 77, 65, 67 };
+        protected static readonly byte[] KMAC_Bytes = new byte[] { 75, 77, 65, 67 };
 
-        protected KMACNotBuildInAdapter(Int32 a_hash_size) 
+        protected KMACNotBuildInAdapter(Int32 a_hash_size)
             : base(a_hash_size, 200 - (a_hash_size * 2))
-        {} // end constructor
+        { } // end constructor
 
         ~KMACNotBuildInAdapter()
         {
@@ -1051,7 +1026,8 @@ namespace SharpHash.Crypto
             Utils.Utils.memset(ref key, 0);
         } // end function Clear
 
-        public virtual byte[] Key {
+        public virtual byte[] Key
+        {
             get
             {
                 byte[] result = new byte[key.Length];
@@ -1068,7 +1044,6 @@ namespace SharpHash.Crypto
                     key = new byte[value.Length];
                     Utils.Utils.memcopy(ref key, value, value.Length);
                 } // end else
-                    
             }
         } // end property Key
 
@@ -1076,8 +1051,8 @@ namespace SharpHash.Crypto
         {
             get
             {
-                if (this is IXOF) 
-                    return String.Format("{0}_{1}_{2}", Name, "XOFSizeInBytes", 
+                if (this is IXOF)
+                    return String.Format("{0}_{1}_{2}", Name, "XOFSizeInBytes",
                         (hash as IXOF).XOFSizeInBits >> 3);
 
                 return String.Format("{0}", Name);
@@ -1093,7 +1068,6 @@ namespace SharpHash.Crypto
 
             (hash as IXOF).DoOutput(ref destination, destinationOffset, outputLength);
         } // end function DoOutput
-
     } // end class KMACNotBuildInAdapter
 
     internal sealed class KMAC128 : KMACNotBuildInAdapter
@@ -1127,7 +1101,7 @@ namespace SharpHash.Crypto
         public override IHash Clone()
         {
             // KMAC128 Cloning
-            KMAC128 HashInstance = new KMAC128(hash.Clone(), Key, 
+            KMAC128 HashInstance = new KMAC128(hash.Clone(), Key,
                 Customization, (hash as IXOF).XOFSizeInBits);
 
             HashInstance.BufferSize = BufferSize;
@@ -1135,12 +1109,11 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        public static IKMAC CreateKMAC128(byte[] a_KMACKey, byte[] a_Customization, 
+        public static IKMAC CreateKMAC128(byte[] a_KMACKey, byte[] a_Customization,
             UInt64 a_OutputLengthInBits)
         {
             return new KMAC128(a_KMACKey, a_Customization, a_OutputLengthInBits) as IKMAC;
         } // end function CreateKMAC128
-
     } // end class KMAC128
 
     internal sealed class KMAC128XOF : KMACNotBuildInAdapter, IXOF
@@ -1205,7 +1178,6 @@ namespace SharpHash.Crypto
 
             return (LXof as IHash) as IKMAC;
         } // end function CreateKMAC128XOF
-
     } // end class KMAC128XOF
 
     internal sealed class KMAC256 : KMACNotBuildInAdapter
@@ -1252,7 +1224,6 @@ namespace SharpHash.Crypto
         {
             return new KMAC256(a_KMACKey, a_Customization, a_OutputLengthInBits) as IKMAC;
         } // end function CreateKMA256
-
     } // end class KMAC256
 
     internal sealed class KMAC256XOF : KMACNotBuildInAdapter, IXOF
@@ -1317,7 +1288,5 @@ namespace SharpHash.Crypto
 
             return (LXof as IHash) as IKMAC;
         } // end function CreateKMAC256XOF
-
     } // end class KMAC256XOF
-
 }

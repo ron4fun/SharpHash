@@ -1,6 +1,5 @@
 ﻿using SharpHash.Base;
 using SharpHash.Interfaces;
-using SharpHash.Utils;
 using System;
 
 namespace SharpHash.Crypto
@@ -24,7 +23,6 @@ namespace SharpHash.Crypto
                 36, 225, 123, 8, 12, 189, 177, 74, 120, 136, 149, 139, 227, 99, 232, 109, 233, 203, 213,
                 254, 59, 0, 29, 57, 242, 239, 183, 14, 102, 88, 208, 228, 166, 119, 114, 248, 235, 117,
                 75, 10, 49, 68, 80, 180, 143, 237, 31, 26, 219, 153, 141, 51, 159, 17, 131, 20};
-
 
         public MD2()
             : base(16, 16)
@@ -96,14 +94,14 @@ namespace SharpHash.Crypto
                 Utils.Utils.memmove((IntPtr)((byte*)tempPtr + a_data_length), (IntPtr)((byte*)a_data + a_index), a_data_length);
 
                 for (Int32 i = 0; i < 16; i++)
-		        {
+                {
                     temp[i + 32] = (byte)(state[i] ^ ((byte*)a_data)[i + a_index]);
                 } // end for
 
                 for (Int32 i = 0; i < 18; i++)
-		        {
+                {
                     for (Int32 j = 0; j < 48; j++)
-			        {
+                    {
                         temp[j] = (byte)(temp[j] ^ pi[t]);
                         t = temp[j];
                     } // end for
@@ -116,16 +114,13 @@ namespace SharpHash.Crypto
                 t = checksum[15];
 
                 for (Int32 i = 0; i < 16; i++)
-		        {
+                {
                     checksum[i] = (byte)(checksum[i] ^ pi[((byte*)a_data)[i + a_index] ^ t]);
                     t = checksum[i];
                 } // end for
 
                 Utils.Utils.memset(ref temp, 0);
             }
-            
         } // end function TransformBlock
-
     } // end class MD2
-
 }

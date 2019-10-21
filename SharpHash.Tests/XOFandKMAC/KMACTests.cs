@@ -1,5 +1,4 @@
-﻿
-namespace SharpHash.XOFandKMAC.Tests
+﻿namespace SharpHash.XOFandKMAC.Tests
 {
     public class KMACTests
     {

@@ -6,7 +6,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon />
     <StartupObject />
-    <Authors>Ron4fun Xor-el</Authors>
+    <Authors>Ron4fun, Xor-el, IzarchTech</Authors>
     <Company>XorelConcepts</Company>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>SharpHash is a C# hashing library which provides an easy to use interface for computing hashes and checksums of data. It also supports state based (incremental) hashing.</Description>

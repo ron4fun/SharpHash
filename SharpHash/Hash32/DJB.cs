@@ -47,6 +47,5 @@ namespace SharpHash.Hash32
                 a_length--;
             } // end while
         } // end function TransformBytes
-
     } // end class
 }

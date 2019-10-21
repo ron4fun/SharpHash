@@ -302,6 +302,7 @@ namespace SharpHash.Utils
 
         public static byte[] ConvertStringToBytes(string a_in, Encoding encoding)
         {
+            if (a_in == null) return new byte[0];
             return encoding.GetBytes(a_in);
         } // end function ConvertStringToBytes
 

@@ -8,7 +8,5 @@ namespace SharpHash.Interfaces.IBlake2SConfigurations
         byte[] Salt { get; set; }
         byte[] Key { get; set; }
         Int32 HashSize { get; set; }
-
     } // end interface IBlake2SConfig
-
 }

@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -30,9 +29,9 @@ namespace SharpHash.Crypto
         } // end function Clone
 
         private static UInt32 P1(UInt32 a, UInt32 b, UInt32 c)
-	    {
-		    return (a & b) | (~a & c);
-	    } // end function P1
+        {
+            return (a & b) | (~a & c);
+        } // end function P1
 
         private static UInt32 P2(UInt32 a, UInt32 b, UInt32 c)
         {
@@ -170,12 +169,8 @@ namespace SharpHash.Crypto
             state[1] = state[2] + d + aa;
             state[2] = state[3] + a + bb;
             state[3] = cc;
-            
 
             Utils.Utils.memset(ref data, 0);
-           
         } // end function TransformBlock
-
     } // end class RIPEMD
-
 }

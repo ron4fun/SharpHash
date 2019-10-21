@@ -22,10 +22,9 @@ namespace SharpHash.Crypto
             pi = new UInt32[17];
             work_buffer = new UInt32[17];
 
-            Array.Resize(ref stages, 32);      
+            Array.Resize(ref stages, 32);
             for (UInt32 i = 0; i < 32; i++)
-			    stages[i] = new UInt32[8];
-
+                stages[i] = new UInt32[8];
         } // end constructor
 
         public override IHash Clone()
@@ -51,7 +50,7 @@ namespace SharpHash.Crypto
             Array.Resize(ref stages, 32);
             for (UInt32 i = 0; i < 32; i++)
                 Utils.Utils.memcopy(ref HashInstance.stages[i], stages[i], stages[i].Length);
-           
+
             HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
@@ -60,7 +59,7 @@ namespace SharpHash.Crypto
         public override unsafe void Initialize()
         {
             Utils.Utils.memset(ref state, 0);
-            
+
             for (Int32 i = 0; i < 32; i++)
                 Utils.Utils.memset(ref stages[i], 0);
 
@@ -99,7 +98,7 @@ namespace SharpHash.Crypto
             fixed (UInt32* ptr_theta = theta)
             {
                 for (Int32 i = 0; i < 32; i++)
-		        {
+                {
                     tap4 = (tap + 4) & 0x1F;
                     tap16 = (tap + 16) & 0x1F;
 
@@ -142,10 +141,8 @@ namespace SharpHash.Crypto
                     state[14] = theta[14] ^ stages[tap16][5];
                     state[15] = theta[15] ^ stages[tap16][6];
                     state[16] = theta[16] ^ stages[tap16][7];
-
                 } // end for
             }
-
         } // end function Finish
 
         protected override unsafe void TransformBlock(IntPtr a_data,
@@ -199,10 +196,8 @@ namespace SharpHash.Crypto
                 state[15] = theta[15] ^ stages[tap16][6];
                 state[16] = theta[16] ^ stages[tap16][7];
 
-
                 Utils.Utils.memset(ref work_buffer, 0);
             }
-            
         } // end function TransformBlock
 
         private unsafe void GPT(UInt32* a_theta)
@@ -261,7 +256,5 @@ namespace SharpHash.Crypto
             a_theta[15] = pi[15] ^ pi[16] ^ pi[2];
             a_theta[16] = pi[16] ^ pi[0] ^ pi[3];
         } // end function GPT
-
     } // end class Panama
-
 }

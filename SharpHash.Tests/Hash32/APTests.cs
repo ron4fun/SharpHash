@@ -1,73 +1,19 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
-using SharpHash.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SharpHash.Base;
 
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
-    public class APTests
+    public class APTests : Hash32BaseTests
     {
-        protected IHash hash = HashFactory.Hash32.CreateAP();
-
-        protected string ExpectedHashOfEmptyData = "AAAAAAAA";
-        protected string ExpectedHashOfDefaultData = "7F14EFED";
-        protected string ExpectedHashOfOnetoNine = "C0E86BE5";
-        protected string ExpectedHashOfabcde = "7F6A697A";
-
-        [TestMethod]
-        public void TestEmptyString()
+        public APTests()
         {
-            TestHelper.TestActualAndExpectedData(TestConstants.EmptyData,
-                ExpectedHashOfEmptyData, hash);
-        }
+            hash = HashFactory.Hash32.CreateAP();
 
-        [TestMethod]
-        public void TestDefaultData()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.DefaultData,
-                ExpectedHashOfDefaultData, hash);
+            ExpectedHashOfEmptyData = "AAAAAAAA";
+            ExpectedHashOfDefaultData = "7F14EFED";
+            ExpectedHashOfOnetoNine = "C0E86BE5";
+            ExpectedHashOfabcde = "7F6A697A";
         }
-
-        [TestMethod]
-        public void TestOnetoNine()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.OnetoNine,
-                ExpectedHashOfOnetoNine, hash);
-        }
-
-        [TestMethod]
-        public void TestBytesabcde()
-        {
-            TestHelper.TestActualAndExpectedData(TestConstants.Bytesabcde,
-                ExpectedHashOfabcde, hash);
-        }
-
-        [TestMethod]
-        public void TestEmptyStream()
-        {
-            TestHelper.TestEmptyStream(ExpectedHashOfEmptyData, hash);
-        }
-
-        [TestMethod]
-        public void TestIncrementalHash()
-        {
-            TestHelper.TestIncrementalHash(TestConstants.DefaultData,
-                ExpectedHashOfDefaultData, hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsCorrect()
-        {
-            TestHelper.TestHashCloneIsCorrect(hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsUnique()
-        {
-            TestHelper.TestHashCloneIsUnique(hash);
-        }
-
     }
-
 }

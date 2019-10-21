@@ -105,11 +105,8 @@ namespace SharpHash.Hash32
                         ByteUpdate(a_data[offset]);
                         offset++;
                     } // end while
-
                 }
             }
-
-
         } // end function TransformBytes
 
         public override IHashResult TransformFinal()
@@ -124,17 +121,17 @@ namespace SharpHash.Hash32
         } // end function TransformFinal
 
         private void TransformUInt32Fast(UInt32 a_data)
-	    {
+        {
             UInt32 k = a_data;
-		
-		    k = k* C1;
+
+            k = k * C1;
             k = Bits.RotateLeft32(k, 15);
-		    k = k* C2;
+            k = k * C2;
 
             h = h ^ k;
-		    h = Bits.RotateLeft32(h, 13);
-		    h = (h* 5) + C3;
-	    } // end function TransformUInt32Fast
+            h = Bits.RotateLeft32(h, 13);
+            h = (h * 5) + C3;
+        } // end function TransformUInt32Fast
 
         private void ByteUpdate(byte a_b)
         {
@@ -151,7 +148,7 @@ namespace SharpHash.Hash32
                         k = Converters.ReadBytesAsUInt32LE((IntPtr)ptr_Fm_buf, 0);
                     }
                 }
-                
+
                 TransformUInt32Fast(k);
                 idx = 0;
             } // end if
@@ -192,7 +189,6 @@ namespace SharpHash.Hash32
                         k = k * C2;
                         h = h ^ k;
                         break;
-
                 } // end switch
             } // end if
 
@@ -206,15 +202,15 @@ namespace SharpHash.Hash32
         } // end function Finish
 
         public Int32? KeyLength
-	    {
+        {
             get
             {
                 return 4;
             }
-	    } // end property KeyLength
+        } // end property KeyLength
 
         public byte[] Key
-	    {
+        {
             get
             {
                 return Converters.ReadUInt32AsBytesLE(key);
@@ -238,7 +234,5 @@ namespace SharpHash.Hash32
                 } // end else
             }
         } // end property Key
-        
     } // end class MurmurHash3_x86_32
-
 }

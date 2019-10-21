@@ -1,5 +1,4 @@
-﻿using SharpHash.Base;
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
 
@@ -36,7 +35,7 @@ namespace SharpHash.Crypto
                 byte* sPtr = (byte*)dPtr;
                 Converters.le32_copy(a_data, a_index, (IntPtr)sPtr, 0, a_data_length);
             }
-            
+
             A = state[0];
             B = state[1];
             C = state[2];
@@ -180,9 +179,6 @@ namespace SharpHash.Crypto
             state[3] = state[3] + D;
 
             Utils.Utils.memset(ref data, 0);
-
         } // end function TransformBlock
-
     } // end class MD5
-
 }

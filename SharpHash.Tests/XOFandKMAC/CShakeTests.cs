@@ -1,6 +1,4 @@
-﻿
-using SharpHash.Interfaces;
-using SharpHash.Utils;
+﻿using SharpHash.Utils;
 using System.Text;
 
 namespace SharpHash.XOFandKMAC.Tests
@@ -13,6 +11,5 @@ namespace SharpHash.XOFandKMAC.Tests
         {
             FS = Converters.ConvertStringToBytes("Email Signature", Encoding.UTF8);
         } //
-
     }
 }

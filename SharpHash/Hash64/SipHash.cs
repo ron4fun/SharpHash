@@ -48,7 +48,7 @@ namespace SharpHash.Hash64
         override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             Int32 i, Length, iter, offset;
-            
+
             Length = a_length;
             i = a_index;
 
@@ -98,9 +98,7 @@ namespace SharpHash.Hash64
                     ByteUpdate(a_data[offset]);
                     offset++;
                 } // end while
-
             }
-
         } // end function TransformBytes
 
         override public IHashResult TransformFinal()
@@ -133,14 +131,14 @@ namespace SharpHash.Hash64
         } // end function Compress
 
         private void CompressTimes(Int32 a_times)
-	    {
+        {
             Int32 i = 0;
-		
-		    while (i < a_times)
-		    {
-			    Compress();
+
+            while (i < a_times)
+            {
+                Compress();
                 i++;
-		    } // end while
+            } // end while
         } // end function CompressTimes
 
         private void ProcessBlock(UInt64 a_m)
@@ -221,7 +219,6 @@ namespace SharpHash.Hash64
                     case 1:
                         b = b | ((UInt64)(buf[0]));
                         break;
-
                 } // end switch
             } // end if
 
@@ -248,7 +245,7 @@ namespace SharpHash.Hash64
 
                 Converters.ReadUInt64AsBytesLE(key0, ref LKey, 0);
                 Converters.ReadUInt64AsBytesLE(key1, ref LKey, 8);
-           
+
                 return LKey;
             }
             set
@@ -271,12 +268,9 @@ namespace SharpHash.Hash64
                             key1 = Converters.ReadBytesAsUInt64LE((IntPtr)bPtr, 8);
                         }
                     }
-
                 } // end else
             }
-
         } // end property Key
-
     } // end class SipHash
 
     /// <summary>
@@ -288,18 +282,18 @@ namespace SharpHash.Hash64
         { } // end constructor
 
         public override IHash Clone()
-	    {
+        {
             SipHash2_4 HashInstance = new SipHash2_4();
             HashInstance.v0 = v0;
-		    HashInstance.v1 = v1;
-		    HashInstance.v2 = v2;
-		    HashInstance.v3 = v3;
-		    HashInstance.key0 = key0;
-		    HashInstance.key1 = key1;
-		    HashInstance.total_length = total_length;
-		    HashInstance.cr = cr;
-		    HashInstance.fr = fr;
-		    HashInstance.idx = idx;
+            HashInstance.v1 = v1;
+            HashInstance.v2 = v2;
+            HashInstance.v3 = v3;
+            HashInstance.key0 = key0;
+            HashInstance.key1 = key1;
+            HashInstance.total_length = total_length;
+            HashInstance.cr = cr;
+            HashInstance.fr = fr;
+            HashInstance.idx = idx;
 
             if (!(buf == null || buf.Length == 0))
             {
@@ -309,9 +303,7 @@ namespace SharpHash.Hash64
 
             HashInstance.BufferSize = BufferSize;
 
-		    return HashInstance;
-	    } // end function Clone
-
+            return HashInstance;
+        } // end function Clone
     }; // end class SipHash2_4
-
 }
