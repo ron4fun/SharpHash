@@ -4,7 +4,7 @@ namespace SharpHash.Utils
 {
     public static class Utils
     {
-        public unsafe static void memcopy(ref byte[] dest, byte[] src, Int32 n, 
+        public unsafe static void memcopy(ref byte[] dest, byte[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
             fixed (byte* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
@@ -59,7 +59,7 @@ namespace SharpHash.Utils
 
             // Copy data from temp[] to cdest[]
             for (int i = 0; i < n; i++)
-                cdest[i] = temp[i];            
+                cdest[i] = temp[i];
         }
 
         public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n)
@@ -145,7 +145,6 @@ namespace SharpHash.Utils
                     result[x.Length + index] = y[index++];
                 } // end while
             } // end if
-
             else if (x.Length > y.Length)
             {
                 // Multi fill array
@@ -157,9 +156,7 @@ namespace SharpHash.Utils
 
                 while (index < x.Length)
                     result[index] = x[index++];
-
             } // end else if
-
             else if (y.Length > x.Length)
             {
                 // Multi fill array
@@ -171,11 +168,9 @@ namespace SharpHash.Utils
 
                 while (index < y.Length)
                     result[x.Length + index] = y[index++];
-
             } // ende else if
-         
+
             return result;
         } // end function Concat
-
     }
 }
