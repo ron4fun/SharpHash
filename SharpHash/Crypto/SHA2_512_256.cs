@@ -11,7 +11,7 @@ namespace SharpHash.Crypto
             base(32)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA2_512_256 HashInstance = new SHA2_512_256();
             HashInstance.buffer = buffer.Clone();
@@ -25,7 +25,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             state[0] = 0x22312194FC2BF72C;
             state[1] = 0x9F555FA3C84C64C2;
@@ -39,7 +39,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[4 * sizeof(UInt64)];
 

@@ -10,7 +10,7 @@ namespace SharpHash.Crypto
         private byte[] state = null;
         private byte[] checksum = null;
 
-        private readonly static byte[] pi = new byte[256] {41, 46, 67, 201, 162, 216, 124, 1, 61, 54, 84, 161, 236, 240, 6,
+        private static readonly byte[] pi = new byte[256] {41, 46, 67, 201, 162, 216, 124, 1, 61, 54, 84, 161, 236, 240, 6,
                 19, 98, 167, 5, 243, 192, 199, 115, 140, 152, 147, 43, 217, 188, 76, 130, 202,
                 30, 155, 87, 60, 253, 212, 224, 22, 103, 66, 111, 24, 138, 23, 229, 18, 190, 78,
                 196, 214, 218, 158, 222, 73, 160, 251, 245, 142, 187, 47, 238, 122, 169, 104, 121,
@@ -33,7 +33,7 @@ namespace SharpHash.Crypto
             checksum = new byte[16];
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             MD2 HashInstance = new MD2();
             HashInstance.buffer = buffer.Clone();
@@ -50,7 +50,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             Utils.Utils.memset(ref state, 0);
             Utils.Utils.memset(ref checksum, 0);
@@ -58,7 +58,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override protected byte[] GetResult()
+        protected override byte[] GetResult()
         {
             byte[] result = new byte[state.Length];
             Utils.Utils.memcopy(ref result, state, state.Length);
@@ -66,7 +66,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override protected void Finish()
+        protected override void Finish()
         {
             UInt32 padLen;
 
@@ -84,7 +84,7 @@ namespace SharpHash.Crypto
             TransformBytes(checksum, 0, 16);
         } // end function Finish
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 t = 0;

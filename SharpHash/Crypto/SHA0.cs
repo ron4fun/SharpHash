@@ -10,10 +10,10 @@ namespace SharpHash.Crypto
         protected UInt32[] state = null;
         private UInt32[] data = null;
 
-        private readonly static UInt32 C1 = 0x5A827999;
-        private readonly static UInt32 C2 = 0x6ED9EBA1;
-        private readonly static UInt32 C3 = 0x8F1BBCDC;
-        private readonly static UInt32 C4 = 0xCA62C1D6;
+        private static readonly UInt32 C1 = 0x5A827999;
+        private static readonly UInt32 C2 = 0x6ED9EBA1;
+        private static readonly UInt32 C3 = 0x8F1BBCDC;
+        private static readonly UInt32 C4 = 0xCA62C1D6;
                
         public SHA0()
             : base(20, 64)
@@ -22,7 +22,7 @@ namespace SharpHash.Crypto
             data = new UInt32[80];
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA0 HashInstance = new SHA0();
             HashInstance.buffer = buffer.Clone();
@@ -36,7 +36,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             state[0] = 0x67452301;
             state[1] = 0xEFCDAB89;
@@ -47,7 +47,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        virtual protected unsafe void Expand(UInt32* a_data)
+        protected virtual unsafe void Expand(UInt32* a_data)
         {
             a_data[16] = ((a_data[16 - 3] ^ a_data[16 - 8]) ^ a_data[16 - 14]) ^ a_data[0];
             a_data[17] = ((a_data[17 - 3] ^ a_data[17 - 8]) ^ a_data[17 - 14]) ^ a_data[17 - 16];
@@ -116,7 +116,7 @@ namespace SharpHash.Crypto
 
         } // end function Expand
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[5 * sizeof(UInt32)];
 
@@ -131,7 +131,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override protected void Finish()
+        protected override void Finish()
         {
             Int32 padindex;
 
@@ -154,7 +154,7 @@ namespace SharpHash.Crypto
             TransformBytes(pad, 0, padindex);
         } // end function Finish
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D, E;            

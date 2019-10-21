@@ -17,7 +17,7 @@ namespace SharpHash.Crypto
             data = new UInt64[80];
         } // end constructor
 
-        override protected void Finish()
+        protected override void Finish()
         {
             UInt64 lowBits, hiBits;
             Int32 padindex;
@@ -51,7 +51,7 @@ namespace SharpHash.Crypto
 
         } // end function Finish
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt64 T0, T1, a, b, c, d, e, f, g, h;

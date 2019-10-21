@@ -10,9 +10,9 @@ namespace SharpHash.Crypto
         private UInt32[] hash = null;
         private UInt32[] data = null;
 
-        private readonly static Int32[] rot = new Int32[] { 5, 11, 7, 15, 6, 13, 8, 14, 7, 12, 9, 11, 8, 15, 6, 12, 9, 14, 5, 13 };
-        private readonly static Int32[] tor = new Int32[] { 27, 21, 25, 17, 26, 19, 24, 18, 25, 20, 23, 21, 24, 17, 26, 20, 23, 18, 27, 19 };
-        private readonly static Int32[] index = new Int32[] { 18, 0, 1, 2, 3, 19, 4, 5, 6, 7, 16, 8,
+        private static readonly Int32[] rot = new Int32[] { 5, 11, 7, 15, 6, 13, 8, 14, 7, 12, 9, 11, 8, 15, 6, 12, 9, 14, 5, 13 };
+        private static readonly Int32[] tor = new Int32[] { 27, 21, 25, 17, 26, 19, 24, 18, 25, 20, 23, 21, 24, 17, 26, 20, 23, 18, 27, 19 };
+        private static readonly Int32[] index = new Int32[] { 18, 0, 1, 2, 3, 19, 4, 5, 6, 7, 16, 8,
                                     9, 10, 11, 17, 12, 13, 14, 15, 18, 3, 6, 9, 12, 19, 15, 2, 5, 8, 16, 11,
                                     14, 1, 4, 17, 7, 10, 13, 0, 18, 12, 5, 14, 7, 19, 0, 9, 2, 11, 16, 4, 13,
                                     6, 15, 17, 8, 1, 10, 3, 18, 7, 2, 13, 8, 19, 3, 14, 9, 4, 16, 15, 10, 5,
@@ -25,7 +25,7 @@ namespace SharpHash.Crypto
             data = new UInt32[20];
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             HAS160 HashInstance = new HAS160();
             HashInstance.buffer = buffer.Clone();
@@ -39,7 +39,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             hash[0] = 0x67452301;
             hash[1] = 0xEFCDAB89;
@@ -50,7 +50,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[5 * sizeof(UInt32)];
 
@@ -66,15 +66,13 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override protected void Finish()
+        protected override void Finish()
         {
             Int32 pad_index;
 
             UInt64 bits = processed_bytes * 8;
-            if (buffer.Position < 56)
-                pad_index = 56 - buffer.Position;
-            else
-                pad_index = 120 - buffer.Position;
+            
+            pad_index = buffer.Position < 56 ? 56 - buffer.Position : 120 - buffer.Position;
 
             byte[] pad = new byte[pad_index + 8];
 
@@ -89,7 +87,7 @@ namespace SharpHash.Crypto
             TransformBytes(pad, 0, pad_index);
         } // end function Finish
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D, E, T;

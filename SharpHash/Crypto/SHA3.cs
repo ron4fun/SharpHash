@@ -7,10 +7,10 @@ namespace SharpHash.Crypto
 {
     internal static class Global
     {
-        public readonly static string InvalidHashMode = "Only \"[{0}]\" HashModes are Supported";
-        public readonly static string InvalidXOFSize = "XOFSize in Bits must be Multiples of 8 & be Greater than Zero Bytes";
-        public readonly static string OutputLengthInvalid = "Output Length is above the Digest Length";
-        public readonly static string OutputBufferTooShort = "Output Buffer Too Short";
+        public static readonly string InvalidHashMode = "Only \"[{0}]\" HashModes are Supported";
+        public static readonly string InvalidXOFSize = "XOFSize in Bits must be Multiples of 8 & be Greater than Zero Bytes";
+        public static readonly string OutputLengthInvalid = "Output Length is above the Digest Length";
+        public static readonly string OutputBufferTooShort = "Output Buffer Too Short";
 
     } // end class Global
 
@@ -29,7 +29,7 @@ namespace SharpHash.Crypto
         protected UInt64[] state = null;
         protected HashMode hash_mode;
 
-        private readonly static UInt64[] RC = new UInt64[] {
+        private static readonly UInt64[] RC = new UInt64[] {
             0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 0x8000000080008000,
             0x000000000000808B, 0x0000000080000001, 0x8000000080008081, 0x8000000000008009,
             0x000000000000008A, 0x0000000000000088, 0x0000000080008009, 0x000000008000000A,
@@ -44,7 +44,7 @@ namespace SharpHash.Crypto
             state = new UInt64[25];
         } // end constructor
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             fixed (UInt64* sPtr = state)
             {
@@ -54,7 +54,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override public string Name
+        public override string Name
         {
             get
             {
@@ -352,7 +352,7 @@ namespace SharpHash.Crypto
             
         } // end function Finish
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[HashSize];
 
@@ -367,7 +367,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt64[] data = new UInt64[21];
@@ -402,7 +402,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.SHA3;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA3_224 HashInstance = new SHA3_224();
             HashInstance.buffer = buffer.Clone();
@@ -426,7 +426,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.SHA3;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA3_256 HashInstance = new SHA3_256();
             HashInstance.buffer = buffer.Clone();
@@ -450,7 +450,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.SHA3;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA3_384 HashInstance = new SHA3_384();
             HashInstance.buffer = buffer.Clone();
@@ -474,7 +474,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.SHA3;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA3_512 HashInstance = new SHA3_512();
             HashInstance.buffer = buffer.Clone();
@@ -499,7 +499,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.Keccak;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Keccak_224 HashInstance = new Keccak_224();
             HashInstance.buffer = buffer.Clone();
@@ -523,7 +523,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.Keccak;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Keccak_256 HashInstance = new Keccak_256();
             HashInstance.buffer = buffer.Clone();
@@ -547,7 +547,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.Keccak;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Keccak_288 HashInstance = new Keccak_288();
             HashInstance.buffer = buffer.Clone();
@@ -571,7 +571,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.Keccak;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Keccak_384 HashInstance = new Keccak_384();
             HashInstance.buffer = buffer.Clone();
@@ -595,7 +595,7 @@ namespace SharpHash.Crypto
             hash_mode = HashMode.Keccak;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Keccak_512 HashInstance = new Keccak_512();
             HashInstance.buffer = buffer.Clone();
@@ -628,7 +628,7 @@ namespace SharpHash.Crypto
             Finalized = false;
         } // end constructor
 
-        override public void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
 
@@ -639,7 +639,7 @@ namespace SharpHash.Crypto
             Utils.Utils.memset(ref ShakeBuffer, 0);
         } // end function 
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {         
             byte[] temp = GetResult();
             
@@ -648,7 +648,7 @@ namespace SharpHash.Crypto
             return new HashResult(temp);
         } // end function TransformFinal
 
-        override protected byte[] GetResult()
+        protected override byte[] GetResult()
         {
             UInt64 XofSizeInBytes = XOFSizeInBits >> 3;
 
@@ -671,12 +671,12 @@ namespace SharpHash.Crypto
             return this;
         } // end function SetXOFSizeInBitsInternal
 
-        virtual public UInt64 XOFSizeInBits {
-            get { return xofSizeInBits; }
-            set { SetXOFSizeInBitsInternal(value); }
+        public virtual UInt64 XOFSizeInBits {
+            get => xofSizeInBits;
+            set => SetXOFSizeInBitsInternal(value);
         }
 
-        virtual public void DoOutput(ref byte[] a_destination, UInt64 a_destinationOffset,
+        public virtual void DoOutput(ref byte[] a_destination, UInt64 a_destinationOffset,
             UInt64 a_outputLength)
         {
             UInt64 DestinationOffset;
@@ -729,7 +729,7 @@ namespace SharpHash.Crypto
             base((Int32)HashSizeEnum.HashSize128)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // Xof Cloning
             IXOF LXof = (new Shake_128() as IXOF);
@@ -765,7 +765,7 @@ namespace SharpHash.Crypto
             base((Int32)HashSizeEnum.HashSize256)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // Xof Cloning
             IXOF LXof = (new Shake_256() as IXOF);
@@ -862,7 +862,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function LeftEncode
 
-        override public void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
 
@@ -917,7 +917,7 @@ namespace SharpHash.Crypto
             base((Int32)HashSizeEnum.HashSize128, N, S)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // Xof Cloning
             IXOF LXof = (new CShake_128(FN, FS) as IXOF);
@@ -961,7 +961,7 @@ namespace SharpHash.Crypto
             base((Int32)HashSizeEnum.HashSize256, N, S)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // Xof Cloning
             IXOF LXof = (new CShake_256(FN, FS) as IXOF);
@@ -1015,13 +1015,13 @@ namespace SharpHash.Crypto
             Clear();
         } // end destructor
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             hash.Initialize();
             TransformBytes(CShake.BytePad(CShake.EncodeString(Key), BlockSize));
         } // end function Initialize
 
-        virtual protected unsafe byte[] GetResult()
+        protected virtual unsafe byte[] GetResult()
         {
             UInt64 XofSizeInBytes = (hash as IXOF).XOFSizeInBits >> 3;
 
@@ -1032,7 +1032,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             byte[] temp = GetResult();
 
@@ -1041,17 +1041,17 @@ namespace SharpHash.Crypto
             return new HashResult(temp);
         } // end function TransformFinal
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             hash.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
 
-        virtual public void Clear()
+        public virtual void Clear()
         {
             Utils.Utils.memset(ref key, 0);
         } // end function Clear
 
-        virtual public byte[] Key {
+        public virtual byte[] Key {
             get
             {
                 byte[] result = new byte[key.Length];
@@ -1072,7 +1072,7 @@ namespace SharpHash.Crypto
             }
         } // end property Key
 
-        override public string Name
+        public override string Name
         {
             get
             {
@@ -1084,7 +1084,7 @@ namespace SharpHash.Crypto
             }
         }
 
-        virtual public void DoOutput(ref byte[] destination, UInt64 destinationOffset, UInt64 outputLength)
+        public virtual void DoOutput(ref byte[] destination, UInt64 destinationOffset, UInt64 outputLength)
         {
             if (this is IXOF)
                 TransformBytes(CShake.RightEncode(0));
@@ -1124,7 +1124,7 @@ namespace SharpHash.Crypto
                 a_KMACKey, a_Customization, a_OutputLengthInBits)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // KMAC128 Cloning
             KMAC128 HashInstance = new KMAC128(hash.Clone(), Key, 
@@ -1168,7 +1168,7 @@ namespace SharpHash.Crypto
             hash = a_hash;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // KMAC128XOF Cloning
             KMAC128XOF HashInstance = new KMAC128XOF(hash.Clone(), Key, Customization);
@@ -1193,8 +1193,8 @@ namespace SharpHash.Crypto
 
         public UInt64 XOFSizeInBits
         {
-            get { return (hash as IXOF).XOFSizeInBits; }
-            set { SetXOFSizeInBitsInternal(value); }
+            get => (hash as IXOF).XOFSizeInBits;
+            set => SetXOFSizeInBitsInternal(value);
         } // end property XOFSizeInBits
 
         public static IKMAC CreateKMAC128XOF(byte[] a_KMACKey, byte[] a_Customization,
@@ -1236,7 +1236,7 @@ namespace SharpHash.Crypto
                 a_KMACKey, a_Customization, a_OutputLengthInBits)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // KMAC256 Cloning
             KMAC256 HashInstance = new KMAC256(hash.Clone(), Key,
@@ -1280,7 +1280,7 @@ namespace SharpHash.Crypto
             hash = a_hash;
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             // KMAC256XOF Cloning
             KMAC256XOF HashInstance = new KMAC256XOF(hash.Clone(), Key, Customization);
@@ -1305,8 +1305,8 @@ namespace SharpHash.Crypto
 
         public UInt64 XOFSizeInBits
         {
-            get { return (hash as IXOF).XOFSizeInBits; }
-            set { SetXOFSizeInBitsInternal(value); }
+            get => (hash as IXOF).XOFSizeInBits;
+            set => SetXOFSizeInBitsInternal(value);
         } // end property XOFSizeInBits
 
         public static IKMAC CreateKMAC256XOF(byte[] a_KMACKey, byte[] a_Customization,

@@ -24,7 +24,7 @@ namespace SharpHash.Crypto
             state = new UInt32[a_state_length];
         } // end constructor
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[state.Length * sizeof(UInt32)];
 
@@ -40,7 +40,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override public void Initialize()
+        public override void Initialize()
         {
             state[0] = 0x67452301;
             state[1] = 0xEFCDAB89;
@@ -50,7 +50,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override protected void Finish()
+        protected override void Finish()
         {
             UInt64 bits;
             Int32 padindex;

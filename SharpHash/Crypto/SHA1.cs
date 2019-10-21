@@ -10,7 +10,7 @@ namespace SharpHash.Crypto
         public SHA1()
         {} // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             SHA1 HashInstance = new SHA1();
             HashInstance.buffer = buffer.Clone();
@@ -24,7 +24,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override protected unsafe void Expand(UInt32* a_data)
+        protected override unsafe void Expand(UInt32* a_data)
         {
             UInt32 T;
 

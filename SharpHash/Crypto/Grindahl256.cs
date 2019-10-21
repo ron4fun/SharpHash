@@ -15,7 +15,7 @@ namespace SharpHash.Crypto
         private static UInt32[] table_2 = new UInt32[256];
         private static UInt32[] table_3 = new UInt32[256];
 
-        private readonly static UInt32[] master_table = new UInt32[] {
+        private static readonly UInt32[] master_table = new UInt32[] {
             0xC66363A5, 0xF87C7C84,
             0xEE777799, 0xF67B7B8D, 0xFFF2F20D, 0xD66B6BBD, 0xDE6F6FB1, 0x91C5C554,
             0x60303050, 0x02010103, 0xCE6767A9, 0x562B2B7D, 0xE7FEFE19, 0xB5D7D762,
@@ -82,7 +82,7 @@ namespace SharpHash.Crypto
             temp = new UInt32[13];
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Grindahl256 HashInstance = new Grindahl256();
             HashInstance.buffer = buffer.Clone();
@@ -99,7 +99,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             Utils.Utils.memset(ref state, 0);
             Utils.Utils.memset(ref temp, 0);
@@ -107,7 +107,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[8 * sizeof(UInt32)];
 
@@ -123,7 +123,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override protected unsafe void Finish()
+        protected override unsafe void Finish()
         {
             Int32 padding_size = 12 - (Int32)(processed_bytes & 3);
             UInt64 msg_length = (processed_bytes >> 2) + 1;
@@ -153,7 +153,7 @@ namespace SharpHash.Crypto
 
         } // end function Finish
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             state[0] = Converters.ReadBytesAsUInt32LE(a_data, a_index);

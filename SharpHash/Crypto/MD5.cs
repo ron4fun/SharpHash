@@ -11,7 +11,7 @@ namespace SharpHash.Crypto
             : base(4, 16)
         { } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             MD5 HashInstance = new MD5();
             HashInstance.buffer = buffer.Clone();
@@ -25,7 +25,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D;

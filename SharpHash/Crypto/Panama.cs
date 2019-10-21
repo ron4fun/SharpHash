@@ -28,7 +28,7 @@ namespace SharpHash.Crypto
 
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             Panama HashInstance = new Panama();
             HashInstance.buffer = buffer.Clone();
@@ -57,7 +57,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override public unsafe void Initialize()
+        public override unsafe void Initialize()
         {
             Utils.Utils.memset(ref state, 0);
             
@@ -67,7 +67,7 @@ namespace SharpHash.Crypto
             base.Initialize();
         } // end function Initialize
 
-        override protected unsafe byte[] GetResult()
+        protected override unsafe byte[] GetResult()
         {
             byte[] result = new byte[8 * sizeof(UInt32)];
 
@@ -83,7 +83,7 @@ namespace SharpHash.Crypto
             return result;
         } // end function GetResult
 
-        override protected unsafe void Finish()
+        protected override unsafe void Finish()
         {
             Int32 tap4, tap16, tap25;
 
@@ -148,7 +148,7 @@ namespace SharpHash.Crypto
 
         } // end function Finish
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 tap16, tap25;

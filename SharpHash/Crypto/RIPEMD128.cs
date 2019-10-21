@@ -15,7 +15,7 @@ namespace SharpHash.Crypto
             data = new UInt32[16];
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             RIPEMD128 HashInstance = new RIPEMD128();
             HashInstance.buffer = buffer.Clone();
@@ -29,7 +29,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        override protected unsafe void TransformBlock(IntPtr a_data,
+        protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 a, b, c, d, aa, bb, cc, dd;
