@@ -6,6 +6,32 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon />
     <StartupObject />
+    <Authors>Ron4fun Xor-el</Authors>
+    <Company>XorelConcepts</Company>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Description>SharpHash is a C# hashing library which provides an easy to use interface for computing hashes and checksums of data. It also supports state based (incremental) hashing.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/ron4fun/SharpHash</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ron4fun/SharpHash.git</RepositoryUrl>
+    <Copyright>2019</Copyright>
+    <PackageId>SharpHash_Ron4fun</PackageId>
+    <PackageTags>Hash;Hashing;Crypto;Cryptography;Checksum;HMAC;KDF;PBKDF;</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>sharphash_key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
