@@ -1,4 +1,4 @@
-﻿using SharpHash.Base;
+using SharpHash.Base;
 using SharpHash.Interfaces;
 using System;
 
@@ -13,13 +13,8 @@ namespace SharpHash.Checksum
             : base(4, 1)
         { } // end constructor
 
-<<<<<<< Updated upstream
         public override IHash Clone()
-    	{
-=======
-        override public IHash Clone()
         {
->>>>>>> Stashed changes
             Adler32 HashInstance = new Adler32();
             HashInstance.a = a;
             HashInstance.b = b;

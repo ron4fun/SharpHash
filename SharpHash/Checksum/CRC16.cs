@@ -1,4 +1,4 @@
-﻿using SharpHash.Base;
+using SharpHash.Base;
 using SharpHash.Interfaces;
 using System;
 
@@ -6,11 +6,7 @@ namespace SharpHash.Checksum
 {
     internal sealed class CRC16Polynomials
     {
-<<<<<<< Updated upstream
-	    public static readonly UInt16 BUYPASS = 0x8005;
-=======
-        static public readonly UInt16 BUYPASS = 0x8005;
->>>>>>> Stashed changes
+        public static readonly UInt16 BUYPASS = 0x8005;
     }; // end class CRC16Polynomials
 
     internal class CRC16 : Hash, IChecksum, IBlockHash, IHash16, ITransformBlock
@@ -23,13 +19,8 @@ namespace SharpHash.Checksum
         {
             CRCAlgorithm = new CRC(16, _poly, _Init, _refIn, _refOut, _XorOut, _check, _Names);
         } // end constructor
-<<<<<<< Updated upstream
-        
-        public override void Initialize()
-=======
 
-        override public void Initialize()
->>>>>>> Stashed changes
+        public override void Initialize()
         {
             CRCAlgorithm.Initialize();
         } // end function Initialize
@@ -39,15 +30,9 @@ namespace SharpHash.Checksum
             return CRCAlgorithm.TransformFinal();
         } // end function TransformFinal
 
-<<<<<<< Updated upstream
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
-	    {
-		    CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
-=======
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
->>>>>>> Stashed changes
         } // end function TransformBytes
     } // end class CRC16
 

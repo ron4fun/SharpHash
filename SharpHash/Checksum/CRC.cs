@@ -1,4 +1,4 @@
-﻿using SharpHash.Base;
+using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
@@ -567,13 +567,8 @@ namespace SharpHash.Checksum
             checkValue = _check;
         } // end constructor
 
-<<<<<<< Updated upstream
         public override IHash Clone()
-    	{
-=======
-        override public IHash Clone()
         {
->>>>>>> Stashed changes
             CRC HashInstance = new CRC(width, polynomial, init, reflectIn, reflectOut, xorOut, checkValue, names);
             HashInstance.CRCMask = CRCMask;
             HashInstance.CRCHighBitMask = CRCHighBitMask;
@@ -592,17 +587,7 @@ namespace SharpHash.Checksum
             return HashInstance;
         } // end function Clone
 
-<<<<<<< Updated upstream
         public override string Name => Names[0];
-=======
-        override public string Name
-        {
-            get
-            {
-                return Names[0];
-            }
-        }
->>>>>>> Stashed changes
 
         public override void Initialize()
         {
@@ -661,14 +646,14 @@ namespace SharpHash.Checksum
                 Initialize();
                 return new HashResult(LUInt8);
             } // end result
-            
+
             if (value == 1 || value == 2)
             {
                 LUInt16 = (UInt16)hash;
                 Initialize();
                 return new HashResult(LUInt16);
             } // end result
-            
+
             if (value == 3 || value == 4)
             {
                 LUInt32 = (UInt32)hash;
@@ -1012,7 +997,6 @@ namespace SharpHash.Checksum
             throw new ArgumentHashLibException("Invalid CRCStandard object.");
         } // end function CreateCRCObject
 
-<<<<<<< Updated upstream
         public string[] Names => names;
 
         public Int32 Width => width;
@@ -1028,73 +1012,7 @@ namespace SharpHash.Checksum
         public UInt64 OutputXor => xorOut;
 
         public UInt64 CheckValue => checkValue;
-              
-=======
-        public string[] Names
-        {
-            get
-            {
-                return names;
-            }
-        } // end property Names
 
-        public Int32 Width
-        {
-            get
-            {
-                return width;
-            }
-        } // end property Width
-
-        public UInt64 Polynomial
-        {
-            get
-            {
-                return polynomial;
-            }
-        } // end property Polynomial
-
-        public UInt64 Initial
-        {
-            get
-            {
-                return init;
-            }
-        } // end property Initial
-
-        public bool IsInputReflected
-        {
-            get
-            {
-                return reflectIn;
-            }
-        } // end property IsInputReflected
-
-        public bool IsOutputReflected
-        {
-            get
-            {
-                return reflectOut;
-            }
-        } // end property IsOutputReflected
-
-        public UInt64 OutputXor
-        {
-            get
-            {
-                return xorOut;
-            }
-        } // end property OutputXor
-
-        public UInt64 CheckValue
-        {
-            get
-            {
-                return checkValue;
-            }
-        } // end property CheckValue
-
->>>>>>> Stashed changes
         private void GenerateTable()
         {
             UInt64 bit, crc;

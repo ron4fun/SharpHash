@@ -1,4 +1,4 @@
-﻿using SharpHash.Interfaces;
+using SharpHash.Interfaces;
 using System;
 using System.IO;
 
@@ -26,14 +26,9 @@ namespace SharpHash.Base
             Buffer.SetLength(0);
         } // end fucntion Initialize
 
-<<<<<<< Updated upstream
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
-	    {
-=======
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             if (a_data == null || a_data.Length == 0) return;
->>>>>>> Stashed changes
             Buffer.Write(a_data, a_index, a_length);
         } // end function TransformBytes
 
