@@ -120,9 +120,6 @@ Available Algorithms
 
 * `KMACXOF (KMAC128XOF, KMAC256XOF)`
 
-### Want To Become A Contributor
-----------------------------------------
-Request via email to [ron2tele@gmail.com](ron2tele@gmail.com). And be sure to heed to our coding guidelines.
 
 ### Other Implementations
 ----------------------------------------
