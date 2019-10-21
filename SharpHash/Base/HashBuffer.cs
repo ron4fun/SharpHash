@@ -111,48 +111,14 @@ namespace SharpHash.Base
             return result;
         } // end function GetBytesZeroPadded
 
-<<<<<<< Updated upstream
         public bool IsEmpty => pos == 0;
-	
-	    public bool IsFull => pos == data.Length;
+
+        public bool IsFull => pos == data.Length;
 
         public Int32 Length => data.Length; // end property Length
-=======
-        public bool IsEmpty
-        {
-            get
-            {
-                return pos == 0;
-            }
-        } // end property IsEmpty
 
-        public bool IsFull
-        {
-            get
-            {
-                return pos == data.Length;
-            }
-        } // end property IsFull
+        public Int32 Position => pos;
 
-        public Int32 Length
-        {
-            get
-            {
-                return data.Length;
-            }
-        } // end property Length
-
-        public Int32 Position
-        {
-            get
-            {
-                return pos;
-            }
-        } // end property Position
->>>>>>> Stashed changes
-
-        public Int32 Position =>  pos;
-        
         public void Initialize()
         {
             pos = 0;

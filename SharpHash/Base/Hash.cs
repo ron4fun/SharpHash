@@ -14,11 +14,7 @@ namespace SharpHash.Base
 
         public virtual string Name => GetType().Name;
 
-<<<<<<< Updated upstream
-        public virtual Int32 BufferSize 
-=======
-        virtual public Int32 BufferSize
->>>>>>> Stashed changes
+        public virtual Int32 BufferSize
         {
             get => buffer_size;
             set
@@ -55,21 +51,12 @@ namespace SharpHash.Base
 
         public abstract void Initialize();
 
-<<<<<<< Updated upstream
         public virtual IHash Clone()
-	    {
-		    throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
-	    } // end function Clone
-
-	    public virtual IHashResult ComputeString(string a_data, Encoding encoding)
-=======
-        virtual public IHash Clone()
         {
             throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
         } // end function Clone
 
-        virtual public IHashResult ComputeString(string a_data, Encoding encoding)
->>>>>>> Stashed changes
+        public virtual IHashResult ComputeString(string a_data, Encoding encoding)
         {
             return ComputeBytes(Converters.ConvertStringToBytes(a_data, encoding));
         } // end function ComputeString
@@ -133,13 +120,8 @@ namespace SharpHash.Base
             return TransformFinal();
         } // end function ComputeStream
 
-<<<<<<< Updated upstream
         public virtual IHashResult ComputeFile(string a_file_name,
-		        Int64 a_from = 0, Int64 a_length = -1)
-=======
-        virtual public IHashResult ComputeFile(string a_file_name,
                 Int64 a_from = 0, Int64 a_length = -1)
->>>>>>> Stashed changes
         {
             Initialize();
             TransformFile(a_file_name, a_from, a_length);
@@ -175,11 +157,7 @@ namespace SharpHash.Base
 
         public abstract void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length);
 
-<<<<<<< Updated upstream
-	    public virtual void TransformStream(Stream a_stream, Int64 a_length = -1)
-=======
-        virtual public void TransformStream(Stream a_stream, Int64 a_length = -1)
->>>>>>> Stashed changes
+        public virtual void TransformStream(Stream a_stream, Int64 a_length = -1)
         {
             Int32 readed = 0, LBufferSize;
             UInt64 size, new_size;
@@ -258,13 +236,8 @@ namespace SharpHash.Base
             }
         } // end function TransformStream
 
-<<<<<<< Updated upstream
         public virtual void TransformFile(string a_file_name,
-		        Int64 a_from = 0, Int64 a_length = -1)
-=======
-        virtual public void TransformFile(string a_file_name,
                 Int64 a_from = 0, Int64 a_length = -1)
->>>>>>> Stashed changes
         {
             Stream ReadFile = File.OpenRead(a_file_name);
 

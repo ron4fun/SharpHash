@@ -6,13 +6,8 @@ namespace SharpHash.Checksum
 {
     internal sealed class CRC32Polynomials
     {
-<<<<<<< Updated upstream
-	    public static readonly UInt32 PKZIP = 0x04C11DB7;
+        public static readonly UInt32 PKZIP = 0x04C11DB7;
         public static readonly UInt32 Castagnoli = 0x1EDC6F41;
-=======
-        static public readonly UInt32 PKZIP = 0x04C11DB7;
-        static public readonly UInt32 Castagnoli = 0x1EDC6F41;
->>>>>>> Stashed changes
     } // end class CRC32Polynomials
 
     internal class CRC32 : Hash, IChecksum, IBlockHash, IHash32, ITransformBlock
@@ -35,15 +30,9 @@ namespace SharpHash.Checksum
             return CRCAlgorithm.TransformFinal();
         } // end function TransformFinal
 
-<<<<<<< Updated upstream
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
-	    {
-		    CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
-=======
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
->>>>>>> Stashed changes
         } // end function TransformBytes
     } // end class CRC32
 

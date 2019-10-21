@@ -1,4 +1,4 @@
-using SharpHash.Interfaces;
+﻿using SharpHash.Interfaces;
 using System;
 using System.IO;
 

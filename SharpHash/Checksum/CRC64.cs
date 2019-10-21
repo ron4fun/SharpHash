@@ -30,15 +30,9 @@ namespace SharpHash.Checksum
             return CRCAlgorithm.TransformFinal();
         } // end function TransformFinal
 
-<<<<<<< Updated upstream
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
-	    {
-		    CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
-=======
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
->>>>>>> Stashed changes
         } // end function TransformBytes
     } // end class CRC64
 

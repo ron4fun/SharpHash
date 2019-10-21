@@ -1,4 +1,4 @@
-﻿using SharpHash.Base;
+using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
@@ -14,7 +14,7 @@ namespace SharpHash.Crypto
         private static readonly UInt32 C2 = 0x6ED9EBA1;
         private static readonly UInt32 C3 = 0x8F1BBCDC;
         private static readonly UInt32 C4 = 0xCA62C1D6;
-               
+
         public SHA0()
             : base(20, 64)
         {
@@ -113,7 +113,6 @@ namespace SharpHash.Crypto
             a_data[77] = ((a_data[77 - 3] ^ a_data[77 - 8]) ^ a_data[77 - 14]) ^ a_data[77 - 16];
             a_data[78] = ((a_data[78 - 3] ^ a_data[78 - 8]) ^ a_data[78 - 14]) ^ a_data[78 - 16];
             a_data[79] = ((a_data[79 - 3] ^ a_data[79 - 8]) ^ a_data[79 - 14]) ^ a_data[79 - 16];
-
         } // end function Expand
 
         protected override unsafe byte[] GetResult()
@@ -122,12 +121,12 @@ namespace SharpHash.Crypto
 
             fixed (UInt32* sPtr = state)
             {
-                fixed(byte* bPtr= result)
+                fixed (byte* bPtr = result)
                 {
                     Converters.be32_copy((IntPtr)sPtr, 0, (IntPtr)bPtr, 0, result.Length);
                 }
             }
-            
+
             return result;
         } // end function GetResult
 
@@ -157,7 +156,7 @@ namespace SharpHash.Crypto
         protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
-            UInt32 A, B, C, D, E;            
+            UInt32 A, B, C, D, E;
 
             fixed (UInt32* dPtr = data)
             {
@@ -460,9 +459,6 @@ namespace SharpHash.Crypto
             state[4] = state[4] + E;
 
             Utils.Utils.memset(ref data, 0);
-
         } // end function TransformBlock
-
     } // end class SHA0
-
 }

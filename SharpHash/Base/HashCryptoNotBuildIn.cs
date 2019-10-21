@@ -17,13 +17,8 @@ namespace SharpHash.Base
             buffer = new HashBuffer(a_buffer_size);
         } // end constructor
 
-<<<<<<< Updated upstream
         public override unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
-	    {
-=======
-        override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
->>>>>>> Stashed changes
             fixed (byte* ptr_a_data = a_data)
             {
                 if (!buffer.IsEmpty)
@@ -45,22 +40,13 @@ namespace SharpHash.Base
             }
         } // end function TransformBytes
 
-<<<<<<< Updated upstream
-	    public override void Initialize()
-=======
-        override public void Initialize()
->>>>>>> Stashed changes
+        public override void Initialize()
         {
             buffer.Initialize();
             processed_bytes = 0;
         } // end function Initialize
-<<<<<<< Updated upstream
-        
-        public override IHashResult TransformFinal()
-=======
 
-        override public IHashResult TransformFinal()
->>>>>>> Stashed changes
+        public override IHashResult TransformFinal()
         {
             Finish();
 

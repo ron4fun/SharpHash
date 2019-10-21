@@ -10,16 +10,10 @@ namespace SharpHash.Crypto
         private UInt32[] hash = null;
         private UInt32[] data = null;
 
-<<<<<<< Updated upstream
         private static readonly Int32[] rot = new Int32[] { 5, 11, 7, 15, 6, 13, 8, 14, 7, 12, 9, 11, 8, 15, 6, 12, 9, 14, 5, 13 };
         private static readonly Int32[] tor = new Int32[] { 27, 21, 25, 17, 26, 19, 24, 18, 25, 20, 23, 21, 24, 17, 26, 20, 23, 18, 27, 19 };
-        private static readonly Int32[] index = new Int32[] { 18, 0, 1, 2, 3, 19, 4, 5, 6, 7, 16, 8,
-=======
-        private readonly static Int32[] rot = new Int32[] { 5, 11, 7, 15, 6, 13, 8, 14, 7, 12, 9, 11, 8, 15, 6, 12, 9, 14, 5, 13 };
-        private readonly static Int32[] tor = new Int32[] { 27, 21, 25, 17, 26, 19, 24, 18, 25, 20, 23, 21, 24, 17, 26, 20, 23, 18, 27, 19 };
 
-        private readonly static Int32[] index = new Int32[] { 18, 0, 1, 2, 3, 19, 4, 5, 6, 7, 16, 8,
->>>>>>> Stashed changes
+        private static readonly Int32[] index = new Int32[] { 18, 0, 1, 2, 3, 19, 4, 5, 6, 7, 16, 8,
                                     9, 10, 11, 17, 12, 13, 14, 15, 18, 3, 6, 9, 12, 19, 15, 2, 5, 8, 16, 11,
                                     14, 1, 4, 17, 7, 10, 13, 0, 18, 12, 5, 14, 7, 19, 0, 9, 2, 11, 16, 4, 13,
                                     6, 15, 17, 8, 1, 10, 3, 18, 7, 2, 13, 8, 19, 3, 14, 9, 4, 16, 15, 10, 5,
@@ -78,7 +72,7 @@ namespace SharpHash.Crypto
             Int32 pad_index;
 
             UInt64 bits = processed_bytes * 8;
-            
+
             pad_index = buffer.Position < 56 ? 56 - buffer.Position : 120 - buffer.Position;
 
             byte[] pad = new byte[pad_index + 8];
