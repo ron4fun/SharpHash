@@ -25,13 +25,8 @@ namespace SharpHash.Base
             Utils.Utils.memset(ref key, 0);
         } // end function Clear
 
-<<<<<<< Updated upstream
         public override IHash Clone()
-    	{
-=======
-        override public IHash Clone()
         {
->>>>>>> Stashed changes
             HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash);
             hmac.blocksize = blocksize;
 
@@ -79,23 +74,10 @@ namespace SharpHash.Base
             hash.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
 
-<<<<<<< Updated upstream
-	    public override string Name => $"HMAC({hash.Name})";
+        public override string Name => $"HMAC({hash.Name})";
 
-	    public virtual byte[] Key
-	    {
-=======
-        override public string Name
+        public virtual byte[] Key
         {
-            get
-            {
-                return $"HMAC({hash.Name})";
-            }
-        } // end property GetName
-
-        virtual public byte[] Key
-        {
->>>>>>> Stashed changes
             get
             {
                 if (key != null)
@@ -120,19 +102,8 @@ namespace SharpHash.Base
             }
         } // end property Key
 
-<<<<<<< Updated upstream
         public virtual Int32? KeyLength => null;
-        
-=======
-        virtual public Int32? KeyLength
-        {
-            get
-            {
-                return null;
-            }
-        } // end property KeyLength
 
->>>>>>> Stashed changes
         protected void UpdatePads()
         {
             byte[] LKey;
