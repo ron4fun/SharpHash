@@ -18,7 +18,7 @@
     <PackageTags>Hash;Hashing;Crypto;Cryptography;Checksum;HMAC;KDF;PBKDF;</PackageTags>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>sharphash_key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
