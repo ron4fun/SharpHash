@@ -108,7 +108,7 @@ namespace SharpHash.Base
             return result;
         } // end function GetBytes
 
-        override public Int32 GetHashCode()
+        public override Int32 GetHashCode()
         {
             string Temp = Convert.ToBase64String(hash);
 
@@ -176,7 +176,7 @@ namespace SharpHash.Base
                 ((UInt64)(hash[4]) << 24) | ((UInt64)(hash[5]) << 16) | ((UInt64)(hash[6]) << 8) | (UInt64)(hash[7]);
         } // end function GetUInt64
 
-        static private bool SlowEquals(byte[] a_ar1, byte[] a_ar2)
+        private static bool SlowEquals(byte[] a_ar1, byte[] a_ar2)
         {
             UInt32 diff = (UInt32)(a_ar1.Length ^ a_ar2.Length), I = 0;
 

@@ -515,9 +515,9 @@ namespace SharpHash.Base
             /// Initializes a new interface instance of the TPBKDF2_HMAC class using a password, a salt, a number of iterations and an Instance of an "IHash" to be used as an "IHMAC" hashing implementation to derive the key.
             /// </summary>
             /// <param name="a_hash">The name of the "IHash" implementation to be transformed to an "IHMAC" Instance so it can be used to derive the key.</param>
-            /// <param name="password">The password to derive the key for.</param>
-            /// <param name="salt">The salt to use to derive the key.</param>
-            /// <param name="iterations">The number of iterations to use to derive the key.</param>
+            /// <param name="a_password">The password to derive the key for.</param>
+            /// <param name="a_salt">The salt to use to derive the key.</param>
+            /// <param name="a_iterations">The number of iterations to use to derive the key.</param>
             /// <exception cref="ArgumentNilHashLibException">The password, salt or algorithm is Nil.</exception>
             /// <exception cref="ArgumentHashLibException">The iteration is less than 1.</exception>
             public static IPBKDF2_HMAC CreatePBKDF2_HMAC(IHash a_hash, byte[] a_password, 

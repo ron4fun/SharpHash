@@ -570,7 +570,7 @@ namespace SharpHash.Checksum
 
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
     	{
             CRC HashInstance = new CRC(width, polynomial, init, reflectIn, reflectOut, xorOut, checkValue, names);
             HashInstance.CRCMask = CRCMask;
@@ -590,15 +590,9 @@ namespace SharpHash.Checksum
             return HashInstance;
 	    } // end function Clone
 
-        override public string Name
-	    {
-            get
-            {
-                return Names[0];
-            }
-	    }
+        public override string Name => Names[0];
 
-        override public void Initialize()
+        public override void Initialize()
         {
             // initialize some bitmasks
             CRCMask = ((((UInt64)1 << (Width - 1)) - 1) << 1) | 1;
@@ -615,7 +609,7 @@ namespace SharpHash.Checksum
             } // end if
         } // end function Initialize
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             UInt64 LUInt64;
             UInt32 LUInt32;
@@ -655,25 +649,27 @@ namespace SharpHash.Checksum
                 Initialize();
                 return new HashResult(LUInt8);
             } // end result
-            else if (value == 1 || value == 2)
+            
+            if (value == 1 || value == 2)
             {
                 LUInt16 = (UInt16)hash;
                 Initialize();
                 return new HashResult(LUInt16);
-            } // end else if
-            else if (value == 3 || value == 4)
+            } // end result
+            
+            if (value == 3 || value == 4)
             {
                 LUInt32 = (UInt32)hash;
                 Initialize();
                 return new HashResult(LUInt32);
-            } // end else if
+            } // end result
 
             LUInt64 = hash;
             Initialize();
             return new HashResult(LUInt64);
         } // end function TransformFinal
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             // table driven CRC reportedly only works for 8, 16, 24, 32 bits
             // HOWEVER, it seems to work for everything > 7 bits, so use it
@@ -1006,69 +1002,21 @@ namespace SharpHash.Checksum
 		    throw new ArgumentHashLibException("Invalid CRCStandard object.");
         } // end function CreateCRCObject
 
-        public string[] Names
-	    {
-            get
-            {
-                return names;
-            }
-	    } // end property Names
+        public string[] Names => names;
 
-        public Int32 Width
-	    {
-            get
-            {
-                return width;
-            }
-        } // end property Width
+        public Int32 Width => width;
 
-        public UInt64 Polynomial
-	    {
-            get
-            {
-                return polynomial;
-            }
-        } // end property Polynomial
+        public UInt64 Polynomial => polynomial;
 
-        public UInt64 Initial
-	    {
-            get
-            {
-                return init;
-            }
-        } // end property Initial
+        public UInt64 Initial => init;
 
-        public bool IsInputReflected
-	    {
-            get
-            {
-                return reflectIn;
-            }
-        } // end property IsInputReflected
+        public bool IsInputReflected => reflectIn;
 
-        public bool IsOutputReflected
-	    {
-            get
-            {
-                return reflectOut;
-            }
-        } // end property IsOutputReflected 
+        public bool IsOutputReflected => reflectOut;
 
-        public UInt64 OutputXor
-	    {
-            get
-            {
-                return xorOut;
-            }
-        } // end property OutputXor
+        public UInt64 OutputXor => xorOut;
 
-        public UInt64 CheckValue
-	    {
-            get
-            {
-                return checkValue;
-            }
-        } // end property CheckValue
+        public UInt64 CheckValue => checkValue;
               
         private void GenerateTable()
         {
@@ -1189,7 +1137,7 @@ namespace SharpHash.Checksum
         } // end function CalculateCRCdirect
 
         // reflects the lower 'width' bits of 'value'
-        static private UInt64 Reflect(UInt64 a_value, Int32 a_width)
+        private static UInt64 Reflect(UInt64 a_value, Int32 a_width)
         {
             UInt64 j, i, result = 0;
 

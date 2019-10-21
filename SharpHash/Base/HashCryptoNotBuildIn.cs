@@ -17,7 +17,7 @@ namespace SharpHash.Base
             buffer = new HashBuffer(a_buffer_size);
         } // end constructor
 
-        override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
 	    {
             fixed (byte* ptr_a_data = a_data)
             {
@@ -40,13 +40,13 @@ namespace SharpHash.Base
             }
 	    } // end function TransformBytes
 
-	    override public void Initialize()
+	    public override void Initialize()
         {
             buffer.Initialize();
             processed_bytes = 0;
         } // end function Initialize
         
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             Finish();
 

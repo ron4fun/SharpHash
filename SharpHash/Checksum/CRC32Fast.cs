@@ -12,12 +12,12 @@ namespace SharpHash.Checksum
             : base(4, 1)
         { } // end constructor
 
-        override public void Initialize()
+        public override void Initialize()
         {
             CurrentCRC = 0;
         } // end function Initialize
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             IHashResult res = new HashResult(CurrentCRC);
             Initialize();
@@ -72,7 +72,7 @@ namespace SharpHash.Checksum
             CurrentCRC = ~ LCRC; // FCurrentCRC := LCRC xor System.High(UInt32);
         } // end function LocalCRCCompute
 
-        static public UInt32[] Init_CRC_Table(UInt32 a_polynomial)
+        public static UInt32[] Init_CRC_Table(UInt32 a_polynomial)
         {
             Int32 LIdx, LJIdx, LKIdx;
             UInt32 LRes;
@@ -108,11 +108,11 @@ namespace SharpHash.Checksum
         } // end constructor
 
         // Polynomial Reversed
-        static private readonly UInt32 CRC32_PKZIP_Polynomial = 0xEDB88320;
+        private static readonly UInt32 CRC32_PKZIP_Polynomial = 0xEDB88320;
 
         private UInt32[] CRC32_PKZIP_Table = null;
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             CRC32_PKZIP_Fast HashInstance = new CRC32_PKZIP_Fast();
             HashInstance.CurrentCRC = CurrentCRC;
@@ -122,7 +122,7 @@ namespace SharpHash.Checksum
             return HashInstance;
         } // end function Clone
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             LocalCRCCompute(CRC32_PKZIP_Table, a_data, a_index, a_length);
         } // end function TransformBytes
@@ -132,7 +132,7 @@ namespace SharpHash.Checksum
     internal sealed class CRC32_CASTAGNOLI_Fast : CRC32Fast
     {
         // Polynomial Reversed
-        static private readonly UInt32 CRC32_CASTAGNOLI_Polynomial = 0x82F63B78;
+        private static readonly UInt32 CRC32_CASTAGNOLI_Polynomial = 0x82F63B78;
 
         private UInt32[] CRC32_CASTAGNOLI_Table = null;
 
@@ -141,7 +141,7 @@ namespace SharpHash.Checksum
             CRC32_CASTAGNOLI_Table = Init_CRC_Table(CRC32_CASTAGNOLI_Polynomial);
         } // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
         {
             CRC32_CASTAGNOLI_Fast HashInstance = new CRC32_CASTAGNOLI_Fast();
             HashInstance.CurrentCRC = CurrentCRC;
@@ -151,7 +151,7 @@ namespace SharpHash.Checksum
             return HashInstance;
         } // end function Clone
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             LocalCRCCompute(CRC32_CASTAGNOLI_Table, a_data, a_index, a_length);
         } // end function TransformBytes

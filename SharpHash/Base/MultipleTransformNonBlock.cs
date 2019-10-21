@@ -21,18 +21,18 @@ namespace SharpHash.Base
             Buffer.Close();
         } // end destructor
 
-        override public void Initialize()
+        public override void Initialize()
         {
             Buffer.Flush();
             Buffer.SetLength(0);
         } // end fucntion Initialize
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
 	    {
             Buffer.Write(a_data, a_index, a_length);
         } // end function TransformBytes
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             IHashResult result = ComputeAggregatedBytes(Aggregate());
 
@@ -41,7 +41,7 @@ namespace SharpHash.Base
             return result;
         } // end function TransformFinal
 
-        override public IHashResult ComputeBytes(byte[] a_data)
+        public override IHashResult ComputeBytes(byte[] a_data)
         {
             Initialize();
 

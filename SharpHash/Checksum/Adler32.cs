@@ -6,14 +6,14 @@ namespace SharpHash.Checksum
 {
     internal sealed class Adler32 : Hash, IChecksum, IBlockHash, IHash32, ITransformBlock
     {
-        static private readonly UInt32 MOD_ADLER = 65521;
+        private static readonly UInt32 MOD_ADLER = 65521;
         private UInt32 a = 1, b = 0;
 
         public Adler32() 
             : base(4, 1)
         {} // end constructor
 
-        override public IHash Clone()
+        public override IHash Clone()
     	{
             Adler32 HashInstance = new Adler32();
             HashInstance.a = a;
@@ -24,13 +24,13 @@ namespace SharpHash.Checksum
 		    return HashInstance;
 	    } // end function Clone
 
-        override public void Initialize()
+        public override void Initialize()
         {
             a = 1;
             b = 0;
         } // end function Initialize
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             IHashResult result = new HashResult((Int32)((b << 16) | a));
 
@@ -39,7 +39,7 @@ namespace SharpHash.Checksum
             return result;
         } // end function TransformFinal
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             Int32 n;
 

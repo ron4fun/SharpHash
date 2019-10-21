@@ -12,17 +12,11 @@ namespace SharpHash.Base
         protected Int32 block_size;
         protected Int32 hash_size;
 
-        virtual public string Name
-        {
-            get
-            {
-                return this.GetType().Name;
-            }
-        } // end property Name
+        public virtual string Name => GetType().Name;
 
-        virtual public Int32 BufferSize 
+        public virtual Int32 BufferSize 
         {
-            get { return buffer_size; }
+            get => buffer_size;
             set
             {
                 if (value > 0)
@@ -36,21 +30,9 @@ namespace SharpHash.Base
             }
         } // end property BufferSize
 
-        virtual public Int32 BlockSize
-        {
-            get
-            {
-                return block_size;
-            }
-        } // end property BlockSize
+        public virtual Int32 BlockSize => block_size;
 
-        virtual public Int32 HashSize
-        {
-            get
-            {
-                return hash_size;
-            }
-        } // end property HashSize
+        public virtual Int32 HashSize => hash_size;
 
         protected static Int32 BUFFER_SIZE = (Int32)(64 * 1024); // 64Kb
 
@@ -69,24 +51,24 @@ namespace SharpHash.Base
 
         public abstract void Initialize();
 
-        virtual public IHash Clone()
+        public virtual IHash Clone()
 	    {
 		    throw new NotImplementedHashLibException(String.Format(CloneNotYetImplemented, Name));
 	    } // end function Clone
 
-	    virtual public IHashResult ComputeString(string a_data, Encoding encoding)
+	    public virtual IHashResult ComputeString(string a_data, Encoding encoding)
         {
             return ComputeBytes(Converters.ConvertStringToBytes(a_data, encoding));
         } // end function ComputeString
 
-        virtual public IHashResult ComputeUntyped(IntPtr a_data, Int64 a_length)
+        public virtual IHashResult ComputeUntyped(IntPtr a_data, Int64 a_length)
         {
             Initialize();
             TransformUntyped(a_data, a_length);
             return TransformFinal();
         } // end function ComputeUntyped
 
-        virtual public void TransformUntyped(IntPtr a_data, Int64 a_length)
+        public virtual void TransformUntyped(IntPtr a_data, Int64 a_length)
         {
             unsafe {
                 byte* PtrBuffer, PtrEnd;
@@ -95,10 +77,7 @@ namespace SharpHash.Base
 
                 PtrBuffer = (byte*)a_data;
 
-                if (buffer_size > a_length) // Sanity Check
-                    LBufferSize = BUFFER_SIZE;
-                else
-                    LBufferSize = buffer_size;
+                LBufferSize = buffer_size > a_length ? BUFFER_SIZE : buffer_size;
 
                 if (PtrBuffer != null)
                 {
@@ -134,14 +113,14 @@ namespace SharpHash.Base
             }
         } // end function TransformUntyped
 
-        virtual public IHashResult ComputeStream(Stream a_stream, Int64 a_length = -1)
+        public virtual IHashResult ComputeStream(Stream a_stream, Int64 a_length = -1)
         {
             Initialize();
             TransformStream(a_stream, a_length);
             return TransformFinal();
         } // end function ComputeStream
 
-        virtual public IHashResult ComputeFile(string a_file_name,
+        public virtual IHashResult ComputeFile(string a_file_name,
 		        Int64 a_from = 0, Int64 a_length = -1)
         {
             Initialize();
@@ -149,24 +128,24 @@ namespace SharpHash.Base
             return TransformFinal();
         } // end function ComputeFile
 
-        virtual public IHashResult ComputeBytes(byte[] a_data)
+        public virtual IHashResult ComputeBytes(byte[] a_data)
         {
             Initialize();
             TransformBytes(a_data);
             return TransformFinal();
         } // end function ComputeBytes
 
-        virtual public void TransformString(string a_data, Encoding encoding)
+        public virtual void TransformString(string a_data, Encoding encoding)
         {
             TransformBytes(Converters.ConvertStringToBytes(a_data, encoding));
         } // end function TransformString
 
-        virtual public void TransformBytes(byte[] a_data)
+        public virtual void TransformBytes(byte[] a_data)
         {
             TransformBytes(a_data, 0, a_data?.Length ?? 0);
         } // end function TransformBytes
 
-        virtual public void TransformBytes(byte[] a_data, Int32 a_index)
+        public virtual void TransformBytes(byte[] a_data, Int32 a_index)
         {
             if (a_data != null)
             {
@@ -178,7 +157,7 @@ namespace SharpHash.Base
 
         public abstract void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length);
 
-	    virtual public void TransformStream(Stream a_stream, Int64 a_length = -1)
+	    public virtual void TransformStream(Stream a_stream, Int64 a_length = -1)
         {
             Int32 readed = 0, LBufferSize;
             UInt64 size, new_size;
@@ -260,7 +239,7 @@ namespace SharpHash.Base
             }
         } // end function TransformStream
 
-        virtual public void TransformFile(string a_file_name,
+        public virtual void TransformFile(string a_file_name,
 		        Int64 a_from = 0, Int64 a_length = -1)
         {
             Stream ReadFile = File.OpenRead(a_file_name);

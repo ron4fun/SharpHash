@@ -25,7 +25,7 @@ namespace SharpHash.Base
             Utils.Utils.memset(ref key, 0);
         } // end function Clear
 
-        override public IHash Clone()
+        public override IHash Clone()
     	{
             HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash);
             hmac.blocksize = blocksize;
@@ -51,14 +51,14 @@ namespace SharpHash.Base
 		    return hmac;
 	    }
 
-        override public void Initialize()
+        public override void Initialize()
         {
             hash.Initialize();
             UpdatePads();
             hash.TransformBytes(ipad);
         } // end function Initialize
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             IHashResult result = hash.TransformFinal();
             hash.TransformBytes(opad);
@@ -69,20 +69,14 @@ namespace SharpHash.Base
             return result;
         } // end function TransformFinal
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
             hash.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
 
-	    override public string Name
-	    {
-            get
-            {
-                return $"HMAC({hash.Name})";
-            }
-	    } // end property GetName
+	    public override string Name => $"HMAC({hash.Name})";
 
-	    virtual public byte[] Key
+	    public virtual byte[] Key
 	    {
             get
             {
@@ -109,27 +103,14 @@ namespace SharpHash.Base
             }
         } // end property Key
 
-        virtual public Int32? KeyLength
-	    {
-            get
-            {
-                return null;
-            }
-        } // end property KeyLength
+        public virtual Int32? KeyLength => null;
         
         protected void UpdatePads()
         {
             byte[] LKey;
             Int32 Idx;
 
-            if (key.Length > blocksize)
-            {
-                LKey = hash.ComputeBytes(key).GetBytes();
-            } // end if
-            else
-            {
-                LKey = key;
-            } // end else
+            LKey = key.Length > blocksize ? hash.ComputeBytes(key).GetBytes() : key;
 
             unsafe
             {

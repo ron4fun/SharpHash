@@ -20,17 +20,17 @@ namespace SharpHash.Checksum
             CRCAlgorithm = new CRC(64, _poly, _Init, _refIn, _refOut, _XorOut, _check, _Names);
         } // end constructor
 
-        override public void Initialize()
+        public override void Initialize()
         {
             CRCAlgorithm.Initialize();
         } // end function Initialize
 
-        override public IHashResult TransformFinal()
+        public override IHashResult TransformFinal()
         {
             return CRCAlgorithm.TransformFinal();
         } // end function TransformFinal
 
-        override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
 	    {
 		    CRCAlgorithm.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
