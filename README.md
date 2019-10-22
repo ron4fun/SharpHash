@@ -121,6 +121,38 @@ Available Algorithms
 * `KMACXOF (KMAC128XOF, KMAC256XOF)`
 
 
+
+### SharpHash Usage Example
+----------------------------------------
+
+
+```c#
+using SharpHash.Base;
+using SharpHash.Interfaces;
+using System;
+using System.Text;
+
+namespace Program
+{
+    public class Hello {
+	    public static void Main() {
+	        // Chaining mode
+	        string result = HashFactory.Crypto.CreateMD5().ComputeString("Hello C#", Encoding.UTF8).ToString();
+
+			// Incremental mode
+			IHash hash = HashFactory.Crypto.CreateMD5();
+			hash.Initialize();
+			hash.TransformString("Hello", Encoding.UTF8);
+			hash.TransformString(" C#", Encoding.UTF8);
+			string result_2 = hash.TransformFinal().ToString();
+
+			bool check = result == result_2;
+	    }
+	}
+}
+```
+
+
 ### Other Implementations
 ----------------------------------------
 
