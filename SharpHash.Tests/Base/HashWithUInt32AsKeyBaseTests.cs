@@ -8,7 +8,7 @@ using System.Text;
 namespace SharpHash
 {
     [TestClass]
-    public abstract class HashWithUInt32AsKeyBaseTests : Hash64BaseTests
+    public abstract class HashWithUInt32AsKeyBaseTests : HashAdapter2BaseTests
     {
         protected string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
 
