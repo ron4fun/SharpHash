@@ -79,7 +79,7 @@ Available Algorithms
  
  * `RadioGatun (RadioGatun32, RadioGatun64)`
 
- * `WhirlPool`
+ * `WhirlPool` :heavy_check_mark:
 
  * `Blake2B (160, 256, 384, 512)`
  
