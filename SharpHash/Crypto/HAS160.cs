@@ -34,7 +34,6 @@ namespace SharpHash.Crypto
     internal sealed class HAS160 : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
         private UInt32[] hash = null;
-        private UInt32[] data = null;
 
         private static readonly Int32[] rot = new Int32[] { 5, 11, 7, 15, 6, 13, 8, 14, 7, 12, 9, 11, 8, 15, 6, 12, 9, 14, 5, 13 };
         private static readonly Int32[] tor = new Int32[] { 27, 21, 25, 17, 26, 19, 24, 18, 25, 20, 23, 21, 24, 17, 26, 20, 23, 18, 27, 19 };
@@ -49,7 +48,6 @@ namespace SharpHash.Crypto
             : base(20, 64)
         {
             hash = new UInt32[5];
-            data = new UInt32[20];
         } // end constructor
 
         public override IHash Clone()
@@ -118,6 +116,7 @@ namespace SharpHash.Crypto
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D, E, T;
+            UInt32[] data = new UInt32[20];
 
             fixed (UInt32* dataPtr = data)
             {

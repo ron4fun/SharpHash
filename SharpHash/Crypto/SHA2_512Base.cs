@@ -34,13 +34,11 @@ namespace SharpHash.Crypto
     internal abstract class SHA2_512Base : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
         protected UInt64[] state = null;
-        protected UInt64[] data = null;
 
         public SHA2_512Base(Int32 a_hash_size)
             : base(a_hash_size, 128)
         {
             state = new UInt64[8];
-            data = new UInt64[80];
         } // end constructor
 
         protected override void Finish()
@@ -80,6 +78,7 @@ namespace SharpHash.Crypto
                 Int32 a_data_length, Int32 a_index)
         {
             UInt64 T0, T1, a, b, c, d, e, f, g, h;
+            UInt64[] data = new UInt64[80];
 
             fixed (UInt64* dPtr = data)
             {

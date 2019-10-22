@@ -33,7 +33,6 @@ namespace SharpHash.Crypto
     internal class SHA0 : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
         protected UInt32[] state = null;
-        private UInt32[] data = null;
 
         private static readonly UInt32 C1 = 0x5A827999;
         private static readonly UInt32 C2 = 0x6ED9EBA1;
@@ -44,7 +43,6 @@ namespace SharpHash.Crypto
             : base(20, 64)
         {
             state = new UInt32[5];
-            data = new UInt32[80];
         } // end constructor
 
         public override IHash Clone()
@@ -182,6 +180,7 @@ namespace SharpHash.Crypto
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D, E;
+            UInt32[] data = new UInt32[80];
 
             fixed (UInt32* dPtr = data)
             {

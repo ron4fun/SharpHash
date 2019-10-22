@@ -66,11 +66,8 @@ namespace SharpHash.Hash128
             HashInstance.key = key;
             HashInstance.idx = idx;
 
-            if (!(buf == null || buf.Length == 0))
-            {
-                HashInstance.buf = new byte[buf.Length];
-                Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
-            } // end if
+            HashInstance.buf = new byte[buf.Length];
+            Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
 
             HashInstance.BufferSize = BufferSize;
 

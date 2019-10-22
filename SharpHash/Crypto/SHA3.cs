@@ -69,10 +69,7 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            fixed (UInt64* sPtr = state)
-            {
-                Utils.Utils.memset((IntPtr)sPtr, 0, state.Length * sizeof(UInt64));
-            }
+            Utils.Utils.memset(ref state, 0);
 
             base.Initialize();
         } // end function Initialize

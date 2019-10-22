@@ -33,7 +33,7 @@ namespace SharpHash.Crypto
 {
     internal sealed class WhirlPool : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
-        private UInt64[] hash, data, k, m, temp;
+        private UInt64[] hash = null;
 
         private static readonly UInt32 ROUNDS = 10;
         private static readonly UInt32 REDUCTION_POLYNOMIAL = 0x011D;
@@ -111,10 +111,6 @@ namespace SharpHash.Crypto
             : base(64, 64)
         {
             hash = new UInt64[8];
-            data = new UInt64[8];
-            k = new UInt64[8];
-            m = new UInt64[8];
-            temp = new UInt64[8];
         } // end constructor
 
         public override IHash Clone()
@@ -180,6 +176,9 @@ namespace SharpHash.Crypto
         protected override unsafe void TransformBlock(IntPtr a_data,
                 Int32 a_data_length, Int32 a_index)
         {
+            UInt64[] data = new UInt64[8], k = new UInt64[8],
+                m = new UInt64[8], temp = new UInt64[8];
+
             fixed (UInt64* dPtr = data)
             {
                 Converters.be64_copy(a_data, a_index, (IntPtr)dPtr, 0, 64);

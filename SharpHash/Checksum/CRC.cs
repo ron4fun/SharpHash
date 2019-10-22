@@ -544,14 +544,22 @@ namespace SharpHash.Checksum
 
     internal sealed class CRC : Hash, IChecksum, ICRC, ITransformBlock
     {
-        private string[] names = null;
-        private Int32 width;
-        private UInt64 polynomial, init, xorOut, checkValue, CRCMask, CRCHighBitMask, hash;
-        private bool reflectIn, reflectOut, IsTableGenerated;
+        private string[] names { get; set; }
+        private Int32 width { get; set; }
+        private UInt64 polynomial { get; set; }
+        private UInt64 init { get; set; }
+        private UInt64 xorOut { get; set; }
+        private UInt64 checkValue { get; set; }
+        private UInt64 CRCMask { get; set; }
+        private UInt64 CRCHighBitMask { get; set; }
+        private UInt64 hash { get; set; }
+        private bool reflectIn { get; set; }
+        private bool reflectOut { get; set; }
+        private bool IsTableGenerated { get; set; }
 
-        private UInt64[] CRCTable;
+        private UInt64[] CRCTable { get; set; }
 
-        private static Int32 Delta = 7;
+        private static Int32 Delta { get => 7; }
 
         public CRC(Int32 _Width, UInt64 _poly, UInt64 _Init,
             bool _refIn, bool _refOut, UInt64 _XorOut, UInt64 _check, string[] _Names)

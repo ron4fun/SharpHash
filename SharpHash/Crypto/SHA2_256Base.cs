@@ -34,13 +34,11 @@ namespace SharpHash.Crypto
     internal abstract class SHA2_256Base : BlockHash, ICryptoNotBuildIn, ITransformBlock
     {
         protected UInt32[] state = null;
-        protected UInt32[] data = null;
 
         public SHA2_256Base(Int32 a_hash_size)
             : base(a_hash_size, 64)
         {
             state = new UInt32[8];
-            data = new UInt32[64];
         } // end constructor
 
         protected override void Finish()
@@ -70,6 +68,7 @@ namespace SharpHash.Crypto
                 Int32 a_data_length, Int32 a_index)
         {
             UInt32 A, B, C, D, E, F, G, H, T, T2;
+            UInt32[] data = new UInt32[64];
 
             fixed (UInt32* dPtr = data)
             {
