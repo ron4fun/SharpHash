@@ -122,7 +122,7 @@ Available Algorithms
 
 
 
-### SharpHash Usage Example
+### Usage Examples
 ----------------------------------------
 
 
@@ -134,10 +134,11 @@ using System.Text;
 
 namespace Program
 {
-    public class Hello {
-	    public static void Main() {
-	        // Chaining mode
-	        string result = HashFactory.Crypto.CreateMD5().ComputeString("Hello C#", Encoding.UTF8).ToString();
+	public class Hello {
+		public static void Main() {
+			// Chaining mode
+			string result = HashFactory.Crypto.CreateMD5()
+					.ComputeString("Hello C#", Encoding.UTF8).ToString();
 
 			// Incremental mode
 			IHash hash = HashFactory.Crypto.CreateMD5();
