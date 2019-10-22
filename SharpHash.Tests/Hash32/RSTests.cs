@@ -4,7 +4,7 @@ using SharpHash.Base;
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
-    public class RSTests : Hash32BaseTests
+    public class RSTests : HashAdapter1BaseTests
     {
         public RSTests()
         {

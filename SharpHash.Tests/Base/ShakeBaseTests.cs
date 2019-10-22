@@ -8,7 +8,7 @@ using System.Text;
 namespace SharpHash
 {
     [TestClass]
-    public abstract class ShakeBaseTests : Hash32BaseTests
+    public abstract class ShakeBaseTests : HashAdapter1BaseTests
     {
         protected string ExpectedVeryLongShakeOfEmptyString { get; set; }
 

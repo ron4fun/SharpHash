@@ -9,7 +9,7 @@ using System.Text;
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
-    public class Murmur2Tests : Hash32BaseTests
+    public class Murmur2Tests : HashAdapter1BaseTests
     {
         private string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
 

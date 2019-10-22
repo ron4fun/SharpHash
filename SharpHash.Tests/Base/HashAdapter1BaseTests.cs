@@ -4,7 +4,7 @@ using SharpHash.Tests;
 namespace SharpHash
 {
     [TestClass]
-    public abstract class Hash32BaseTests : HashBaseTests
+    public abstract class HashAdapter1BaseTests : HashBaseTests
     {
         protected string ExpectedHashOfOnetoNine { get; set; }
         protected string ExpectedHashOfabcde { get; set; }

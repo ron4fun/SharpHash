@@ -8,7 +8,7 @@ using System.Text;
 namespace SharpHash
 {
     [TestClass]
-    public abstract class CryptoHashBaseTests : Hash32BaseTests
+    public abstract class CryptoHashBaseTests : HashAdapter1BaseTests
     {
         protected string ExpectedHashOfDefaultDataWithHMACWithLongKey { get; set; }
         protected string ExpectedHashOfDefaultDataWithHMACWithShortKey { get; set; }

@@ -5,7 +5,7 @@ using SharpHash.Tests;
 namespace SharpHash.Hash64.Tests
 {
     [TestClass]
-    public class SipHash2_4Tests : Hash32BaseTests
+    public class SipHash2_4Tests : HashAdapter1BaseTests
     {
         private string ExpectedHashOfShortMessage { get; set; }
 

@@ -4,7 +4,7 @@ using SharpHash.Base;
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
-    public class BKDRTests : Hash32BaseTests
+    public class BKDRTests : HashAdapter1BaseTests
     {
         public BKDRTests()
         {

@@ -4,7 +4,7 @@ using SharpHash.Base;
 namespace SharpHash.Hash32.Tests
 {
     [TestClass]
-    public class Jenkins3Tests : Hash32BaseTests
+    public class Jenkins3Tests : HashAdapter1BaseTests
     {
         public Jenkins3Tests()
         {

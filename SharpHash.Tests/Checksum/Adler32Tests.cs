@@ -4,7 +4,7 @@ using SharpHash.Base;
 namespace SharpHash.Checksum.Tests
 {
     [TestClass]
-    public class Adler32Tests : Hash32BaseTests
+    public class Adler32Tests : HashAdapter1BaseTests
     {
         public Adler32Tests()
         {
