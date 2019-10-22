@@ -17,55 +17,55 @@ Available Algorithms
 ----------------------------------------
 ##### Cyclic Redundancy Checks
 
-* `All CRC Variants from CRC3 to CRC64` 
+* `All CRC Variants from CRC3 to CRC64` :heavy_check_mark:
 
 ##### Checksums
 
-* `Adler32`
+* `Adler32` :heavy_check_mark:
 
 ##### Non-Cryptographic Hash Functions 
 ----------------------------------------
 
 ###### 32 bit hashes
 
-* `AP` `BKDR` `Bernstein` `Bernstein1` `DEK` `DJB` `ELF` `FNV` 
+* `AP` `BKDR` `Bernstein` `Bernstein1` `DEK` `DJB` `ELF` `FNV` :heavy_check_mark:
 
-* `FNV1a` `JS` `Jenkins3` `Murmur2` `MurmurHash3_x86_32` `OneAtTime`
+* `FNV1a` `JS` `Jenkins3` `Murmur2` `MurmurHash3_x86_32` `OneAtTime` :heavy_check_mark:
 
-*  `PJW` `RS` `Rotating` `SDBM` `ShiftAndXor` `SuperFast` `XXHash32`
+*  `PJW` `RS` `Rotating` `SDBM` `ShiftAndXor` `SuperFast` `XXHash32` :heavy_check_mark:
 
 ###### 64 bit hashes
 
-* `FNV64` `FNV1a64` `Murmur2_64` `SipHash2_4` `XXHash64`
+* `FNV64` `FNV1a64` `Murmur2_64` `SipHash2_4` `XXHash64` :heavy_check_mark:
 
 ###### 128 bit hashes
 
-* `MurmurHash3_x86_128` `MurmurHash3_x64_128` 
+* `MurmurHash3_x86_128` `MurmurHash3_x64_128` :heavy_check_mark:
 
 ##### Cryptographic Hash Functions 
 ----------------------------------------
 
- * `MD2`
+ * `MD2` :heavy_check_mark:
 
- * `MD4`
+ * `MD4` :heavy_check_mark:
 
- * `MD5`
+ * `MD5` :heavy_check_mark:
 
- * `SHA-0`
+ * `SHA-0` :heavy_check_mark:
 
- * `SHA-1`
+ * `SHA-1` :heavy_check_mark:
 
- * `SHA-2 (224, 256, 384, 512, 512-224, 512-256)`
+ * `SHA-2 (224, 256, 384, 512, 512-224, 512-256)` :heavy_check_mark:
 
  * `GOST 34.11-94`
 
  * `GOST R 34.11-2012 (AKA Streebog) (256, 512)`
  
- * `Grindahl (256, 512)`
+ * `Grindahl (256, 512)` :heavy_check_mark:
  
- * `HAS160`
+ * `HAS160` :heavy_check_mark:
 
- * `RIPEMD (128, 256, 256, 320)`
+ * `RIPEMD (128, 256, 256, 320)` :heavy_check_mark:
 
  * `Tiger (128, 160, 192 (Rounds 3, 4, 5))` 
 
@@ -75,7 +75,7 @@ Available Algorithms
  
  * `Haval (128, 160, 192, 224, 256 (Rounds 3, 4, 5))`
  
- * `Panama`
+ * `Panama` :heavy_check_mark:
  
  * `RadioGatun (RadioGatun32, RadioGatun64)`
 
@@ -85,9 +85,9 @@ Available Algorithms
  
  * `Blake2S (128, 160, 224, 256)`
 
- * `SHA-3 (224, 256, 384, 512)`
+ * `SHA-3 (224, 256, 384, 512)` :heavy_check_mark:
  
- * `Keccak (224, 256, 288, 384, 512)`
+ * `Keccak (224, 256, 288, 384, 512)` :heavy_check_mark:
 
 ### Key Derivation Functions
 ----------------------------------------
@@ -96,7 +96,7 @@ Available Algorithms
 
 ----------------------------------------
 
-* `PBKDF2`
+* `PBKDF2` :heavy_check_mark:
  
 * `Argon2 (2i, 2d and 2id variants)`
 
@@ -105,20 +105,20 @@ Available Algorithms
 ### MAC
 ----------------------------------------
 
-* `HMAC (all supported hashes)`
+* `HMAC (all supported hashes)` :heavy_check_mark:
 
-* `KMAC (KMAC128, KMAC256)`
+* `KMAC (KMAC128, KMAC256)` :heavy_check_mark:
 
 ### XOF (Extendable Output Function)
 ----------------------------------------
 
-* `Shake (Shake-128, Shake-256)`
+* `Shake (Shake-128, Shake-256)` :heavy_check_mark:
 
-* `CShake (CShake-128, CShake-256)`
+* `CShake (CShake-128, CShake-256)` :heavy_check_mark:
 
 * `Blake2X (Blake2XS, Blake2XB)`
 
-* `KMACXOF (KMAC128XOF, KMAC256XOF)`
+* `KMACXOF (KMAC128XOF, KMAC256XOF)` :heavy_check_mark:
 
 
 
@@ -134,22 +134,24 @@ using System.Text;
 
 namespace Program
 {
-	public class Hello {
-		public static void Main() {
-			// Chaining mode
-			string result = HashFactory.Crypto.CreateMD5()
-					.ComputeString("Hello C#", Encoding.UTF8).ToString();
+    public class Hello 
+    {
+	public static void Main() 
+	{
+	    // Chaining mode
+	    string result = HashFactory.Crypto.CreateMD5()
+	    			.ComputeString("Hello C#", Encoding.UTF8).ToString();
 
-			// Incremental mode
-			IHash hash = HashFactory.Crypto.CreateMD5();
-			hash.Initialize();
-			hash.TransformString("Hello", Encoding.UTF8);
-			hash.TransformString(" C#", Encoding.UTF8);
-			string result_2 = hash.TransformFinal().ToString();
+	    // Incremental mode
+	    IHash hash = HashFactory.Crypto.CreateMD5();
+	    hash.Initialize();
+	    hash.TransformString("Hello", Encoding.UTF8);
+	    hash.TransformString(" C#", Encoding.UTF8);
+	    string result_2 = hash.TransformFinal().ToString();
 
-			bool check = result == result_2;
-	    }
-	}
+	    bool check = result == result_2;
+        }
+    }
 }
 ```
 
