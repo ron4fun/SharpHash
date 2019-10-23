@@ -173,12 +173,8 @@ namespace SharpHash.Base
 
         public virtual void TransformBytes(byte[] a_data, Int32 a_index)
         {
-            if (a_data != null)
-            {
-                Int32 Length = a_data.Length - a_index;
-
-                if (Length > 0) TransformBytes(a_data, a_index, Length);
-            } // end if
+            if (a_data == null) return;
+            TransformBytes(a_data, a_index, a_data.Length - a_index);
         } // end function TransformBytes
 
         public abstract void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length);
