@@ -10,9 +10,9 @@ namespace SharpHash
     [TestClass]
     public abstract class ShakeBaseTests : HashAdapter1BaseTests
     {
-        protected string ExpectedVeryLongShakeOfEmptyString { get; set; }
+        protected static string ExpectedVeryLongShakeOfEmptyString { get; set; }
 
-        protected IXOF VeryLongShake = null;
+        protected static IXOF VeryLongShake { get; set; }
 
         [TestMethod]
         public void TestVeryLongShakeOfEmptyString()

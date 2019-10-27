@@ -6,9 +6,9 @@ namespace SharpHash
     [TestClass]
     public abstract class HashAdapter2BaseTests : HashBaseTests
     {
-        protected string ExpectedHashOfRandomString { get; set; }
-        protected string ExpectedHashOfZerotoFour { get; set; }
-        protected string ExpectedHashOfEmptyDataWithOneAsKey { get; set; }
+        protected static string ExpectedHashOfRandomString { get; set; }
+        protected static string ExpectedHashOfZerotoFour { get; set; }
+        protected static string ExpectedHashOfEmptyDataWithOneAsKey { get; set; }
 
         [TestMethod]
         public void TestRandomString()
