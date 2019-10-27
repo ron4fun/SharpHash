@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_3_128Tests : CryptoHashBaseTests
     {
-        static Tiger2_3_128Tests()
+        public Tiger2_3_128Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_3_128();
 
@@ -22,7 +22,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_4_128Tests : CryptoHashBaseTests
     {
-        static Tiger2_4_128Tests()
+        public Tiger2_4_128Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_4_128();
 
@@ -38,7 +38,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_5_128Tests : CryptoHashBaseTests
     {
-        static Tiger2_5_128Tests()
+        public Tiger2_5_128Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_5_128();
 
@@ -54,7 +54,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_3_160Tests : CryptoHashBaseTests
     {
-        static Tiger2_3_160Tests()
+        public Tiger2_3_160Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_3_160();
 
@@ -70,7 +70,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_4_160Tests : CryptoHashBaseTests
     {
-        static Tiger2_4_160Tests()
+        public Tiger2_4_160Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_4_160();
 
@@ -86,7 +86,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_5_160Tests : CryptoHashBaseTests
     {
-        static Tiger2_5_160Tests()
+        public Tiger2_5_160Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_5_160();
 
@@ -102,7 +102,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_3_192Tests : CryptoHashBaseTests
     {
-        static Tiger2_3_192Tests()
+        public Tiger2_3_192Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_3_192();
 
@@ -118,7 +118,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_4_192Tests : CryptoHashBaseTests
     {
-        static Tiger2_4_192Tests()
+        public Tiger2_4_192Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_4_192();
 
@@ -134,7 +134,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Tiger2_5_192Tests : CryptoHashBaseTests
     {
-        static Tiger2_5_192Tests()
+        public Tiger2_5_192Tests()
         {
             hash = HashFactory.Crypto.CreateTiger2_5_192();
 

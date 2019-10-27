@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class Jenkins3Tests : HashAdapter1BaseTests
     {
-        static Jenkins3Tests()
+        public Jenkins3Tests()
         {
             hash = HashFactory.Hash32.CreateJenkins3();
 

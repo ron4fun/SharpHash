@@ -6,7 +6,7 @@ namespace SharpHash.Hash64.Tests
     [TestClass]
     public class XXHash64Tests : HashWithUInt64AsKeyBaseTests
     {
-        static XXHash64Tests()
+        public XXHash64Tests()
         {
             hash = HashFactory.Hash64.CreateXXHash64();
 

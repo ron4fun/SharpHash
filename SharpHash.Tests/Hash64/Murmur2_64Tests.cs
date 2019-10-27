@@ -11,9 +11,9 @@ namespace SharpHash.Hash64.Tests
     [TestClass]
     public class Murmur2_64Tests : HashAdapter1BaseTests
     {
-        private static string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
+        private string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
 
-        static Murmur2_64Tests()
+        public Murmur2_64Tests()
         {
             hash = HashFactory.Hash64.CreateMurmur2();
 

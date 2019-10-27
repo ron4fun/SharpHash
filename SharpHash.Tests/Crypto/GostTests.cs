@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class GostTests : CryptoHashBaseTests
     {
-        static GostTests()
+        public GostTests()
         {
             hash = HashFactory.Crypto.CreateGost();
 

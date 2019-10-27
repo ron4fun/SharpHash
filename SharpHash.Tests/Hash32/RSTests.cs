@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class RSTests : HashAdapter1BaseTests
     {
-        static RSTests()
+        public RSTests()
         {
             hash = HashFactory.Hash32.CreateRS();
 

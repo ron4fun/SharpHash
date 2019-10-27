@@ -6,7 +6,7 @@ namespace SharpHash.Checksum.Tests
     [TestClass]
     public class Adler32Tests : HashAdapter1BaseTests
     {
-        static Adler32Tests()
+        public Adler32Tests()
         {
             hash = HashFactory.Checksum.CreateAdler32();
 

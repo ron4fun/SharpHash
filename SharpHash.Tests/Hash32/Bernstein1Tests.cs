@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class Bernstein1Tests : HashAdapter1BaseTests
     {
-        static Bernstein1Tests()
+        public Bernstein1Tests()
         {
             hash = HashFactory.Hash32.CreateBernstein1();
 

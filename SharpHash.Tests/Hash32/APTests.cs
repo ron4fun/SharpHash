@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class APTests : HashAdapter1BaseTests
     {
-        static APTests()
+        public APTests()
         {
             hash = HashFactory.Hash32.CreateAP();
 

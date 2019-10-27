@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class OneAtTimeTests : HashAdapter1BaseTests
     {
-        static OneAtTimeTests()
+        public OneAtTimeTests()
         {
             hash = HashFactory.Hash32.CreateOneAtTime();
 

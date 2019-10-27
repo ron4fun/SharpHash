@@ -10,10 +10,10 @@ namespace SharpHash
     [TestClass]
     public abstract class HashBaseTests
     {
-        protected static IHash hash { get; set; }
+        protected IHash hash { get; set; }
 
-        protected static string ExpectedHashOfEmptyData { get; set; }
-        protected static string ExpectedHashOfDefaultData { get; set; }
+        protected string ExpectedHashOfEmptyData { get; set; }
+        protected string ExpectedHashOfDefaultData { get; set; }
 
         [TestMethod]
         public void TestEmptyString()
@@ -45,7 +45,7 @@ namespace SharpHash
         public void TestIncrementalHash()
         {
             TestHelper.TestIncrementalHash(TestConstants.DefaultData,
-            ExpectedHashOfDefaultData, hash.Clone());
+            ExpectedHashOfDefaultData, hash);
         }
 
         [TestMethod]
@@ -78,13 +78,13 @@ namespace SharpHash
         [TestMethod]
         public void TestHashCloneIsCorrect()
         {
-            TestHelper.TestHashCloneIsCorrect(hash.Clone());
+            TestHelper.TestHashCloneIsCorrect(hash);
         }
 
         [TestMethod]
         public void TestHashCloneIsUnique()
         {
-            TestHelper.TestHashCloneIsUnique(hash.Clone());
+            TestHelper.TestHashCloneIsUnique(hash);
         }
     }
 }

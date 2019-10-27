@@ -7,9 +7,9 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class GOST3411_2012_512Tests : HashBaseTests
     {
-        private static string ExpectedHashOfQuickBrownFox { get; set; }
+        private string ExpectedHashOfQuickBrownFox { get; set; }
 
-        static GOST3411_2012_512Tests()
+        public GOST3411_2012_512Tests()
         {
             hash = HashFactory.Crypto.CreateGOST3411_2012_512();
 

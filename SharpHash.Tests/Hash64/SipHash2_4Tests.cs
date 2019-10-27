@@ -7,9 +7,9 @@ namespace SharpHash.Hash64.Tests
     [TestClass]
     public class SipHash2_4Tests : HashAdapter1BaseTests
     {
-        private static string ExpectedHashOfShortMessage { get; set; }
+        private string ExpectedHashOfShortMessage { get; set; }
 
-        static SipHash2_4Tests()
+        public SipHash2_4Tests()
         {
             hash = HashFactory.Hash64.CreateSipHash2_4();
 

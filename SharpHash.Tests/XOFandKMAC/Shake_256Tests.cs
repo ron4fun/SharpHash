@@ -7,7 +7,7 @@ namespace SharpHash.XOFandKMAC.Tests
     [TestClass]
     public class Shake_256Tests : ShakeBaseTests
     {
-        static Shake_256Tests()
+        public Shake_256Tests()
         {
             hash = HashFactory.XOF.CreateShake_256(512);
             VeryLongShake = HashFactory.XOF.CreateShake_256(8000) as IXOF;

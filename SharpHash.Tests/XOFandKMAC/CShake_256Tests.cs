@@ -11,7 +11,7 @@ namespace SharpHash.XOFandKMAC.Tests
     [TestClass]
     public class CShake_256Tests : CShakeBaseTests
     {
-        static CShake_256Tests()
+        public CShake_256Tests()
         {
             hash = HashFactory.XOF.CreateCShake_256(null, FS, 512);
             ExpectedHashOfZeroToThreeInHex =

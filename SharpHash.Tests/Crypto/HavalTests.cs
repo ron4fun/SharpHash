@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_3_128Tests : CryptoHashBaseTests
     {
-        static Haval_3_128Tests()
+        public Haval_3_128Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_3_128();
 
@@ -22,7 +22,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_4_128Tests : CryptoHashBaseTests
     {
-        static Haval_4_128Tests()
+        public Haval_4_128Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_4_128();
 
@@ -38,7 +38,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_5_128Tests : CryptoHashBaseTests
     {
-        static Haval_5_128Tests()
+        public Haval_5_128Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_5_128();
 
@@ -54,7 +54,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_3_160Tests : CryptoHashBaseTests
     {
-        static Haval_3_160Tests()
+        public Haval_3_160Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_3_160();
 
@@ -70,7 +70,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_4_160Tests : CryptoHashBaseTests
     {
-        static Haval_4_160Tests()
+        public Haval_4_160Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_4_160();
 
@@ -86,7 +86,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_5_160Tests : CryptoHashBaseTests
     {
-        static Haval_5_160Tests()
+        public Haval_5_160Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_5_160();
 
@@ -102,7 +102,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_3_192Tests : CryptoHashBaseTests
     {
-        static Haval_3_192Tests()
+        public Haval_3_192Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_3_192();
 
@@ -118,7 +118,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_4_192Tests : CryptoHashBaseTests
     {
-        static Haval_4_192Tests()
+        public Haval_4_192Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_4_192();
 
@@ -134,7 +134,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_5_192Tests : CryptoHashBaseTests
     {
-        static Haval_5_192Tests()
+        public Haval_5_192Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_5_192();
 
@@ -150,7 +150,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_3_224Tests : CryptoHashBaseTests
     {
-        static Haval_3_224Tests()
+        public Haval_3_224Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_3_224();
 
@@ -166,7 +166,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_4_224Tests : CryptoHashBaseTests
     {
-        static Haval_4_224Tests()
+        public Haval_4_224Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_4_224();
 
@@ -182,7 +182,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_5_224Tests : CryptoHashBaseTests
     {
-        static Haval_5_224Tests()
+        public Haval_5_224Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_5_224();
 
@@ -198,7 +198,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_3_256Tests : CryptoHashBaseTests
     {
-        static Haval_3_256Tests()
+        public Haval_3_256Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_3_256();
 
@@ -214,7 +214,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_4_256Tests : CryptoHashBaseTests
     {
-        static Haval_4_256Tests()
+        public Haval_4_256Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_4_256();
 
@@ -230,7 +230,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Haval_5_256Tests : CryptoHashBaseTests
     {
-        static Haval_5_256Tests()
+        public Haval_5_256Tests()
         {
             hash = HashFactory.Crypto.CreateHaval_5_256();
 

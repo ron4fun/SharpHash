@@ -11,12 +11,12 @@ namespace SharpHash.Tests
     [TestClass]
     public class NullDigestTests
     {
-        protected static IHash hash = HashFactory.NullDigestFactory.CreateNullDigest();
+        protected IHash hash = HashFactory.NullDigestFactory.CreateNullDigest();
 
-        protected static string ExpectedHashOfEmptyData = "00000001";
-        protected static string ExpectedHashOfDefaultData = "25D40524";
-        protected static string ExpectedHashOfOnetoNine = "091E01DE";
-        protected static string ExpectedHashOfabcde = "05C801F0";
+        protected string ExpectedHashOfEmptyData = "00000001";
+        protected string ExpectedHashOfDefaultData = "25D40524";
+        protected string ExpectedHashOfOnetoNine = "091E01DE";
+        protected string ExpectedHashOfabcde = "05C801F0";
 
         [TestMethod]
         public void TestBytesabcde()

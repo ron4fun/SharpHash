@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Grindahl256Tests : CryptoHashBaseTests
     {
-        static Grindahl256Tests()
+        public Grindahl256Tests()
         {
             hash = HashFactory.Crypto.CreateGrindahl256();
 

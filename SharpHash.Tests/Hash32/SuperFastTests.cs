@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class SuperFastTests : HashAdapter1BaseTests
     {
-        static SuperFastTests()
+        public SuperFastTests()
         {
             hash = HashFactory.Hash32.CreateSuperFast();
 

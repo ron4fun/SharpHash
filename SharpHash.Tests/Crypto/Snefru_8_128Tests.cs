@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Snefru_8_128Tests : CryptoHashBaseTests
     {
-        static Snefru_8_128Tests()
+        public Snefru_8_128Tests()
         {
             hash = HashFactory.Crypto.CreateSnefru_8_128();
 

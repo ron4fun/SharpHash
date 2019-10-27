@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class BKDRTests : HashAdapter1BaseTests
     {
-        static BKDRTests()
+        public BKDRTests()
         {
             hash = HashFactory.Hash32.CreateBKDR();
 

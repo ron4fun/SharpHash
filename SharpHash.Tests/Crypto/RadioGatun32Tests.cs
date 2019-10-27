@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class RadioGatun32Tests : CryptoHashBaseTests
     {
-        static RadioGatun32Tests()
+        public RadioGatun32Tests()
         {
             hash = HashFactory.Crypto.CreateRadioGatun32();
 

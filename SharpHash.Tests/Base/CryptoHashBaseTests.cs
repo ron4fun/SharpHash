@@ -10,8 +10,8 @@ namespace SharpHash
     [TestClass]
     public abstract class CryptoHashBaseTests : HashAdapter1BaseTests
     {
-        protected static string ExpectedHashOfDefaultDataWithHMACWithLongKey { get; set; }
-        protected static string ExpectedHashOfDefaultDataWithHMACWithShortKey { get; set; }
+        protected string ExpectedHashOfDefaultDataWithHMACWithLongKey { get; set; }
+        protected string ExpectedHashOfDefaultDataWithHMACWithShortKey { get; set; }
 
         [TestMethod]
         public void TestHMACWithDefaultDataAndLongKey()

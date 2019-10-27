@@ -6,7 +6,7 @@ namespace SharpHash.Hash128.Tests
     [TestClass]
     public class MurmurHash3_x86_128Tests : HashWithUInt32AsKeyBaseTests
     {
-        static MurmurHash3_x86_128Tests()
+        public MurmurHash3_x86_128Tests()
         {
             hash = HashFactory.Hash128.CreateMurmurHash3_x86_128();
 

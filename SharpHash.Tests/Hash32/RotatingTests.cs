@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class RotatingTests : HashAdapter1BaseTests
     {
-        static RotatingTests()
+        public RotatingTests()
         {
             hash = HashFactory.Hash32.CreateRotating();
 

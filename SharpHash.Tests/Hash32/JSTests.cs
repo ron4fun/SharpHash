@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class JSTests : HashAdapter1BaseTests
     {
-        static JSTests()
+        public JSTests()
         {
             hash = HashFactory.Hash32.CreateJS();
 

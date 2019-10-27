@@ -11,9 +11,9 @@ namespace SharpHash.XOFandKMAC.Tests
     [TestClass]
     public class KMAC256Tests : KMACBaseTests
     {
-        private static readonly UInt64 OutputSizeInBits = 64 * 8;
+        private readonly UInt64 OutputSizeInBits = 64 * 8;
 
-        static KMAC256Tests()
+        public KMAC256Tests()
         {
             Int32 LIdx;
             byte[] temp = new byte[200];

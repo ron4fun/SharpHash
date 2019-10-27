@@ -10,9 +10,9 @@ namespace SharpHash
     {
         protected static readonly byte[] FS = Converters.ConvertStringToBytes("Email Signature", Encoding.UTF8);
 
-        protected static IHash hash { get; set; }
-        protected static string ExpectedHashOfZeroToThreeInHex { get; set; }
-        protected static string ExpectedHashOfZeroToOneHundredAndNinetyNineInHex { get; set; }
+        protected IHash hash { get; set; }
+        protected string ExpectedHashOfZeroToThreeInHex { get; set; }
+        protected string ExpectedHashOfZeroToOneHundredAndNinetyNineInHex { get; set; }
 
         [TestMethod]
         public void TestCShakeVectors()

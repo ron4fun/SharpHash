@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class SDBMTests : HashAdapter1BaseTests
     {
-        static SDBMTests()
+        public SDBMTests()
         {
             hash = HashFactory.Hash32.CreateSDBM();
 

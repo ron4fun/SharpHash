@@ -6,8 +6,8 @@ namespace SharpHash
     [TestClass]
     public abstract class HashAdapter1BaseTests : HashBaseTests
     {
-        protected static string ExpectedHashOfOnetoNine { get; set; }
-        protected static string ExpectedHashOfabcde { get; set; }
+        protected string ExpectedHashOfOnetoNine { get; set; }
+        protected string ExpectedHashOfabcde { get; set; }
 
         [TestMethod]
         public void TestOnetoNine()

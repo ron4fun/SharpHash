@@ -10,7 +10,7 @@ namespace SharpHash
     [TestClass]
     public abstract class HashWithUInt32AsKeyBaseTests : HashAdapter2BaseTests
     {
-        protected static string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
+        protected string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
 
         [TestMethod]
         public void TestWithDifferentKeyOneEmptyString()
