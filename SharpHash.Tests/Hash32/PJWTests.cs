@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class PJWTests : HashAdapter1BaseTests
     {
-        public PJWTests()
+        static PJWTests()
         {
             hash = HashFactory.Hash32.CreatePJW();
 

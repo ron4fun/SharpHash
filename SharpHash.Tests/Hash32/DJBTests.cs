@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class DJBTests : HashAdapter1BaseTests
     {
-        public DJBTests()
+        static DJBTests()
         {
             hash = HashFactory.Hash32.CreateDJB();
 

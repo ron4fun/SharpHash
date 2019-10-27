@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class MD2Tests : CryptoHashBaseTests
     {
-        public MD2Tests()
+        static MD2Tests()
         {
             hash = HashFactory.Crypto.CreateMD2();
 

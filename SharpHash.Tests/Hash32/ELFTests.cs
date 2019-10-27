@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class ELFTests : HashAdapter1BaseTests
     {
-        public ELFTests()
+        static ELFTests()
         {
             hash = HashFactory.Hash32.CreateELF();
 

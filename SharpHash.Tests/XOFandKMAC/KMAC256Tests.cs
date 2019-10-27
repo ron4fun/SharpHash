@@ -9,11 +9,11 @@ using System.Text;
 namespace SharpHash.XOFandKMAC.Tests
 {
     [TestClass]
-    public class KMAC256Tests : KMACTests
+    public class KMAC256Tests : KMACBaseTests
     {
-        private readonly UInt64 OutputSizeInBits = 64 * 8;
+        private static readonly UInt64 OutputSizeInBits = 64 * 8;
 
-        public KMAC256Tests()
+        static KMAC256Tests()
         {
             Int32 LIdx;
             byte[] temp = new byte[200];

@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class PanamaTests : CryptoHashBaseTests
     {
-        public PanamaTests()
+        static PanamaTests()
         {
             hash = HashFactory.Crypto.CreatePanama();
 

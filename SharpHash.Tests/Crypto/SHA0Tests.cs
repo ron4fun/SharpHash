@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class SHA0Tests : CryptoHashBaseTests
     {
-        public SHA0Tests()
+        static SHA0Tests()
         {
             hash = HashFactory.Crypto.CreateSHA0();
 

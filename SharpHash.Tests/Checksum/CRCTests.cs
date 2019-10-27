@@ -21,8 +21,8 @@ namespace SharpHash.Checksum.Tests
     [TestClass]
     public class CRCTests
     {
-        protected IHash crcObj = null;
-        protected IEnumerable<CRCStandard> CRCStandardValues = EnumUtil.GetValues<CRCStandard>();
+        protected static IHash crcObj = null;
+        protected static IEnumerable<CRCStandard> CRCStandardValues = EnumUtil.GetValues<CRCStandard>();
 
         [TestMethod]
         public void TestAnotherChunkedDataIncrementalHash()
@@ -161,11 +161,11 @@ namespace SharpHash.Checksum.Tests
     [TestClass]
     public class CRC32FastTests
     {
-        protected IHash crcObj = null;
+        protected static IHash crcObj = null;
 
-        protected UInt32 CRC32_PKZIP_Check_Value = 0xCBF43926;
-        protected UInt32 CRC32_CASTAGNOLI_Check_Value = 0xE3069283;
-        protected Int32[] WorkingIndex = new Int32[] { 0, 1 };
+        protected static readonly UInt32 CRC32_PKZIP_Check_Value = 0xCBF43926;
+        protected static readonly UInt32 CRC32_CASTAGNOLI_Check_Value = 0xE3069283;
+        protected static readonly Int32[] WorkingIndex = new Int32[] { 0, 1 };
 
         protected UInt32 GetWorkingValue(Int32 a_index)
         {

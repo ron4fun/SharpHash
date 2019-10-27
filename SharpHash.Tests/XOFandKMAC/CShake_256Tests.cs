@@ -9,21 +9,18 @@ using System.Text;
 namespace SharpHash.XOFandKMAC.Tests
 {
     [TestClass]
-    public class CShake_256Tests : CShakeTests
+    public class CShake_256Tests : CShakeBaseTests
     {
-        protected IHash hash;
-
-        protected string ExpectedHashOfZeroToThreeInHex =
+        static CShake_256Tests()
+        {
+            hash = HashFactory.XOF.CreateCShake_256(null, FS, 512);
+            ExpectedHashOfZeroToThreeInHex =
             "D008828E2B80AC9D2218FFEE1D070C48" + "B8E4C87BFF32C9699D5B6896EEE0EDD1"
           + "64020E2BE0560858D9C00C037E34A969" + "37C561A74C412BB4C746469527281C8C";
 
-        protected string ExpectedHashOfZeroToOneHundredAndNinetyNineInHex =
+            ExpectedHashOfZeroToOneHundredAndNinetyNineInHex =
             "07DC27B11E51FBAC75BC7B3C1D983E8B" + "4B85FB1DEFAF218912AC864302730917"
           + "27F42B17ED1DF63E8EC118F04B23633C" + "1DFB1574C8FB55CB45DA8E25AFB092BB";
-
-        public CShake_256Tests()
-        {
-            hash = HashFactory.XOF.CreateCShake_256(null, FS, 512);
         } //
 
         [TestMethod]
@@ -55,36 +52,6 @@ namespace SharpHash.XOFandKMAC.Tests
             Assert.AreEqual(ExpectedString, ActualString,
                 String.Format("Expected {0} but got {1}.",
                 ExpectedString, ActualString));
-        }
-
-        [TestMethod]
-        public void TestCShake_256_Vectors()
-        {
-            TestHelper.TestActualAndExpectedData(
-                Converters.ConvertHexStringToBytes(TestConstants.ZeroToThreeInHex),
-                ExpectedHashOfZeroToThreeInHex, hash);
-
-            TestHelper.TestActualAndExpectedData(
-                Converters.ConvertHexStringToBytes(TestConstants.ZeroToOneHundredAndNinetyNineInHex),
-                ExpectedHashOfZeroToOneHundredAndNinetyNineInHex, hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsCorrect()
-        {
-            TestHelper.TestHashCloneIsCorrect(hash);
-        }
-
-        [TestMethod]
-        public void TestHashCloneIsUnique()
-        {
-            TestHelper.TestHashCloneIsUnique(hash);
-        }
-
-        [TestMethod]
-        public void TestHMACCloneIsCorrect()
-        {
-            TestHelper.TestHMACCloneIsCorrect(hash);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace SharpHash.Hash64.Tests
     [TestClass]
     public class Murmur2_64Tests : HashAdapter1BaseTests
     {
-        private string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
+        private static string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
 
-        public Murmur2_64Tests()
+        static Murmur2_64Tests()
         {
             hash = HashFactory.Hash64.CreateMurmur2();
 
@@ -30,7 +30,7 @@ namespace SharpHash.Hash64.Tests
             IHashWithKey LIHashWithKey;
 
             string ExpectedString = ExpectedHashOfDefaultDataWithMaxUInt32AsKey;
-            LIHashWithKey = (hash as IHashWithKey);
+            LIHashWithKey = (hash.Clone() as IHashWithKey);
             LIHashWithKey.Key = Converters.ReadUInt32AsBytesLE(UInt32.MaxValue);
 
             string ActualString = LIHashWithKey.ComputeString(TestConstants.DefaultData,

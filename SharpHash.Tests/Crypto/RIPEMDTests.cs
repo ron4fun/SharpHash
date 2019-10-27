@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class RIPEMDTests : CryptoHashBaseTests
     {
-        public RIPEMDTests()
+        static RIPEMDTests()
         {
             hash = HashFactory.Crypto.CreateRIPEMD();
 

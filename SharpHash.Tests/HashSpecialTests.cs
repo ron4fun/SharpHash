@@ -6,14 +6,14 @@ using SharpHash.Utils;
 using System;
 using System.Text;
 
-namespace SharpHash
+namespace SharpHash.Tests
 {
     [TestClass]
     public class HashTests
     {
-        private IHash hash = HashFactory.Crypto.CreateMD5();
-        private readonly string ExpectedHashOfDefaultData = "462EC1E50C8F2D5C387682E98F9BC842";
-        private readonly string ExpectedHashOfEmptyData = "D41D8CD98F00B204E9800998ECF8427E";
+        private static IHash hash = HashFactory.Crypto.CreateMD5();
+        private static readonly string ExpectedHashOfDefaultData = "462EC1E50C8F2D5C387682E98F9BC842";
+        private static readonly string ExpectedHashOfEmptyData = "D41D8CD98F00B204E9800998ECF8427E";
 
         [TestMethod]
         public void TestNullStreamThrowException()

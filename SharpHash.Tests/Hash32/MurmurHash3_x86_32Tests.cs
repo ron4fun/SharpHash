@@ -7,7 +7,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class MurmurHash3_x86_32Tests : HashWithUInt32AsKeyBaseTests
     {
-        public MurmurHash3_x86_32Tests()
+        static MurmurHash3_x86_32Tests()
         {
             hash = HashFactory.Hash32.CreateMurmurHash3_x86_32();
 

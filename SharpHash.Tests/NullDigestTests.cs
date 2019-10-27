@@ -6,17 +6,17 @@ using SharpHash.Utils;
 using System.Linq;
 using System.Text;
 
-namespace SharpHash.Checksum.Tests
+namespace SharpHash.Tests
 {
     [TestClass]
     public class NullDigestTests
     {
-        protected IHash hash = HashFactory.NullDigestFactory.CreateNullDigest();
+        protected static IHash hash = HashFactory.NullDigestFactory.CreateNullDigest();
 
-        protected string ExpectedHashOfEmptyData = "00000001";
-        protected string ExpectedHashOfDefaultData = "25D40524";
-        protected string ExpectedHashOfOnetoNine = "091E01DE";
-        protected string ExpectedHashOfabcde = "05C801F0";
+        protected static string ExpectedHashOfEmptyData = "00000001";
+        protected static string ExpectedHashOfDefaultData = "25D40524";
+        protected static string ExpectedHashOfOnetoNine = "091E01DE";
+        protected static string ExpectedHashOfabcde = "05C801F0";
 
         [TestMethod]
         public void TestBytesabcde()

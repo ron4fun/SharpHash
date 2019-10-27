@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class Keccak_384Tests : CryptoHashBaseTests
     {
-        public Keccak_384Tests()
+        static Keccak_384Tests()
         {
             hash = HashFactory.Crypto.CreateKeccak_384();
 

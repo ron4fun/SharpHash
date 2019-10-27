@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class FNV1aTests : HashAdapter1BaseTests
     {
-        public FNV1aTests()
+        static FNV1aTests()
         {
             hash = HashFactory.Hash32.CreateFNV1a();
 

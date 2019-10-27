@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class ShiftAndXorTests : HashAdapter1BaseTests
     {
-        public ShiftAndXorTests()
+        static ShiftAndXorTests()
         {
             hash = HashFactory.Hash32.CreateShiftAndXor();
 

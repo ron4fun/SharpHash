@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class XXHash32Tests : HashWithUInt32AsKeyBaseTests
     {
-        public XXHash32Tests()
+        static XXHash32Tests()
         {
             hash = HashFactory.Hash32.CreateXXHash32();
 

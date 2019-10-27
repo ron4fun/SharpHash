@@ -6,7 +6,7 @@ namespace SharpHash.Hash32.Tests
     [TestClass]
     public class DEKTests : HashAdapter1BaseTests
     {
-        public DEKTests()
+        static DEKTests()
         {
             hash = HashFactory.Hash32.CreateDEK();
 

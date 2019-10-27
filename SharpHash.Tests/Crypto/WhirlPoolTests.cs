@@ -6,7 +6,7 @@ namespace SharpHash.Crypto.Tests
     [TestClass]
     public class WhirlPoolTests : CryptoHashBaseTests
     {
-        public WhirlPoolTests()
+        static WhirlPoolTests()
         {
             hash = HashFactory.Crypto.CreateWhirlPool();
 
