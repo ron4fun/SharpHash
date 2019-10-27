@@ -57,9 +57,9 @@ Available Algorithms
 
  * `SHA-2 (224, 256, 384, 512, 512-224, 512-256)` :heavy_check_mark:
 
- * `GOST 34.11-94`
+ * `GOST 34.11-94` :heavy_check_mark:
 
- * `GOST R 34.11-2012 (AKA Streebog) (256, 512)`
+ * `GOST R 34.11-2012 (AKA Streebog) (256, 512)` :heavy_check_mark:
  
  * `Grindahl (256, 512)` :heavy_check_mark:
  
@@ -67,17 +67,17 @@ Available Algorithms
 
  * `RIPEMD (128, 256, 256, 320)` :heavy_check_mark:
 
- * `Tiger (128, 160, 192 (Rounds 3, 4, 5))` 
+ * `Tiger (128, 160, 192 (Rounds 3, 4, 5))` :heavy_check_mark:
 
- * `Tiger2 (128, 160, 192 (Rounds 3, 4, 5))` 
+ * `Tiger2 (128, 160, 192 (Rounds 3, 4, 5))` :heavy_check_mark:
  
- * `Snefru (128, 256)`
+ * `Snefru (128, 256)` :heavy_check_mark:
  
- * `Haval (128, 160, 192, 224, 256 (Rounds 3, 4, 5))`
+ * `Haval (128, 160, 192, 224, 256 (Rounds 3, 4, 5))` :heavy_check_mark:
  
  * `Panama` :heavy_check_mark:
  
- * `RadioGatun (RadioGatun32, RadioGatun64)`
+ * `RadioGatun (RadioGatun32, RadioGatun64)` :heavy_check_mark:
 
  * `WhirlPool` :heavy_check_mark:
 
