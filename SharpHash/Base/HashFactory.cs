@@ -146,6 +146,205 @@ namespace SharpHash.Base
 
             ///////////////////////////////////////////
             /// <summary>
+            /// Gost Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+            public static IHash CreateGost()
+            {
+                return new Gost();
+            } // end function CreateGost
+
+            public static IHash CreateGOST3411_2012_256()
+            {
+                return new GOST3411_2012_256();
+            } // end function CreateGOST3411_2012_256
+
+            public static IHash CreateGOST3411_2012_512()
+            {
+                return new GOST3411_2012_512();
+            } // end function CreateGOST3411_2012_512
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// Haval Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="a_rounds">3, 4, 5</param>
+            /// <param name="a_hash_size">128, 160, 192, 224, 256</param>
+            /// <returns></returns>
+            public static IHash CreateHaval(HashRounds a_rounds, HashSizeEnum a_hash_size)
+            {
+                switch (a_rounds)
+                {
+                    case HashRounds.Rounds3:
+                        switch (a_hash_size)
+                        {
+                            case HashSizeEnum.HashSize128:
+                                return CreateHaval_3_128();
+
+                            case HashSizeEnum.HashSize160:
+                                return CreateHaval_3_160();
+
+                            case HashSizeEnum.HashSize192:
+                                return CreateHaval_3_192();
+
+                            case HashSizeEnum.HashSize224:
+                                return CreateHaval_3_224();
+
+                            case HashSizeEnum.HashSize256:
+                                return CreateHaval_3_256();
+
+                            default:
+                                throw new ArgumentHashLibException(Haval.InvalidHavalHashSize);
+                        } // end switch
+
+                    case HashRounds.Rounds4:
+                        switch (a_hash_size)
+                        {
+                            case HashSizeEnum.HashSize128:
+                                return CreateHaval_4_128();
+
+                            case HashSizeEnum.HashSize160:
+                                return CreateHaval_4_160();
+
+                            case HashSizeEnum.HashSize192:
+                                return CreateHaval_4_192();
+
+                            case HashSizeEnum.HashSize224:
+                                return CreateHaval_4_224();
+
+                            case HashSizeEnum.HashSize256:
+                                return CreateHaval_4_256();
+
+                            default:
+                                throw new ArgumentHashLibException(Haval.InvalidHavalHashSize);
+                        } // end switch
+
+                    case HashRounds.Rounds5:
+                        switch (a_hash_size)
+                        {
+                            case HashSizeEnum.HashSize128:
+                                return CreateHaval_5_128();
+
+                            case HashSizeEnum.HashSize160:
+                                return CreateHaval_5_160();
+
+                            case HashSizeEnum.HashSize192:
+                                return CreateHaval_5_192();
+
+                            case HashSizeEnum.HashSize224:
+                                return CreateHaval_5_224();
+
+                            case HashSizeEnum.HashSize256:
+                                return CreateHaval_5_256();
+
+                            default:
+                                throw new ArgumentHashLibException(Haval.InvalidHavalHashSize);
+                        } // end switch
+
+                    default:
+                        throw new ArgumentHashLibException(Haval.InvalidHavalRound);
+                } // end switch
+            } // end function Haval
+
+            public static IHash CreateHaval_3_128()
+            {
+                return new Haval_3_128();
+            } // end function CreateHaval_3_128
+
+            public static IHash CreateHaval_4_128()
+            {
+                return new Haval_4_128();
+            } // end function CreateHaval_4_128
+
+            public static IHash CreateHaval_5_128()
+            {
+                return new Haval_5_128();
+            } // end function CreateHaval_5_128
+
+            public static IHash CreateHaval_3_160()
+            {
+                return new Haval_3_160();
+            } // end function CreateHaval_3_160
+
+            public static IHash CreateHaval_4_160()
+            {
+                return new Haval_4_160();
+            } // end function CreateHaval_4_160
+
+            public static IHash CreateHaval_5_160()
+            {
+                return new Haval_5_160();
+            } // end function CreateHaval_5_160
+
+            public static IHash CreateHaval_3_192()
+            {
+                return new Haval_3_192();
+            } // end function CreateHaval_3_192
+
+            public static IHash CreateHaval_4_192()
+            {
+                return new Haval_4_192();
+            } // end function CreateHaval_4_192
+
+            public static IHash CreateHaval_5_192()
+            {
+                return new Haval_5_192();
+            } // end function CreateHaval_5_192
+
+            public static IHash CreateHaval_3_224()
+            {
+                return new Haval_3_224();
+            } // end function CreateHaval_3_224
+
+            public static IHash CreateHaval_4_224()
+            {
+                return new Haval_4_224();
+            } // end function CreateHaval_4_224
+
+            public static IHash CreateHaval_5_224()
+            {
+                return new Haval_5_224();
+            } // end function CreateHaval_5_224
+
+            public static IHash CreateHaval_3_256()
+            {
+                return new Haval_3_256();
+            } // end function CreateHaval_3_256
+
+            public static IHash CreateHaval_4_256()
+            {
+                return new Haval_4_256();
+            } // end function CreateHaval_4_256
+
+            public static IHash CreateHaval_5_256()
+            {
+                return new Haval_5_256();
+            } // end function CreateHaval_5_256
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// RadioGatun Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+            public static IHash CreateRadioGatun32()
+            {
+                return new RadioGatun32();
+            } // end function CreateRadioGatun32
+
+            public static IHash CreateRadioGatun64()
+            {
+                return new RadioGatun64();
+            } // end function CreateRadioGatun64
+
+            ///////////////////////////////////////////
+            /// <summary>
             /// Grindahl Hash Family
             /// </summary>
             ////////////////////////////////////////////
@@ -190,6 +389,39 @@ namespace SharpHash.Base
             {
                 return new RIPEMD320();
             } // end function CreateRIPEMD320
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// Snefru Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="a_security_level">any Integer value greater than 0. Standard is 8. </param>
+            /// <param name="a_hash_size">128bit, 256bit</param>
+            /// <returns></returns>
+            public static IHash CreateSnefru(Int32 a_security_level, HashSizeEnum a_hash_size)
+            {
+                if (a_security_level < 1)
+                    throw new ArgumentHashLibException(Snefru.InvalidSnefruLevel);
+
+                if ((a_hash_size == HashSizeEnum.HashSize128) || (a_hash_size == HashSizeEnum.HashSize256))
+                    return new Snefru(a_security_level, (Int32)a_hash_size);
+                else
+                    throw new ArgumentHashLibException(Snefru.InvalidSnefruHashSize);
+            } // end function CreateSnefru
+
+            public static IHash CreateSnefru_8_128()
+            {
+                return CreateSnefru(8, HashSizeEnum.HashSize128);
+            } // end function CreateSnefru_8_128
+
+            public static IHash CreateSnefru_8_256()
+            {
+                return CreateSnefru(8, HashSizeEnum.HashSize256);
+            } // end function CreateSnefru_8_256
 
             ///////////////////////////////////////////
             /// <summary>
@@ -302,6 +534,136 @@ namespace SharpHash.Base
             {
                 return new Keccak_512();
             } // end function CreateKeccak_512
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// Tiger Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="a_hash_size">16, 20 or 24 bytes. </param>
+            /// <param name="a_rounds">no of rounds (standard rounds are 3, 4 and 5)</param>
+            /// <returns></returns>
+            public static IHash CreateTiger(Int32 a_hash_size, HashRounds a_rounds)
+            {
+                if ((a_hash_size != 16) && (a_hash_size != 20) && (a_hash_size != 24))
+                    throw new ArgumentHashLibException(Tiger.InvalidTigerHashSize);
+
+                return new Tiger_Base(a_hash_size, a_rounds);
+            } // end function CreateTiger
+
+            public static IHash CreateTiger_3_128()
+            {
+                return Tiger_128.CreateRound3();
+            } // end function CreateTiger_3_128
+
+            public static IHash CreateTiger_3_160()
+            {
+                return Tiger_160.CreateRound3();
+            } // end function CreateTiger_3_160
+
+            public static IHash CreateTiger_3_192()
+            {
+                return Tiger_192.CreateRound3();
+            } // end function CreateTiger_3_192
+
+            public static IHash CreateTiger_4_128()
+            {
+                return Tiger_128.CreateRound4();
+            } // end function CreateTiger_4_128
+
+            public static IHash CreateTiger_4_160()
+            {
+                return Tiger_160.CreateRound4();
+            } // end function CreateTiger_4_160
+
+            public static IHash CreateTiger_4_192()
+            {
+                return Tiger_192.CreateRound4();
+            } // end function CreateTiger_4_192
+
+            public static IHash CreateTiger_5_128()
+            {
+                return Tiger_128.CreateRound5();
+            } // end function CreateTiger_5_128
+
+            public static IHash CreateTiger_5_160()
+            {
+                return Tiger_160.CreateRound5();
+            } // end function CreateTiger_5_160
+
+            public static IHash CreateTiger_5_192()
+            {
+                return Tiger_192.CreateRound5();
+            } // end function CreateTiger_5_192
+
+            ///////////////////////////////////////////
+            /// <summary>
+            /// Tiger2 Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="a_hash_size">16, 20 or 24 bytes. </param>
+            /// <param name="a_rounds">no of rounds (standard rounds are 3, 4 and 5)</param>
+            /// <returns></returns>
+            public static IHash CreateTiger2(Int32 a_hash_size, HashRounds a_rounds)
+            {
+                if ((a_hash_size != 16) && (a_hash_size != 20) && (a_hash_size != 24))
+                    throw new ArgumentHashLibException(Tiger2.InvalidTigerHashSize);
+
+                return new Tiger2_Base(a_hash_size, a_rounds);
+            } // end function CreateTiger2
+
+            public static IHash CreateTiger2_3_128()
+            {
+                return Tiger2_128.CreateRound3();
+            } // end function CreateTiger2_3_128
+
+            public static IHash CreateTiger2_3_160()
+            {
+                return Tiger2_160.CreateRound3();
+            } // end function CreateTiger2_3_160
+
+            public static IHash CreateTiger2_3_192()
+            {
+                return Tiger2_192.CreateRound3();
+            } // end function CreateTiger2_3_192
+
+            public static IHash CreateTiger2_4_128()
+            {
+                return Tiger2_128.CreateRound4();
+            } // end function CreateTiger2_4_128
+
+            public static IHash CreateTiger2_4_160()
+            {
+                return Tiger2_160.CreateRound4();
+            } // end function CreateTiger2_4_160
+
+            public static IHash CreateTiger2_4_192()
+            {
+                return Tiger2_192.CreateRound4();
+            } // end function CreateTiger2_4_192
+
+            public static IHash CreateTiger2_5_128()
+            {
+                return Tiger2_128.CreateRound5();
+            } // end function CreateTiger2_5_128
+
+            public static IHash CreateTiger2_5_160()
+            {
+                return Tiger2_160.CreateRound5();
+            } // end function CreateTiger2_5_160
+
+            public static IHash CreateTiger2_5_192()
+            {
+                return Tiger2_192.CreateRound5();
+            } // end function CreateTiger2_5_192
         } // end class Crypto
 
         public static class Hash32
