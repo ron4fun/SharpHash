@@ -26,7 +26,7 @@
 
 namespace SharpHash.Base
 {
-    internal enum HashRounds
+    public enum HashRounds
     {
         Rounds3 = 3,
         Rounds4 = 4,

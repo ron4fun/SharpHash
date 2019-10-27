@@ -49,7 +49,7 @@ namespace SharpHash.Crypto
             work_buffer = new UInt32[17];
 
             Array.Resize(ref stages, 32);
-            for (UInt32 i = 0; i < 32; i++)
+            for (Int32 i = 0; i < 32; i++)
                 stages[i] = new UInt32[8];
         } // end constructor
 
