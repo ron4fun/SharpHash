@@ -88,25 +88,28 @@ namespace SharpHash.Utils
                 cdest[i] = temp[i];
         }
 
-        public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n)
+        public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n,
+            Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (byte* destPtr = &dest[0], srcPtr = &src[0])
+            fixed (byte* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
             {
                 memmove((IntPtr)destPtr, (IntPtr)srcPtr, n);
             }
         }
 
-        public unsafe static void memmove(ref UInt32[] dest, UInt32[] src, Int32 n)
+        public unsafe static void memmove(ref UInt32[] dest, UInt32[] src, Int32 n,
+            Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (UInt32* destPtr = &dest[0], srcPtr = &src[0])
+            fixed (UInt32* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
             {
                 memmove((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt32));
             }
         }
 
-        public unsafe static void memmove(ref UInt64[] dest, UInt64[] src, Int32 n)
+        public unsafe static void memmove(ref UInt64[] dest, UInt64[] src, Int32 n,
+            Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (UInt64* destPtr = &dest[0], srcPtr = &src[0])
+            fixed (UInt64* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
             {
                 memmove((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt64));
             }
