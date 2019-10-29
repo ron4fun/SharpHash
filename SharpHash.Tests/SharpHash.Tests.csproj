@@ -23,5 +23,4 @@
   <ItemGroup>
     <ProjectReference Include="..\SharpHash\SharpHash.csproj" />
   </ItemGroup>
-
 </Project>
