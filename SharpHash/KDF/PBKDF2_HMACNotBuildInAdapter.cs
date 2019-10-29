@@ -39,12 +39,12 @@ namespace SharpHash.KDF
         private UInt32 IterationCount, Block;
         private Int32 BlockSize, startIndex, endIndex;
 
-        public static string InvalidArgument = "\"bc (ByteCount)\" Argument must be a value greater than zero.";
-        public static string InvalidIndex = "Invalid start or end index in the internal buffer.";
-        public static string UninitializedInstance = "\"IHash\" instance is uninitialized.";
-        public static string EmptyPassword = "Password can't be empty.";
-        public static string EmptySalt = "Salt can't be empty.";
-        public static string IterationtooSmall = "Iteration must be greater than zero.";
+        public static readonly string InvalidArgument = "\"bc (ByteCount)\" Argument must be a value greater than zero.";
+        public static readonly string InvalidIndex = "Invalid start or end index in the internal buffer.";
+        public static readonly string UninitializedInstance = "\"IHash\" instance is uninitialized.";
+        public static readonly string EmptyPassword = "Password can't be empty.";
+        public static readonly string EmptySalt = "Salt can't be empty.";
+        public static readonly string IterationtooSmall = "Iteration must be greater than zero.";
 
         public PBKDF2_HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_password,
             byte[] a_salt, UInt32 a_iterations)
@@ -52,13 +52,16 @@ namespace SharpHash.KDF
             hash = a_underlyingHash.Clone();
 
             buffer = new byte[0];
-            Password = new byte[a_password.Length];
+            //
+            Password = new byte[a_password?.Length ?? 0];
             // Copy Password
-            Utils.Utils.memcopy(ref Password, a_password, a_password.Length);
+            if (!(a_password == null || a_password.Length == 0))
+                Utils.Utils.memcopy(ref Password, a_password, a_password.Length);
 
-            Salt = new byte[a_salt.Length];
+            Salt = new byte[a_salt?.Length ?? 0];
             // Copy Salt
-            Utils.Utils.memcopy(ref Salt, a_salt, a_salt.Length);
+            if (!(a_salt == null || a_salt.Length == 0))
+                Utils.Utils.memcopy(ref Salt, a_salt, a_salt.Length);
 
             IterationCount = a_iterations;
 
@@ -73,12 +76,13 @@ namespace SharpHash.KDF
 
         override public byte[] GetBytes(Int32 bc)
         {
-            Int32 LOffset, LSize, LRemainder;
+            Int32 LOffset, LSize, LRemainder, LRemCount;
+            byte[] LKey, LT_Block = null;
 
             if (bc <= 0)
                 throw new ArgumentOutOfRangeHashLibException(InvalidArgument);
 
-            byte[] LKey = new byte[bc];
+            LKey = new byte[bc];
 
             LOffset = 0;
             LSize = endIndex - startIndex;
@@ -86,28 +90,14 @@ namespace SharpHash.KDF
             {
                 if (bc >= LSize)
                 {
-                    unsafe
-                    {
-                        fixed (byte* dPtr = &LKey[0], sPtr = &buffer[startIndex])
-                        {
-                            Utils.Utils.memmove((IntPtr)dPtr, (IntPtr)sPtr, LSize);
-                        }
-                    }
-
+                    Utils.Utils.memmove(ref LKey, buffer, LSize, startIndex);
                     startIndex = 0;
                     endIndex = 0;
                     LOffset = LOffset + LSize;
                 } // end if
                 else
                 {
-                    unsafe
-                    {
-                        fixed (byte* dPtr = &LKey[0], sPtr = &buffer[startIndex])
-                        {
-                            Utils.Utils.memmove((IntPtr)dPtr, (IntPtr)sPtr, bc);
-                        }
-                    }
-
+                    Utils.Utils.memmove(ref LKey, buffer, bc, startIndex);
                     startIndex = startIndex + bc;
                     return LKey;
                 } // end else
@@ -118,33 +108,24 @@ namespace SharpHash.KDF
 
             while (LOffset < bc)
             {
-                byte[] LT_block = Func();
+                LT_Block = Func();
                 LRemainder = bc - LOffset;
                 if (LRemainder > BlockSize)
                 {
-                    unsafe
-                    {
-                        fixed (byte* dPtr = &LKey[LOffset], sPtr = &LT_block[0])
-                        {
-                            Utils.Utils.memmove((IntPtr)dPtr, (IntPtr)sPtr, BlockSize);
-                        }
-                    }
-
+                    Utils.Utils.memmove(ref LKey, LT_Block, BlockSize, 0, LOffset);
                     LOffset = LOffset + BlockSize;
                 } // end if
                 else
                 {
-                    unsafe
-                    {
-                        fixed (byte* dPtr = &LKey[LOffset], sPtr = &LT_block[0],
-                            dPtr2 = &buffer[startIndex], sPtr2 = &LT_block[0])
-                        {
-                            Utils.Utils.memmove((IntPtr)dPtr, (IntPtr)sPtr, LRemainder);
-                            Utils.Utils.memmove((IntPtr)dPtr2, (IntPtr)sPtr2, BlockSize - LRemainder);
-                        }
-                    }
+                    if (LRemainder > 0)
+                        Utils.Utils.memmove(ref LKey, LT_Block, LRemainder, 0, LOffset);
 
-                    endIndex = endIndex + (BlockSize - LRemainder);
+                    LRemCount = BlockSize - LRemainder;
+                    if (LRemCount > 0)
+                        Utils.Utils.memmove(ref buffer, LT_Block, LRemCount,
+                            LRemainder, startIndex);
+
+                    endIndex = endIndex + LRemCount;
                     return LKey;
                 } // end else
             } // end while
@@ -158,9 +139,8 @@ namespace SharpHash.KDF
             if (!(buffer == null || buffer.Length == 0))
                 Utils.Utils.memset(ref buffer, 0);
 
-            HMAC = new HMACNotBuildInAdapter(hash);
+            HMAC = HMACNotBuildInAdapter.CreateHMAC(hash, Password);
 
-            HMAC.Key = Password;
             BlockSize = (Int32)HMAC.HashSize;
 
             Array.Resize(ref buffer, BlockSize);

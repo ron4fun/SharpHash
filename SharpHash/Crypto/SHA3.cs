@@ -817,15 +817,15 @@ namespace SharpHash.Crypto
         protected CShake(Int32 a_hash_size, byte[] N, byte[] S)
             : base(a_hash_size)
         {
+            FN = new byte[N?.Length ?? 0];
             if (!(N == null || N.Length == 0))
             {
-                FN = new byte[N.Length];
                 Utils.Utils.memcopy(ref FN, N, N.Length);
             } // end if
 
+            FS = new byte[S?.Length ?? 0];
             if (!(S == null || S.Length == 0))
             {
-                FS = new byte[S.Length];
                 Utils.Utils.memcopy(ref FS, S, S.Length);
             } // end if
 
@@ -870,7 +870,7 @@ namespace SharpHash.Crypto
         {
             base.Initialize();
 
-            if (InitBlock != null)
+            if (!(InitBlock == null || InitBlock.Length == 0))
                 TransformBytes(BytePad(InitBlock, BlockSize));
         } // end function Initialize
 
@@ -928,9 +928,9 @@ namespace SharpHash.Crypto
             // CShake_128 Cloning
             CShake_128 HashInstance = (LXof as CShake_128);
 
+            HashInstance.InitBlock = new byte[InitBlock?.Length ?? 0];
             if (!(InitBlock == null || InitBlock.Length == 0))
             {
-                HashInstance.InitBlock = new byte[InitBlock.Length];
                 Utils.Utils.memcopy(ref HashInstance.InitBlock, InitBlock, InitBlock.Length);
             } // end if
 
@@ -1061,7 +1061,7 @@ namespace SharpHash.Crypto
             set
             {
                 if (value == null || value.Length == 0)
-                    key = null;
+                    key = new byte[0];
                 else
                 {
                     key = new byte[value.Length];
@@ -1099,15 +1099,15 @@ namespace SharpHash.Crypto
             UInt64 a_OutputLengthInBits)
             : base((Int32)HashSizeEnum.HashSize128)
         {
+            key = new byte[a_KMACKey?.Length ?? 0];
             if (!(a_KMACKey == null || a_KMACKey.Length == 0))
             {
-                key = new byte[a_KMACKey.Length];
                 Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
             } // end if
 
+            Customization = new byte[a_Customization?.Length ?? 0];
             if (!(Customization == null || Customization.Length == 0))
             {
-                Customization = new byte[a_Customization.Length];
                 Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
             } // end if
 
@@ -1124,8 +1124,8 @@ namespace SharpHash.Crypto
         public override IHash Clone()
         {
             // KMAC128 Cloning
-            KMAC128 HashInstance = new KMAC128(hash.Clone(), Key,
-                Customization, (hash as IXOF).XOFSizeInBits);
+            KMAC128 HashInstance = new KMAC128(hash.Clone(), Key, Customization,
+                (hash as IXOF).XOFSizeInBits);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1149,15 +1149,15 @@ namespace SharpHash.Crypto
         private KMAC128XOF(IHash a_hash, byte[] a_KMACKey, byte[] a_Customization)
             : base((Int32)HashSizeEnum.HashSize128)
         {
+            key = new byte[a_KMACKey?.Length ?? 0];
             if (!(a_KMACKey == null || a_KMACKey.Length == 0))
             {
-                key = new byte[a_KMACKey.Length];
                 Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
             } // end if
 
+            Customization = new byte[a_Customization?.Length ?? 0];
             if (!(Customization == null || Customization.Length == 0))
             {
-                Customization = new byte[a_Customization.Length];
                 Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
             } // end if
 
@@ -1209,15 +1209,15 @@ namespace SharpHash.Crypto
             UInt64 a_OutputLengthInBits)
             : base((Int32)HashSizeEnum.HashSize256)
         {
+            key = new byte[a_KMACKey?.Length ?? 0];
             if (!(a_KMACKey == null || a_KMACKey.Length == 0))
             {
-                key = new byte[a_KMACKey.Length];
                 Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
             } // end if
 
+            Customization = new byte[a_Customization?.Length ?? 0];
             if (!(Customization == null || Customization.Length == 0))
             {
-                Customization = new byte[a_Customization.Length];
                 Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
             } // end if
 
@@ -1234,8 +1234,8 @@ namespace SharpHash.Crypto
         public override IHash Clone()
         {
             // KMAC256 Cloning
-            KMAC256 HashInstance = new KMAC256(hash.Clone(), Key,
-                Customization, (hash as IXOF).XOFSizeInBits);
+            KMAC256 HashInstance = new KMAC256(hash.Clone(), Key, Customization,
+                (hash as IXOF).XOFSizeInBits);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1259,15 +1259,15 @@ namespace SharpHash.Crypto
         private KMAC256XOF(IHash a_hash, byte[] a_KMACKey, byte[] a_Customization)
             : base((Int32)HashSizeEnum.HashSize256)
         {
+            key = new byte[a_KMACKey?.Length ?? 0];
             if (!(a_KMACKey == null || a_KMACKey.Length == 0))
             {
-                key = new byte[a_KMACKey.Length];
                 Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
             } // end if
 
+            Customization = new byte[a_Customization?.Length ?? 0];
             if (!(Customization == null || Customization.Length == 0))
             {
-                Customization = new byte[a_Customization.Length];
                 Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
             } // end if
 

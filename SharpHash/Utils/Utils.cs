@@ -33,28 +33,19 @@ namespace SharpHash.Utils
         public unsafe static void memcopy(ref byte[] dest, byte[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (byte* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
-            {
-                memcopy((IntPtr)destPtr, (IntPtr)srcPtr, n);
-            }
+            Array.Copy(src, indexSrc, dest, indexDest, n);
         }
 
         public unsafe static void memcopy(ref UInt32[] dest, UInt32[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (UInt32* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
-            {
-                memcopy((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt32));
-            }
+            Array.Copy(src, indexSrc, dest, indexDest, n);
         }
 
         public unsafe static void memcopy(ref UInt64[] dest, UInt64[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (UInt64* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
-            {
-                memcopy((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt64));
-            }
+            Array.Copy(src, indexSrc, dest, indexDest, n);
         }
 
         public unsafe static void memcopy(IntPtr dest, IntPtr src, Int32 n)
@@ -91,29 +82,20 @@ namespace SharpHash.Utils
         public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (byte* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
-            {
-                memmove((IntPtr)destPtr, (IntPtr)srcPtr, n);
-            }
-        }
+            Array.Copy(src, indexSrc, dest, indexDest, n);
+        } //
 
         public unsafe static void memmove(ref UInt32[] dest, UInt32[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (UInt32* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
-            {
-                memmove((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt32));
-            }
-        }
+            Array.Copy(src, indexSrc, dest, indexDest, n);
+        } //
 
         public unsafe static void memmove(ref UInt64[] dest, UInt64[] src, Int32 n,
             Int32 indexSrc = 0, Int32 indexDest = 0)
         {
-            fixed (UInt64* destPtr = &dest[indexDest], srcPtr = &src[indexSrc])
-            {
-                memmove((IntPtr)destPtr, (IntPtr)srcPtr, n * sizeof(UInt64));
-            }
-        }
+            Array.Copy(src, indexSrc, dest, indexDest, n);
+        } //
 
         public unsafe static void memset(IntPtr dest, byte value, Int32 n)
         {
@@ -123,36 +105,66 @@ namespace SharpHash.Utils
             // Copy data to dest[]
             for (Int32 i = 0; i < n; i++)
                 cdest[i] = value;
-        } // end function MemSet
+        } // end function memset
 
-        public static unsafe void memset(ref byte[] array, byte value, Int32 index = 0, Int32 n = -1)
+        public static unsafe void memset(ref byte[] array, byte value, Int32 index = 0)
         {
             if (array == null || array.Length == 0) return;
 
-            fixed (byte* destPtr = &array[index])
-            {
-                memset((IntPtr)destPtr, value, (n == -1 ? array.Length : n) * sizeof(byte));
-            }
-        } // end function MemSet
+            Int32 block = 32, startIndex = index, size = array.Length;
+            Int32 length = index + block < size ? index + block : size;
 
-        public static unsafe void memset(ref UInt32[] array, byte value, Int32 index = 0, Int32 n = -1)
+            // Fill the initial array
+            while (index < length)
+                array[index++] = value;
+
+            length = array.Length;
+            while (index < size)
+            {
+                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
+                index += block;
+                block *= 2;
+            } // end while
+        } // end function memSet
+
+        public static unsafe void memset(ref UInt32[] array, byte value, Int32 index = 0)
         {
             if (array == null || array.Length == 0) return;
 
-            fixed (UInt32* destPtr = &array[index])
+            Int32 block = 32, startIndex = index, size = array.Length;
+            Int32 length = index + block < size ? index + block : size;
+
+            // Fill the initial array
+            while (index < length)
+                array[index++] = value;
+
+            length = array.Length;
+            while (index < size)
             {
-                memset((IntPtr)destPtr, value, (n == -1 ? array.Length : n) * sizeof(UInt32));
-            }
+                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
+                index += block;
+                block *= 2;
+            } // end while
         } // end function memset
 
         public static unsafe void memset(ref UInt64[] array, byte value, Int32 index = 0, Int32 n = -1)
         {
             if (array == null || array.Length == 0) return;
 
-            fixed (UInt64* destPtr = &array[index])
+            Int32 block = 32, startIndex = index, size = array.Length;
+            Int32 length = index + block < size ? index + block : size;
+
+            // Fill the initial array
+            while (index < length)
+                array[index++] = value;
+
+            length = array.Length;
+            while (index < size)
             {
-                memset((IntPtr)destPtr, value, (n == -1 ? array.Length : n) * sizeof(UInt64));
-            }
+                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
+                index += block;
+                block *= 2;
+            } // end while
         } // end function memset
 
         public static byte[] Concat(byte[] x, byte[] y)

@@ -34,17 +34,23 @@ namespace SharpHash.Base
     {
         private IHash hash = null;
         private byte[] opad = null, ipad = null, key = null;
-        private Int32 blocksize;
 
-        public HMACNotBuildInAdapter(IHash a_underlyingHash)
+        private HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_HMACKey)
             : base(a_underlyingHash.HashSize, a_underlyingHash.BlockSize)
         {
             hash = a_underlyingHash.Clone();
-            blocksize = hash.BlockSize;
-            key = new byte[0];
-            ipad = new byte[blocksize];
-            opad = new byte[blocksize];
+            Key = a_HMACKey;
+            ipad = new byte[hash.BlockSize];
+            opad = new byte[hash.BlockSize];
         } // end constructor
+
+        public static IHMAC CreateHMAC(IHash a_Hash, byte[] a_HMACKey)
+        {
+            if (a_Hash is IHMAC)
+                return a_Hash as IHMAC;
+
+            return new HMACNotBuildInAdapter(a_Hash, a_HMACKey);
+        } //
 
         public void Clear()
         {
@@ -53,24 +59,23 @@ namespace SharpHash.Base
 
         public override IHash Clone()
         {
-            HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash);
-            hmac.blocksize = blocksize;
+            HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash, Key);
 
-            if (opad != null)
+            hmac.opad = new byte[opad?.Length ?? 0];
+            if (!(opad == null || opad.Length == 0))
             {
-                hmac.opad = new byte[opad.Length];
                 Utils.Utils.memcopy(ref hmac.opad, opad, opad.Length);
             } //
 
-            if (ipad != null)
+            hmac.ipad = new byte[ipad?.Length ?? 0];
+            if (!(ipad == null || ipad.Length == 0))
             {
-                hmac.ipad = new byte[ipad.Length];
                 Utils.Utils.memcopy(ref hmac.ipad, ipad, ipad.Length);
             } //
 
-            if (key != null)
+            hmac.key = new byte[key?.Length ?? 0];
+            if (!(key == null || key.Length == 0))
             {
-                hmac.key = new byte[key.Length];
                 Utils.Utils.memcopy(ref hmac.key, key, key.Length);
             } //
 
@@ -106,15 +111,13 @@ namespace SharpHash.Base
         {
             get
             {
-                if (key != null)
+                byte[] result = new byte[key?.Length ?? 0];
+                if (!(key == null || key.Length == 0))
                 {
-                    byte[] result = new byte[key.Length];
                     Utils.Utils.memcopy(ref result, key, key.Length);
-
-                    return result;
                 } //
 
-                return new byte[0];
+                return result;
             }
             set
             {
@@ -135,19 +138,13 @@ namespace SharpHash.Base
             byte[] LKey;
             Int32 Idx;
 
-            LKey = key.Length > blocksize ? hash.ComputeBytes(key).GetBytes() : key;
+            LKey = Key.Length > hash.BlockSize ? hash.ComputeBytes(Key).GetBytes() : Key;
 
-            unsafe
-            {
-                fixed (byte* ipadPtr = &ipad[0], opadPtr = &opad[0])
-                {
-                    Utils.Utils.memset((IntPtr)ipadPtr, 0x36, blocksize * sizeof(byte));
-                    Utils.Utils.memset((IntPtr)opadPtr, 0x5C, blocksize * sizeof(byte));
-                }
-            }
+            Utils.Utils.memset(ref ipad, 0x36);
+            Utils.Utils.memset(ref opad, 0x5C);
 
             Idx = 0;
-            while ((Idx < LKey.Length) && (Idx < blocksize))
+            while ((Idx < LKey.Length) && (Idx < hash.BlockSize))
             {
                 ipad[Idx] = (byte)(ipad[Idx] ^ LKey[Idx]);
                 opad[Idx] = (byte)(opad[Idx] ^ LKey[Idx]);
