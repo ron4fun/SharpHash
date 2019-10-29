@@ -100,7 +100,7 @@ Available Algorithms
  
 * `Argon2 (2i, 2d and 2id variants)`
 
-* `Scrypt`
+* `Scrypt` :heavy_check_mark:
 
 ### MAC
 ----------------------------------------
