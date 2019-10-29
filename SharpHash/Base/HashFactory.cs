@@ -879,40 +879,53 @@ namespace SharpHash.Base
 
         public static class HMAC
         {
-            public static IHMAC CreateHMAC(IHash hash)
+            public static IHMAC CreateHMAC(IHash hash, byte[] a_HMACKey)
             {
-                return new HMACNotBuildInAdapter(hash);
+                return HMACNotBuildInAdapter.CreateHMAC(hash, a_HMACKey);
             } // end function CreateHMAC
         } // end class HMAC
 
-        public static class PBKDF2_HMAC
+        public static class KDF
         {
-            /// <summary>
-            /// Initializes a new interface instance of the TPBKDF2_HMAC class using a password, a salt, a number of iterations and an Instance of an "IHash" to be used as an "IHMAC" hashing implementation to derive the key.
-            /// </summary>
-            /// <param name="a_hash">The name of the "IHash" implementation to be transformed to an "IHMAC" Instance so it can be used to derive the key.</param>
-            /// <param name="a_password">The password to derive the key for.</param>
-            /// <param name="a_salt">The salt to use to derive the key.</param>
-            /// <param name="a_iterations">The number of iterations to use to derive the key.</param>
-            /// <exception cref="ArgumentNilHashLibException">The password, salt or algorithm is Nil.</exception>
-            /// <exception cref="ArgumentHashLibException">The iteration is less than 1.</exception>
-            public static IPBKDF2_HMAC CreatePBKDF2_HMAC(IHash a_hash, byte[] a_password,
-                byte[] a_salt, UInt32 a_iterations)
+            public static class PBKDF2_HMAC
             {
-                if (a_hash == null)
-                    throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.UninitializedInstance);
+                /// <summary>
+                /// Initializes a new interface instance of the TPBKDF2_HMAC class using a password, a salt, a number of iterations and an Instance of an "IHash" to be used as an "IHMAC" hashing implementation to derive the key.
+                /// </summary>
+                /// <param name="a_hash">The name of the "IHash" implementation to be transformed to an "IHMAC" Instance so it can be used to derive the key.</param>
+                /// <param name="a_password">The password to derive the key for.</param>
+                /// <param name="a_salt">The salt to use to derive the key.</param>
+                /// <param name="a_iterations">The number of iterations to use to derive the key.</param>
+                /// <exception cref="ArgumentNilHashLibException">The password, salt or algorithm is Nil.</exception>
+                /// <exception cref="ArgumentHashLibException">The iteration is less than 1.</exception>
+                public static IPBKDF2_HMAC CreatePBKDF2_HMAC(IHash a_hash, byte[] a_password,
+                    byte[] a_salt, UInt32 a_iterations)
+                {
+                    if (a_hash == null)
+                        throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.UninitializedInstance);
 
-                if (a_password == null || a_password.Length == 0)
-                    throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptyPassword);
+                    if (a_password == null || a_password.Length == 0)
+                        throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptyPassword);
 
-                if (a_salt == null || a_salt.Length == 0)
-                    throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptySalt);
+                    if (a_salt == null || a_salt.Length == 0)
+                        throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptySalt);
 
-                if (a_iterations < 1)
-                    throw new ArgumentHashLibException(PBKDF2_HMACNotBuildInAdapter.IterationtooSmall);
+                    if (a_iterations < 1)
+                        throw new ArgumentHashLibException(PBKDF2_HMACNotBuildInAdapter.IterationtooSmall);
 
-                return new PBKDF2_HMACNotBuildInAdapter(a_hash, a_password, a_salt, a_iterations);
-            } // end function CreatePBKDF2_HMAC
-        } // end class PBKDF2_HMAC
+                    return new PBKDF2_HMACNotBuildInAdapter(a_hash, a_password, a_salt, a_iterations);
+                } // end function CreatePBKDF2_HMAC
+            } // end class PBKDF2_HMAC
+
+            public static class PBKDF_Scrypt
+            {
+                public static IPBKDF_Scrypt CreatePBKDF_Scrypt(byte[] a_PasswordBytes,
+                    byte[] a_SaltBytes, Int32 a_Cost, Int32 a_BlockSize, Int32 a_Parallelism)
+                {
+                    return new PBKDF_ScryptNotBuildInAdapter(a_PasswordBytes, a_SaltBytes,
+                        a_Cost, a_BlockSize, a_Parallelism);
+                } //
+            } // end class PBKDF_Scrypt
+        } // end class KDF
     } // end class HashFactory
 }
