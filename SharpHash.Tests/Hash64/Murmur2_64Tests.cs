@@ -11,17 +11,17 @@ namespace SharpHash.Hash64.Tests
     [TestClass]
     public class Murmur2_64Tests : HashAdapter1BaseTests
     {
-        private string ExpectedHashOfDefaultDataWithMaxUInt32AsKey { get; set; }
+        private string ExpectedHashOfDefaultDataWithMaxUInt64AsKey { get; set; }
 
         public Murmur2_64Tests()
         {
             hash = HashFactory.Hash64.CreateMurmur2();
 
             ExpectedHashOfEmptyData = "0000000000000000";
-            ExpectedHashOfDefaultData = "F78F3AF068158F5A";
-            ExpectedHashOfOnetoNine = "F22BE622518FAF39";
-            ExpectedHashOfabcde = "AF7BA284707E90C2";
-            ExpectedHashOfDefaultDataWithMaxUInt32AsKey = "49F2E215E924B552";
+            ExpectedHashOfDefaultData = "831EFD69DC9E99F9";
+            ExpectedHashOfOnetoNine = "4977490251674330";
+            ExpectedHashOfabcde = "1182974836D6DBB7";
+            ExpectedHashOfDefaultDataWithMaxUInt64AsKey = "FF0A342F0AF9ADC6";
         }
 
         [TestMethod]
@@ -29,9 +29,9 @@ namespace SharpHash.Hash64.Tests
         {
             IHashWithKey LIHashWithKey;
 
-            string ExpectedString = ExpectedHashOfDefaultDataWithMaxUInt32AsKey;
-            LIHashWithKey = (hash.Clone() as IHashWithKey);
-            LIHashWithKey.Key = Converters.ReadUInt32AsBytesLE(UInt32.MaxValue);
+            string ExpectedString = ExpectedHashOfDefaultDataWithMaxUInt64AsKey;
+            LIHashWithKey = (hash as IHashWithKey);
+            LIHashWithKey.Key = Converters.ReadUInt64AsBytesLE(UInt64.MaxValue);
 
             string ActualString = LIHashWithKey.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();

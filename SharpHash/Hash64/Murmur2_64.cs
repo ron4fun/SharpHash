@@ -34,9 +34,9 @@ namespace SharpHash.Hash64
 {
     internal sealed class Murmur2_64 : MultipleTransformNonBlock, IHash64, IHashWithKey, ITransformBlock
     {
-        private UInt32 key, working_key, h;
+        private UInt64 key, working_key;
 
-        static private readonly UInt32 CKEY = 0x0;
+        static private readonly UInt64 CKEY = 0x0;
         static private readonly UInt64 M = 0xC6A4A7935BD1E995;
         static private readonly Int32 R = 47;
 
@@ -44,14 +44,15 @@ namespace SharpHash.Hash64
 
         public Murmur2_64()
           : base(8, 8)
-        { } // end constructor
+        {
+            key = CKEY;
+        } // end constructor
 
         override public IHash Clone()
         {
             Murmur2_64 HashInstance = new Murmur2_64();
             HashInstance.key = key;
             HashInstance.working_key = working_key;
-            HashInstance.h = h;
 
             HashInstance.Buffer = new MemoryStream();
             byte[] buf = Buffer.ToArray();
@@ -81,7 +82,7 @@ namespace SharpHash.Hash64
 
             fixed (byte* ptr_a_data = a_data)
             {
-                h = working_key ^ (UInt64)Length;
+                h = working_key ^ ((UInt64)Length * M);
                 current_index = 0;
 
                 while (Length >= 8)
@@ -102,79 +103,86 @@ namespace SharpHash.Hash64
                 switch (Length)
                 {
                     case 7:
-                        h = h ^ (((UInt64)(a_data[current_index]) << 48));
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 40);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 32);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 24);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 16);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 8);
-                        current_index++;
+                        h = h ^ (((UInt64)(a_data[current_index + 6]) << 48));
+
+                        h = h ^ ((UInt64)(a_data[current_index + 5]) << 40);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 4]) << 32);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 3]) << 24);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 2]) << 16);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 1]) << 8);
+
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
 
                     case 6:
-                        h = h ^ ((UInt64)(a_data[current_index]) << 40);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 32);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 24);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 16);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 8);
-                        current_index++;
+                        h = h ^ ((UInt64)(a_data[current_index + 5]) << 40);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 4]) << 32);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 3]) << 24);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 2]) << 16);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 1]) << 8);
+
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
 
                     case 5:
-                        h = h ^ ((UInt64)(a_data[current_index]) << 32);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 24);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 16);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 8);
-                        current_index++;
+                        h = h ^ ((UInt64)(a_data[current_index + 4]) << 32);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 3]) << 24);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 2]) << 16);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 1]) << 8);
+
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
 
                     case 4:
-                        h = h ^ ((UInt64)(a_data[current_index]) << 24);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 16);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 8);
-                        current_index++;
+                        h = h ^ ((UInt64)(a_data[current_index + 3]) << 24);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 2]) << 16);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 1]) << 8);
+
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
 
                     case 3:
-                        h = h ^ ((UInt64)(a_data[current_index]) << 16);
-                        current_index++;
-                        h = h ^ ((UInt64)(a_data[current_index]) << 8);
-                        current_index++;
+                        h = h ^ ((UInt64)(a_data[current_index + 2]) << 16);
+
+                        h = h ^ ((UInt64)(a_data[current_index + 1]) << 8);
+
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
 
                     case 2:
-                        h = h ^ ((UInt64)(a_data[current_index]) << 8);
-                        current_index++;
+                        h = h ^ ((UInt64)(a_data[current_index + 1]) << 8);
+
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
 
                     case 1:
                         h = h ^ (UInt64)(a_data[current_index]);
+
                         h = h * M;
                         break;
                 } // end switch
@@ -187,20 +195,12 @@ namespace SharpHash.Hash64
             return new HashResult(h);
         } // end function ComputeAggregatedBytes
 
-        public Int32? KeyLength
-        {
-            get
-            {
-                return 4;
-            }
-        } // end property KeyLength
+        public Int32? KeyLength => 8;
 
         public byte[] Key
         {
-            get
-            {
-                return Converters.ReadUInt32AsBytesLE(key);
-            }
+            get => Converters.ReadUInt64AsBytesLE(key);
+
             set
             {
                 if (value == null || value.Length == 0)
@@ -214,7 +214,7 @@ namespace SharpHash.Hash64
                     {
                         fixed (byte* bPtr = &value[0])
                         {
-                            key = Converters.ReadBytesAsUInt32LE((IntPtr)bPtr, 0);
+                            key = Converters.ReadBytesAsUInt64LE((IntPtr)bPtr, 0);
                         }
                     }
                 } // end else
