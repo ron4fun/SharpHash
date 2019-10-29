@@ -307,9 +307,9 @@ namespace SharpHash.Tests
         {
             IHMAC Original, Copy;
 
-            Original = HashFactory.HMAC.CreateHMAC(hash);
-            Original.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
-                Encoding.UTF8);
+            Original = HashFactory.HMAC.CreateHMAC(hash,
+                Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
+                Encoding.UTF8));
             Original.Initialize();
             Original.TransformBytes(ChunkOne);
 

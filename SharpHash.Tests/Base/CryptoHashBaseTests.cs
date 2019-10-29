@@ -16,9 +16,9 @@ namespace SharpHash
         [TestMethod]
         public void TestHMACWithDefaultDataAndLongKey()
         {
-            IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash);
-            hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
-                Encoding.UTF8);
+            IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash,
+                Converters.ConvertStringToBytes(TestConstants.HMACLongStringKey,
+                Encoding.UTF8));
             string ActualString = hmac.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();
 
@@ -28,9 +28,9 @@ namespace SharpHash
         [TestMethod]
         public void TestHMACWithDefaultDataAndShortKey()
         {
-            IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash);
-            hmac.Key = Converters.ConvertStringToBytes(TestConstants.HMACShortStringKey,
-                Encoding.UTF8);
+            IHMAC hmac = HashFactory.HMAC.CreateHMAC(hash,
+                Converters.ConvertStringToBytes(TestConstants.HMACShortStringKey,
+                Encoding.UTF8));
             string ActualString = hmac.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();
 

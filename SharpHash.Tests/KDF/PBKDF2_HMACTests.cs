@@ -4,7 +4,7 @@ using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System.Text;
 
-namespace SharpHash.Tests
+namespace SharpHash.KDF.Tests
 {
     // ====================== PBKDF2_HMACSHA1TestCase ======================
     ////////////////////
@@ -21,7 +21,7 @@ namespace SharpHash.Tests
         [TestMethod]
         public void TestOne()
         {
-            IPBKDF2_HMAC PBKDF2 = HashFactory.PBKDF2_HMAC.CreatePBKDF2_HMAC(hash, Password, Salt, 2048);
+            IPBKDF2_HMAC PBKDF2 = HashFactory.KDF.PBKDF2_HMAC.CreatePBKDF2_HMAC(hash, Password, Salt, 2048);
             byte[] Key = PBKDF2.GetBytes(24);
             PBKDF2.Clear();
 
@@ -46,7 +46,7 @@ namespace SharpHash.Tests
         [TestMethod]
         public void TestOne()
         {
-            IPBKDF2_HMAC PBKDF2 = HashFactory.PBKDF2_HMAC.CreatePBKDF2_HMAC(hash, Password, Salt, 100000);
+            IPBKDF2_HMAC PBKDF2 = HashFactory.KDF.PBKDF2_HMAC.CreatePBKDF2_HMAC(hash, Password, Salt, 100000);
             byte[] Key = PBKDF2.GetBytes(32);
             PBKDF2.Clear();
 
