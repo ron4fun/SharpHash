@@ -131,5 +131,17 @@ namespace SharpHash.XOFandKMAC.Tests
                  "47026C7CD793084AA0283C253EF658490C0DB61438B8326FE9BDDF281B83AE0F",
                  OutputSizeInBits, true);
         }
+
+        [TestMethod]
+        public void TestXofShouldRaiseExceptionOnWriteAfterRead()
+        {
+            byte[] LKey = Converters.ConvertHexStringToBytes(RawKeyInHex);
+            byte[] LCustomization = Converters.ConvertStringToBytes(CustomizationMessage, Encoding.UTF8);
+            byte[] LData = Converters.ConvertHexStringToBytes(TestConstants.ZeroToThreeInHex);
+
+            IXOF Hash = HashFactory.XOF.CreateKMAC128XOF(LKey, LCustomization, OutputSizeInBits) as IXOF;
+
+            Assert.ThrowsException<InvalidOperationHashLibException>(() => CallShouldRaiseException(Hash));
+        }
     }
 }

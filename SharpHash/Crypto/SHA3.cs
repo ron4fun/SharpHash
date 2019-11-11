@@ -37,6 +37,7 @@ namespace SharpHash.Crypto
         public static readonly string InvalidXOFSize = "XOFSize in Bits must be Multiples of 8 & be Greater than Zero Bytes";
         public static readonly string OutputLengthInvalid = "Output Length is above the Digest Length";
         public static readonly string OutputBufferTooShort = "Output Buffer Too Short";
+        public static readonly string WritetoXofAfterReadError = "\"{0}\" Write to Xof after Read not Allowed";
     } // end class Global
 
     internal enum HashMode
@@ -728,6 +729,15 @@ namespace SharpHash.Crypto
                 DestinationOffset++;
             } // end while
         } // end function DoOutput
+
+        public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
+        {
+            if (Finalized)
+                throw new InvalidOperationHashLibException(
+                    String.Format(Global.WritetoXofAfterReadError, Name));
+
+            base.TransformBytes(a_data, a_index, a_length);
+        } // end function TransformBytes
     } // end class Shake
 
     internal sealed class Shake_128 : Shake

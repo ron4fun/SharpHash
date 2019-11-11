@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SharpHash
 {
-    public abstract class CShakeBaseTests
+    public abstract class CShakeBaseTests : XOFBaseTests
     {
         protected static readonly byte[] FS = Converters.ConvertStringToBytes("Email Signature", Encoding.UTF8);
 

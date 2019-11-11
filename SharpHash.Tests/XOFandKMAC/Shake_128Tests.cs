@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpHash.Base;
 using SharpHash.Interfaces;
+using SharpHash.Utils;
 
 namespace SharpHash.XOFandKMAC.Tests
 {
@@ -30,6 +31,13 @@ namespace SharpHash.XOFandKMAC.Tests
               + "9ABFA88898E393718D6EFAB05BB41279EFCD4C5A0CC837CCFC22BE4F725C081F6AA090749DBA7077BAE8D41AF3FEC5A6EE1B8ADCD25E72DE36434584EF567C643D344294E8B2086B87F69"
               + "C3BDC0D5969857082987CA1C63B7182E86898FB9B8039E75EDA219E289331610369271867B145B2908293963CD677C9A1AE6CEB28289B254CDEB76B12F33CE5CF3743131BFB550F019"
               + "7BFE16AFF92367227ADC5074FE3DC0D8D116253980A38636BC9D29F799BBB2D76A0A5F138B8C73BA484D6588764E331D70C378C0641F2D9";
+        }
+
+        [TestMethod]
+        public void TestXofShouldRaiseExceptionOnWriteAfterRead()
+        {
+            IXOF Hash = hash as IXOF;
+            Assert.ThrowsException<InvalidOperationHashLibException>(() => CallShouldRaiseException(Hash));
         }
     }
 }

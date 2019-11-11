@@ -8,7 +8,7 @@ using System.Text;
 namespace SharpHash
 {
     [TestClass]
-    public abstract class HashBaseTests
+    public abstract class HashBaseTests : XOFBaseTests
     {
         protected IHash hash { get; set; }
 

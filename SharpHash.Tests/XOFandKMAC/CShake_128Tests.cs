@@ -48,5 +48,12 @@ namespace SharpHash.XOFandKMAC.Tests
                 String.Format("Expected {0} but got {1}.",
                 ExpectedString, ActualString));
         }
+
+        [TestMethod]
+        public void TestXofShouldRaiseExceptionOnWriteAfterRead()
+        {
+            IXOF Hash = hash as IXOF;
+            Assert.ThrowsException<InvalidOperationHashLibException>(() => CallShouldRaiseException(Hash));
+        }
     }
 }
