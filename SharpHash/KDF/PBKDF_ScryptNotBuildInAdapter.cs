@@ -29,8 +29,6 @@ using SharpHash.Crypto;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SharpHash.KDF
 {
