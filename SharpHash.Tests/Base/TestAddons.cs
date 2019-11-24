@@ -100,6 +100,7 @@ namespace SharpHash.Tests
         public static readonly string OnetoNine = "123456789";
         public static readonly string FEEAABEEF = "EEAABEEF";
         public static readonly string ZeroToThreeInHex = "00010203";
+        public static readonly string ZeroToFifteenInHex = "000102030405060708090A0B0C0D0E0F";
 
         public static readonly string ZeroToOneHundredAndNinetyNineInHex =
             "000102030405060708090A0B0C0D0E0F" + "101112131415161718191A1B1C1D1E1F" +

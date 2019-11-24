@@ -36,7 +36,9 @@ namespace SharpHash.Hash64.Tests
             string ActualString = LIHashWithKey.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();
 
-            Assert.AreEqual(ExpectedString, ActualString);
+            Assert.AreEqual(ExpectedString, ActualString,
+                String.Format("Expected {0} but got {1}.",
+                ExpectedString, ActualString));
         }
     }
 }
