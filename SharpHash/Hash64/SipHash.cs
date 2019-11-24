@@ -131,7 +131,10 @@ namespace SharpHash.Hash64
         {
             Finish();
 
-            IHashResult result = new HashResult(v0 ^ v1 ^ v2 ^ v3);
+            byte[] BufferByte = new byte[HashSize];
+            Converters.ReadUInt64AsBytesLE(v0 ^ v1 ^ v2 ^ v3, ref BufferByte, 0);
+
+            IHashResult result = new HashResult(BufferByte);
 
             Initialize();
 
