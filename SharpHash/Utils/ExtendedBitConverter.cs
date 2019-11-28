@@ -40,7 +40,7 @@ namespace SharpHash.Utils
             return (char)((i - 10) + 'A');
         } // end function GetHexValue
 
-        public static unsafe string ToString(IntPtr value, Int32 StartIndex, Int32 Length)
+        public static unsafe string ToString(IntPtr value, Int32 StartIndex, Int32 Length, char delimeter = '-')
         {
             Int32 chArrayLength = Length * 3;
 
@@ -55,7 +55,7 @@ namespace SharpHash.Utils
 
                 chArray[Idx] = GetHexValue(b >> 4);
                 chArray[Idx + 1] = GetHexValue(b & 15);
-                chArray[Idx + 2] = '-';
+                chArray[Idx + 2] = delimeter;
 
                 Idx += 3;
             } // end while

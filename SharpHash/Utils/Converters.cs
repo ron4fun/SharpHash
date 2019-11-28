@@ -25,13 +25,14 @@
 ////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace SharpHash.Utils
 {
     public static class Converters
     {
-        public unsafe static void swap_copy_str_to_u32(IntPtr src, Int32 src_index,
+        public static unsafe void swap_copy_str_to_u32(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             UInt32* lsrc, ldest, lend;
@@ -125,7 +126,7 @@ namespace SharpHash.Utils
             return x;
         } // end function be2me_64
 
-        public unsafe static void be32_copy(IntPtr src, Int32 src_index,
+        public static unsafe void be32_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
@@ -138,7 +139,7 @@ namespace SharpHash.Utils
             } // end else
         } // end function be32_copy
 
-        public unsafe static void be64_copy(IntPtr src, Int32 src_index,
+        public static unsafe void be64_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
@@ -171,7 +172,7 @@ namespace SharpHash.Utils
             return x;
         } // end function le2me_64
 
-        public unsafe static void le32_copy(IntPtr src, Int32 src_index,
+        public static unsafe void le32_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
@@ -184,7 +185,7 @@ namespace SharpHash.Utils
             } // end else
         } // end function le32_copy
 
-        public unsafe static void le64_copy(IntPtr src, Int32 src_index,
+        public static unsafe void le64_copy(IntPtr src, Int32 src_index,
             IntPtr dest, Int32 dest_index, Int32 length)
         {
             if (BitConverter.IsLittleEndian)
@@ -197,13 +198,13 @@ namespace SharpHash.Utils
             } // end else
         } // end function le64_copy
 
-        public unsafe static UInt32 ReadBytesAsUInt32LE(IntPtr a_in, Int32 a_index)
+        public static unsafe UInt32 ReadBytesAsUInt32LE(IntPtr a_in, Int32 a_index)
         {
             UInt32 result = *(UInt32*)((byte*)a_in + a_index);
             return Converters.le2me_32((Int32)result);
         } // end function ReadBytesAsUInt32LE
 
-        public unsafe static UInt64 ReadBytesAsUInt64LE(IntPtr a_in, Int32 a_index)
+        public static unsafe UInt64 ReadBytesAsUInt64LE(IntPtr a_in, Int32 a_index)
         {
             UInt64 result = *(UInt64*)((byte*)a_in + a_index);
             return Converters.le2me_64(result);
@@ -259,19 +260,19 @@ namespace SharpHash.Utils
             a_out[a_index + 7] = (byte)a_in;
         } // end function ReadUInt64AsBytesBE
 
-        public unsafe static string ConvertBytesToHexString(byte[] a_in, bool a_group)
+        public static unsafe string ConvertBytesToHexString(byte[] a_in, bool a_group, char delimeter = '-')
         {
             if (a_in == null || a_in.Length == 0) return "";
 
             fixed (byte* bPtr = a_in)
             {
-                return ConvertBytesToHexString((IntPtr)bPtr, (UInt32)a_in.Length, a_group);
+                return ConvertBytesToHexString((IntPtr)bPtr, (UInt32)a_in.Length, a_group, delimeter);
             }
         } // end function ConvertBytesToHexString
 
-        public static string ConvertBytesToHexString(IntPtr a_in, UInt32 size, bool a_group)
+        public static string ConvertBytesToHexString(IntPtr a_in, UInt32 size, bool a_group, char delimeter = '-')
         {
-            string hex = ExtendedBitConverter.ToString(a_in, 0, (Int32)size);
+            string hex = ExtendedBitConverter.ToString(a_in, 0, (Int32)size, delimeter);
             hex = hex.ToUpper();
 
             if (size == 1)
@@ -281,39 +282,18 @@ namespace SharpHash.Utils
 
             if (size == 2)
             {
-                return hex.Replace("-", "");
+                return hex.Replace(delimeter.ToString(), "", true, CultureInfo.CurrentCulture);
             } // end if
 
-            if (a_group)
-            {
-                string workstring = ExtendedBitConverter.ToString(a_in, 0, (Int32)size);
-                workstring = workstring.ToUpper();
+            if (a_group) return hex;
 
-                string[] arr = Converters.SplitString(workstring, '-');
-
-                UInt32 I = 0;
-
-                while (I < (arr.Length >> 2))
-                {
-                    if (I != 0)
-                    {
-                        hex = hex + '-';
-                    } // end if
-
-                    hex = hex + (arr[I * 4] + arr[I * 4 + 1] + arr[I * 4 + 2] + arr[I * 4 + 3]);
-
-                    I += 1;
-                } // end while
-
-                return hex;
-            } // end if
-
-            return hex.Replace("-", "");
+            return hex.Replace(delimeter.ToString(), "", 
+                true, CultureInfo.CurrentCulture);
         } // end function ConvertBytesToHexString
 
-        public static byte[] ConvertHexStringToBytes(string a_in)
+        public static byte[] ConvertHexStringToBytes(string a_in, char delimeter = '-')
         {
-            a_in.Replace("-", "");
+            a_in.Replace(delimeter.ToString(), "");
 
             byte[] result = new byte[a_in.Length >> 1];
 
@@ -331,39 +311,5 @@ namespace SharpHash.Utils
             if (String.IsNullOrEmpty(a_in)) return new byte[0];
             return encoding.GetBytes(a_in);
         } // end function ConvertStringToBytes
-
-        public static string[] SplitString(string S, char Delimiter)
-        {
-            Int32 PosStart, PosDel, SplitPoints, I, Len;
-            string[] result = new string[] { };
-
-            if (!(S == null || S.Length == 0))
-            {
-                SplitPoints = 0;
-                for (Int32 i = 0; i < S.Length; i++)
-                {
-                    if (Delimiter == S[i])
-                        SplitPoints += 1;
-                } // end for
-
-                Array.Resize(ref result, SplitPoints + 1);
-
-                I = 0;
-                Len = 1;
-                PosStart = 0;
-                PosDel = (Int32)S.IndexOf(Delimiter, 0);
-                while (PosDel != -1)
-                {
-                    result[I] = S.Substring(PosStart, PosDel - PosStart);
-                    PosStart = PosDel + Len;
-                    PosDel = (Int32)S.IndexOf(Delimiter, PosStart);
-                    I += 1;
-                } // end while
-
-                result[I] = S.Substring(PosStart, S.Length);
-            } // end if
-
-            return result;
-        } // end function SplitString
     }
 }
