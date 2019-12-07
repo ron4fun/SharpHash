@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace SharpHash.Utils
 {
@@ -67,16 +68,9 @@ namespace SharpHash.Utils
             byte* csrc = (byte*)src;
             byte* cdest = (byte*)dest;
 
-            // Create a temporary array to hold data of src
-            byte[] temp = new byte[n];
-
-            // Copy data from csr[] to temp[]
+            // Copy data from csrc[] to cdest[]
             for (int i = 0; i < n; i++)
-                temp[i] = csrc[i];
-
-            // Copy data from temp[] to cdest[]
-            for (int i = 0; i < n; i++)
-                cdest[i] = temp[i];
+                cdest[i] = csrc[i];
         }
 
         public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n,
@@ -131,20 +125,10 @@ namespace SharpHash.Utils
         {
             if (array == null || array.Length == 0) return;
 
-            Int32 block = 32, startIndex = index, size = array.Length;
-            Int32 length = index + block < size ? index + block : size;
-
-            // Fill the initial array
-            while (index < length)
-                array[index++] = value;
-
-            length = array.Length;
-            while (index < size)
+            fixed (uint* ptrStart = array)
             {
-                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
-                index += block;
-                block *= 2;
-            } // end while
+                Unsafe.InitBlock((IntPtr*)(ptrStart + index), value, (uint)array.Length * sizeof(uint));
+            }
         } // end function memset
 
         public static unsafe void memset(ref UInt64[] array, byte value, Int32 index = 0, Int32 n = -1)
