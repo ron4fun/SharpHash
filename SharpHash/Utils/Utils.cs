@@ -51,26 +51,14 @@ namespace SharpHash.Utils
 
         public unsafe static void memcopy(IntPtr dest, IntPtr src, Int32 n)
         {
-            // Typecast src and dest address to (byte *)
-            byte* csrc = (byte*)src;
-            byte* cdest = (byte*)dest;
-
-            // Copy data from csr[] to dest[]
-            for (int i = 0; i < n; i++)
-                cdest[i] = csrc[i];
+            memmove(dest, src, n);
         }
 
         // A function to copy block of 'n' bytes from source
         // address 'src' to destination address 'dest'.
         public unsafe static void memmove(IntPtr dest, IntPtr src, Int32 n)
         {
-            // Typecast src and dest address to (byte *)
-            byte* csrc = (byte*)src;
-            byte* cdest = (byte*)dest;
-
-            // Copy data from csrc[] to cdest[]
-            for (int i = 0; i < n; i++)
-                cdest[i] = csrc[i];
+              Unsafe.CopyBlock((IntPtr*)dest, (IntPtr*)src, (uint)n);
         }
 
         public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n,
