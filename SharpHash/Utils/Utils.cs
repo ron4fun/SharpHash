@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace SharpHash.Utils
 {
@@ -50,26 +51,14 @@ namespace SharpHash.Utils
 
         public unsafe static void memcopy(IntPtr dest, IntPtr src, Int32 n)
         {
-            // Typecast src and dest address to (byte *)
-            byte* csrc = (byte*)src;
-            byte* cdest = (byte*)dest;
-
-            // Copy data from csr[] to dest[]
-            for (int i = 0; i < n; i++)
-                cdest[i] = csrc[i];
+            memmove(dest, src, n);
         }
 
         // A function to copy block of 'n' bytes from source
         // address 'src' to destination address 'dest'.
         public unsafe static void memmove(IntPtr dest, IntPtr src, Int32 n)
         {
-            // Typecast src and dest address to (byte *)
-            byte* csrc = (byte*)src;
-            byte* cdest = (byte*)dest;
-
-            // Copy data from csrc[] to cdest[]
-            for (int i = 0; i < n; i++)
-                cdest[i] = csrc[i];
+              Unsafe.CopyBlock((IntPtr*)dest, (IntPtr*)src, (uint)n);
         }
 
         public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n,
@@ -104,73 +93,50 @@ namespace SharpHash.Utils
         {
             if (array == null || array.Length == 0) return;
 
-            while (index < array.Length)
+            Int32 block = 32, startIndex = index, size = array.Length;
+            Int32 length = index + block < size ? index + block : size;
+
+            // Fill the initial array
+            while (index < length)
                 array[index++] = value;
 
-            //fixed (byte* b = array)
-            //{
-            //    memset((IntPtr)b + index, value, array.Length);
-            //}
-            //Int32 block = 32, startIndex = index, size = array.Length;
-            //Int32 length = index + block < size ? index + block : size;
-
-            //// Fill the initial array
-            //while (index < length)
-            //    array[index++] = value;
-
-            //length = array.Length;
-            //while (index < size)
-            //{
-            //    Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
-            //    index += block;
-            //    block *= 2;
-            //} // end while
+            length = array.Length;
+            while (index < size)
+            {
+                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
+                index += block;
+                block *= 2;
+            } // end while
         } // end function memSet
 
         public static unsafe void memset(ref UInt32[] array, byte value, Int32 index = 0)
         {
             if (array == null || array.Length == 0) return;
 
-            while (index < array.Length)
-                array[index++] = value;
-
-            //Int32 block = 32, startIndex = index, size = array.Length;
-            //Int32 length = index + block < size ? index + block : size;
-
-            //// Fill the initial array
-            //while (index < length)
-            //    array[index++] = value;
-
-            //length = array.Length;
-            //while (index < size)
-            //{
-            //    Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
-            //    index += block;
-            //    block *= 2;
-            //} // end while
+            fixed (uint* ptrStart = array)
+            {
+                Unsafe.InitBlock((IntPtr*)(ptrStart + index), value, (uint)array.Length * sizeof(uint));
+            }
         } // end function memset
 
         public static unsafe void memset(ref UInt64[] array, byte value, Int32 index = 0, Int32 n = -1)
         {
             if (array == null || array.Length == 0) return;
 
-            while (index < array.Length)
+            Int32 block = 32, startIndex = index, size = array.Length;
+            Int32 length = index + block < size ? index + block : size;
+
+            // Fill the initial array
+            while (index < length)
                 array[index++] = value;
 
-            //Int32 block = 32, startIndex = index, size = array.Length;
-            //Int32 length = index + block < size ? index + block : size;
-
-            //// Fill the initial array
-            //while (index < length)
-            //    array[index++] = value;
-
-            //length = array.Length;
-            //while (index < size)
-            //{
-            //    Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
-            //    index += block;
-            //    block *= 2;
-            //} // end while
+            length = array.Length;
+            while (index < size)
+            {
+                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
+                index += block;
+                block *= 2;
+            } // end while
         } // end function memset
 
         public static byte[] Concat(byte[] x, byte[] y)
