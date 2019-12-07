@@ -64,35 +64,35 @@ namespace SharpHash.PerformanceBenchmark
 
             stringList.Clear();
 
-            stringList.Add(Calculate(HashFactory.Checksum.CreateAdler32()));
+            //stringList.Add(Calculate(HashFactory.Checksum.CreateAdler32()));
 
-            stringList.Add(Calculate(HashFactory.Checksum.CreateCRC(CRCStandard.CRC32), "PKZIP_Generic"));
+            //stringList.Add(Calculate(HashFactory.Checksum.CreateCRC(CRCStandard.CRC32), "PKZIP_Generic"));
 
-            stringList.Add(Calculate(HashFactory.Checksum.CreateCRC32_PKZIP(), "Fast"));
+            //stringList.Add(Calculate(HashFactory.Checksum.CreateCRC32_PKZIP(), "Fast"));
 
-            stringList.Add(Calculate(HashFactory.Hash32.CreateMurmurHash3_x86_32()));
+            //stringList.Add(Calculate(HashFactory.Hash32.CreateMurmurHash3_x86_32()));
 
-            stringList.Add(Calculate(HashFactory.Hash32.CreateXXHash32()));
+            //stringList.Add(Calculate(HashFactory.Hash32.CreateXXHash32()));
 
-            stringList.Add(Calculate(HashFactory.Hash64.CreateSipHash2_4()));
+            //stringList.Add(Calculate(HashFactory.Hash64.CreateSipHash2_4()));
 
-            stringList.Add(Calculate(HashFactory.Hash64.CreateXXHash64()));
+            //stringList.Add(Calculate(HashFactory.Hash64.CreateXXHash64()));
 
-            stringList.Add(Calculate(HashFactory.Hash128.CreateMurmurHash3_x86_128()));
+            //stringList.Add(Calculate(HashFactory.Hash128.CreateMurmurHash3_x86_128()));
 
-            stringList.Add(Calculate(HashFactory.Hash128.CreateMurmurHash3_x64_128()));
+            //stringList.Add(Calculate(HashFactory.Hash128.CreateMurmurHash3_x64_128()));
 
             stringList.Add(Calculate(HashFactory.Crypto.CreateMD5()));
 
-            stringList.Add(Calculate(HashFactory.Crypto.CreateSHA1()));
+            //stringList.Add(Calculate(HashFactory.Crypto.CreateSHA1()));
 
-            stringList.Add(Calculate(HashFactory.Crypto.CreateSHA2_256()));
+            //stringList.Add(Calculate(HashFactory.Crypto.CreateSHA2_256()));
 
-            stringList.Add(Calculate(HashFactory.Crypto.CreateSHA2_512()));
+            //stringList.Add(Calculate(HashFactory.Crypto.CreateSHA2_512()));
 
-            stringList.Add(Calculate(HashFactory.Crypto.CreateSHA3_256()));
+            //stringList.Add(Calculate(HashFactory.Crypto.CreateSHA3_256()));
 
-            stringList.Add(Calculate(HashFactory.Crypto.CreateSHA3_512()));
+            //stringList.Add(Calculate(HashFactory.Crypto.CreateSHA3_512()));
 
             //stringList.Add(Calculate(HashFactory.Crypto.CreateBlake2B_256()));
 
