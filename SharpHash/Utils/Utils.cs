@@ -58,7 +58,7 @@ namespace SharpHash.Utils
         // address 'src' to destination address 'dest'.
         public unsafe static void memmove(IntPtr dest, IntPtr src, Int32 n)
         {
-              Unsafe.CopyBlock((IntPtr*)dest, (IntPtr*)src, (uint)n);
+            Unsafe.CopyBlock((IntPtr*)dest, (IntPtr*)src, (uint)n);
         }
 
         public unsafe static void memmove(ref byte[] dest, byte[] src, Int32 n,
@@ -123,20 +123,10 @@ namespace SharpHash.Utils
         {
             if (array == null || array.Length == 0) return;
 
-            Int32 block = 32, startIndex = index, size = array.Length;
-            Int32 length = index + block < size ? index + block : size;
-
-            // Fill the initial array
-            while (index < length)
-                array[index++] = value;
-
-            length = array.Length;
-            while (index < size)
+            fixed (UInt64* ptrStart = array)
             {
-                Buffer.BlockCopy(array, startIndex, array, index, Math.Min(block, size - index));
-                index += block;
-                block *= 2;
-            } // end while
+                Unsafe.InitBlock((IntPtr*)(ptrStart + index), value, (uint)array.Length * sizeof(UInt64));
+            }
         } // end function memset
 
         public static byte[] Concat(byte[] x, byte[] y)
