@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHash", "SharpHash.csproj", "{E09A2FF7-FB5E-48E7-94DD-27C15154FD0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHash", "SharpHash.csproj", "{E09A2FF7-FB5E-48E7-94DD-27C15154FD0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHash.Tests", "..\SharpHash.Tests\SharpHash.Tests.csproj", "{2C3D354C-E1DA-49EF-A506-415DCE29B31F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHash.Tests", "..\SharpHash.Tests\SharpHash.Tests.csproj", "{2C3D354C-E1DA-49EF-A506-415DCE29B31F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHash.PerformanceBenchmark", "..\SharpHash.PerformanceBenchmark\SharpHash.PerformanceBenchmark.csproj", "{A68AA212-9578-40EA-B1C7-92A91A1E9CCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2C3D354C-E1DA-49EF-A506-415DCE29B31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C3D354C-E1DA-49EF-A506-415DCE29B31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C3D354C-E1DA-49EF-A506-415DCE29B31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68AA212-9578-40EA-B1C7-92A91A1E9CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68AA212-9578-40EA-B1C7-92A91A1E9CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68AA212-9578-40EA-B1C7-92A91A1E9CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68AA212-9578-40EA-B1C7-92A91A1E9CCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
