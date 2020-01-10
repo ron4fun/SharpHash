@@ -293,13 +293,14 @@ namespace SharpHash.Utils
 
         public static byte[] ConvertHexStringToBytes(string a_in, char delimeter = '-')
         {
-            a_in.Replace(delimeter.ToString(), "");
+            string l_in = a_in;
+            l_in = l_in.Replace(delimeter.ToString(), "");
 
-            byte[] result = new byte[a_in.Length >> 1];
+            byte[] result = new byte[l_in.Length >> 1];
 
-            for (Int32 i = 0, j = 0; i < a_in.Length; i += 2, j += 1)
+            for (Int32 i = 0, j = 0; i < l_in.Length; i += 2, j += 1)
             {
-                string byteStr = a_in.Substring(i, 2);
+                string byteStr = l_in.Substring(i, 2);
                 result[j] = (byte)Convert.ToChar(Convert.ToUInt32(byteStr, 16));
             } // end for
 
