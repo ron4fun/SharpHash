@@ -38,6 +38,11 @@ namespace SharpHash.Base
 {
     public static class HashFactory
     {
+        public static IHash CreateHash(string hash_string)
+        {
+            return LangBuilder.Reducer(hash_string);
+        } // end function CreateHash
+
         public static class NullDigestFactory
         {
             public static IHash CreateNullDigest()
@@ -542,7 +547,7 @@ namespace SharpHash.Base
             ////////////////////////////////////////////
 
             /// <summary>
-            ///
+            /// Tiger Hash
             /// </summary>
             /// <param name="a_hash_size">16, 20 or 24 bytes. </param>
             /// <param name="a_rounds">no of rounds (standard rounds are 3, 4 and 5)</param>
@@ -607,7 +612,7 @@ namespace SharpHash.Base
             ////////////////////////////////////////////
 
             /// <summary>
-            ///
+            /// Tiger2 Hash
             /// </summary>
             /// <param name="a_hash_size">16, 20 or 24 bytes. </param>
             /// <param name="a_rounds">no of rounds (standard rounds are 3, 4 and 5)</param>

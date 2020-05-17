@@ -29,7 +29,7 @@ using System;
 
 namespace SharpHash.Base
 {
-    internal class HMACNotBuildInAdapter : Hash, IHMAC, IIHMACNotBuildIn, IWithKey,
+    internal class HMACNotBuildInAdapter : Hash, IHMAC, IHMACNotBuildIn, IWithKey,
         ICrypto, ICryptoNotBuildIn
     {
         private IHash hash = null;

@@ -48,7 +48,7 @@ namespace SharpHash.Crypto
             hash = new UInt32[8];
         } // end constructor
 
-        public override string Name => String.Format("{0}_{1}_{2}", GetType().Name, rounds, HashSize * 8);
+        public override string Name => String.Format("Haval_{0}_{1}", rounds, HashSize * 8);
 
         public override unsafe void Initialize()
         {

@@ -63,7 +63,7 @@ namespace SharpHash.Interfaces
     public interface IHMAC : IMAC
     { }; // end interface IHMAC
 
-    public interface IIHMACNotBuildIn : IHMAC
+    public interface IHMACNotBuildIn : IHMAC
     { }; // end interface IHMACNotBuildIn
 
     public interface IKMAC : IMAC
@@ -110,7 +110,7 @@ namespace SharpHash.Interfaces
         UInt64 XOFSizeInBits { get; set; }
 
         void DoOutput(ref byte[] destination, UInt64 destinationOffset, UInt64 outputLength);
-    } // end interface IXOF
+    }; // end interface IXOF
 
     public interface IArgon2Parameters
     {
@@ -124,7 +124,7 @@ namespace SharpHash.Interfaces
         Int32 Lanes { get; }
         Argon2Type Type { get; }
         Argon2Version Version { get; }
-    }  // end interface IArgon2Parameters
+    };  // end interface IArgon2Parameters
 
     public interface IArgon2ParametersBuilder
     {
@@ -147,5 +147,5 @@ namespace SharpHash.Interfaces
         void Clear();
 
         IArgon2ParametersBuilder Build();
-    } // end interface IArgon2ParametersBuilder
+    }; // end interface IArgon2ParametersBuilder
 }

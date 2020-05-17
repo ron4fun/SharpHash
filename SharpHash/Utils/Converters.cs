@@ -221,6 +221,22 @@ namespace SharpHash.Utils
             return arr;
         } // end function ReadUInt32AsBytesLE
 
+        public static void ReadUInt32AsBytesLE(UInt32 a_Input, ref byte[] a_Output, Int32 a_Index)
+        {
+            a_Output[a_Index] = (byte)(a_Input);
+            a_Output[a_Index + 1] = (byte)(a_Input >> 8); 
+            a_Output[a_Index + 2] = (byte)(a_Input >> 16);
+            a_Output[a_Index + 3] = (byte)(a_Input >> 24);
+        } // end function ReadUInt32AsBytesLE
+
+        public static void ReadUInt32AsBytesBE(UInt32 a_Input, ref byte[] a_Output, Int32 a_Index)
+        {
+            a_Output[a_Index] = (byte)(a_Input >> 24);
+            a_Output[a_Index + 1] = (byte)(a_Input >> 16);
+            a_Output[a_Index + 2] = (byte)(a_Input >> 8);
+            a_Output[a_Index + 3] = (byte)(a_Input);
+        } // end function ReadUInt32AsBytesBE
+
         public static byte[] ReadUInt64AsBytesLE(UInt64 a_in)
         {
             byte[] arr = new byte[8];

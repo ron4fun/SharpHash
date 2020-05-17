@@ -33,6 +33,9 @@ namespace SharpHash.Base
         private byte[] data = null;
         private Int32 pos = 0;
 
+        public HashBuffer()
+        { }
+
         public HashBuffer(Int32 a_length)
         {
             data = new byte[a_length];
@@ -41,7 +44,7 @@ namespace SharpHash.Base
 
         public HashBuffer Clone()
         {
-            HashBuffer result = new HashBuffer(0);
+            HashBuffer result = new HashBuffer();
 
             result.pos = pos;
 

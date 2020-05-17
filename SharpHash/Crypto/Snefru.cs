@@ -695,7 +695,7 @@ namespace SharpHash.Crypto
             return HashInstance;
         } // end function Clone
 
-        public override string Name => String.Format("{0}_{1}_{2}", GetType().Name, security_level, HashSize * 8);
+        public override string Name => String.Format("Snefru_{0}_{1}", security_level, HashSize * 8);
 
         public override unsafe void Initialize()
         {
