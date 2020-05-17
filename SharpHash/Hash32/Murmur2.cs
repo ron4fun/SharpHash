@@ -79,7 +79,7 @@ namespace SharpHash.Hash32
             Int32 Length, current_index;
             UInt32 k;
 
-            if (a_data == null || a_data.Length == 0)
+            if (a_data.Empty())
                 return 0;
 
             Length = a_data.Length;
@@ -143,21 +143,16 @@ namespace SharpHash.Hash32
 
         public Int32? KeyLength
         {
-            get
-            {
-                return 4;
-            }
+            get => 4;
         } // end property KeyLength
 
         public byte[] Key
         {
-            get
-            {
-                return Converters.ReadUInt32AsBytesLE(key);
-            }
+            get => Converters.ReadUInt32AsBytesLE(key);
+            
             set
             {
-                if (value == null || value.Length == 0)
+                if (value.Empty())
                     key = CKEY;
                 else
                 {

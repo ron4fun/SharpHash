@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 using SharpHash.Interfaces;
+using SharpHash.Utils;
 using System;
 
 namespace SharpHash.Base
@@ -54,30 +55,16 @@ namespace SharpHash.Base
 
         public void Clear()
         {
-            Utils.Utils.memset(ref key, 0);
+            ArrayUtils.ZeroFill(ref key);
         } // end function Clear
 
         public override IHash Clone()
         {
             HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash, Key);
 
-            hmac.opad = new byte[opad?.Length ?? 0];
-            if (!(opad == null || opad.Length == 0))
-            {
-                Utils.Utils.memcopy(ref hmac.opad, opad, opad.Length);
-            } //
-
-            hmac.ipad = new byte[ipad?.Length ?? 0];
-            if (!(ipad == null || ipad.Length == 0))
-            {
-                Utils.Utils.memcopy(ref hmac.ipad, ipad, ipad.Length);
-            } //
-
-            hmac.key = new byte[key?.Length ?? 0];
-            if (!(key == null || key.Length == 0))
-            {
-                Utils.Utils.memcopy(ref hmac.key, key, key.Length);
-            } //
+            hmac.opad = opad.DeepCopy();
+            hmac.ipad = ipad.DeepCopy();
+            hmac.key = key.DeepCopy();
 
             return hmac;
         }
@@ -109,26 +96,8 @@ namespace SharpHash.Base
 
         public virtual byte[] Key
         {
-            get
-            {
-                byte[] result = new byte[key?.Length ?? 0];
-                if (!(key == null || key.Length == 0))
-                {
-                    Utils.Utils.memcopy(ref result, key, key.Length);
-                } //
-
-                return result;
-            }
-            set
-            {
-                if (value == null || value.Length == 0)
-                    key = new byte[0];
-                else
-                {
-                    key = new byte[value.Length];
-                    Utils.Utils.memcopy(ref key, value, value.Length);
-                } // end else
-            }
+            get => key.DeepCopy();
+            set => key = value.DeepCopy();            
         } // end property Key
 
         public virtual Int32? KeyLength => null;
@@ -140,8 +109,8 @@ namespace SharpHash.Base
 
             LKey = Key.Length > hash.BlockSize ? hash.ComputeBytes(Key).GetBytes() : Key;
 
-            Utils.Utils.memset(ref ipad, 0x36);
-            Utils.Utils.memset(ref opad, 0x5C);
+            Utils.Utils.Memset(ref ipad, 0x36);
+            Utils.Utils.Memset(ref opad, 0x5C);
 
             Idx = 0;
             while ((Idx < LKey.Length) && (Idx < hash.BlockSize))

@@ -70,7 +70,7 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref state, 0);
+            ArrayUtils.ZeroFill(ref state);
 
             base.Initialize();
         } // end function Initialize
@@ -410,7 +410,7 @@ namespace SharpHash.Crypto
 
             KeccakF1600_StatePermute();
 
-            Utils.Utils.memset(ref data, 0);
+            Utils.Utils.Memset(ref data, 0);
         } // end function TransformBlock
     } // end class SHA3
 
@@ -428,8 +428,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -451,8 +450,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -474,8 +472,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -497,8 +494,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -520,8 +516,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -543,8 +538,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -566,8 +560,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -589,8 +582,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -612,8 +604,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -645,7 +636,8 @@ namespace SharpHash.Crypto
             DigestPosition = 0;
             ShakeBufferPosition = 8;
             Finalized = false;
-            Utils.Utils.memset(ref ShakeBuffer, 0);
+
+            ArrayUtils.ZeroFill(ref ShakeBuffer);
         } // end function
 
         public override IHashResult TransformFinal()
@@ -686,8 +678,7 @@ namespace SharpHash.Crypto
             set => SetXOFSizeInBitsInternal(value);
         }
 
-        public virtual void DoOutput(ref byte[] a_destination, UInt64 a_destinationOffset,
-            UInt64 a_outputLength)
+        public virtual void DoOutput(ref byte[] a_destination, UInt64 a_destinationOffset, UInt64 a_outputLength)
         {
             UInt64 DestinationOffset;
 
@@ -759,15 +750,13 @@ namespace SharpHash.Crypto
             HashInstance.ShakeBufferPosition = ShakeBufferPosition;
             HashInstance.Finalized = Finalized;
 
-            HashInstance.ShakeBuffer = new byte[ShakeBuffer.Length];
-            Utils.Utils.memcopy(ref HashInstance.ShakeBuffer, ShakeBuffer, ShakeBuffer.Length);
+            HashInstance.ShakeBuffer = ShakeBuffer.DeepCopy();
 
             // Internal SHA3 Cloning
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -794,15 +783,13 @@ namespace SharpHash.Crypto
             HashInstance.ShakeBufferPosition = ShakeBufferPosition;
             HashInstance.Finalized = Finalized;
 
-            HashInstance.ShakeBuffer = new byte[ShakeBuffer.Length];
-            Utils.Utils.memcopy(ref HashInstance.ShakeBuffer, ShakeBuffer, ShakeBuffer.Length);
+            HashInstance.ShakeBuffer = ShakeBuffer.DeepCopy();
 
             // Internal SHA3 Cloning
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -827,21 +814,12 @@ namespace SharpHash.Crypto
         protected CShake(Int32 a_hash_size, byte[] N, byte[] S)
             : base(a_hash_size)
         {
-            FN = new byte[N?.Length ?? 0];
-            if (!(N == null || N.Length == 0))
-            {
-                Utils.Utils.memcopy(ref FN, N, N.Length);
-            } // end if
-
-            FS = new byte[S?.Length ?? 0];
-            if (!(S == null || S.Length == 0))
-            {
-                Utils.Utils.memcopy(ref FS, S, S.Length);
-            } // end if
+            FN = N.DeepCopy();
+            FS = S.DeepCopy();
 
             InitBlock = null;
 
-            if ((FN == null || FN.Length == 0) && (FS == null || FS.Length == 0))
+            if (FN.Empty() && FS.Empty())
                 hash_mode = HashMode.Shake;
             else
             {
@@ -917,7 +895,7 @@ namespace SharpHash.Crypto
 
         public static byte[] EncodeString(byte[] a_input)
         {
-            if (a_input == null || a_input.Length == 0) return LeftEncode(0);
+            if (a_input.Empty()) return LeftEncode(0);
 
             return Utils.Utils.Concat(LeftEncode((UInt64)a_input.Length * 8), a_input);
         } // end function EncodeString
@@ -938,26 +916,20 @@ namespace SharpHash.Crypto
             // CShake_128 Cloning
             CShake_128 HashInstance = (LXof as CShake_128);
 
-            HashInstance.InitBlock = new byte[InitBlock?.Length ?? 0];
-            if (!(InitBlock == null || InitBlock.Length == 0))
-            {
-                Utils.Utils.memcopy(ref HashInstance.InitBlock, InitBlock, InitBlock.Length);
-            } // end if
+            HashInstance.InitBlock = InitBlock.DeepCopy();
 
             HashInstance.BufferPosition = BufferPosition;
             HashInstance.DigestPosition = DigestPosition;
             HashInstance.ShakeBufferPosition = ShakeBufferPosition;
             HashInstance.Finalized = Finalized;
 
-            HashInstance.ShakeBuffer = new byte[ShakeBuffer.Length];
-            Utils.Utils.memcopy(ref HashInstance.ShakeBuffer, ShakeBuffer, ShakeBuffer.Length);
+            HashInstance.ShakeBuffer = ShakeBuffer.DeepCopy();
 
             // Internal SHA3 Cloning
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -980,26 +952,20 @@ namespace SharpHash.Crypto
             // CShake_256 Cloning
             CShake_256 HashInstance = (LXof as CShake_256);
 
-            if (InitBlock != null)
-            {
-                HashInstance.InitBlock = new byte[InitBlock.Length];
-                Utils.Utils.memcopy(ref HashInstance.InitBlock, InitBlock, InitBlock.Length);
-            } // end if
+            HashInstance.InitBlock = InitBlock.DeepCopy();
 
             HashInstance.BufferPosition = BufferPosition;
             HashInstance.DigestPosition = DigestPosition;
             HashInstance.ShakeBufferPosition = ShakeBufferPosition;
             HashInstance.Finalized = Finalized;
 
-            HashInstance.ShakeBuffer = new byte[ShakeBuffer.Length];
-            Utils.Utils.memcopy(ref HashInstance.ShakeBuffer, ShakeBuffer, ShakeBuffer.Length);
+            HashInstance.ShakeBuffer = ShakeBuffer.DeepCopy();
 
             // Internal SHA3 Cloning
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1056,28 +1022,13 @@ namespace SharpHash.Crypto
 
         public virtual void Clear()
         {
-            Utils.Utils.memset(ref key, 0);
+            ArrayUtils.ZeroFill(ref key);
         } // end function Clear
 
         public virtual byte[] Key
         {
-            get
-            {
-                byte[] result = new byte[key.Length];
-                Utils.Utils.memcopy(ref result, key, key.Length);
-
-                return result;
-            }
-            set
-            {
-                if (value == null || value.Length == 0)
-                    key = new byte[0];
-                else
-                {
-                    key = new byte[value.Length];
-                    Utils.Utils.memcopy(ref key, value, value.Length);
-                } // end else
-            }
+            get => key.DeepCopy();
+            set => key = value.DeepCopy();
         } // end property Key
 
         public override string Name
@@ -1085,10 +1036,10 @@ namespace SharpHash.Crypto
             get
             {
                 if (this is IXOF)
-                    return String.Format("{0}_{1}_{2}", Name, "XOFSizeInBytes",
+                    return String.Format("{0}_{1}_{2}", this.GetType().Name, "XOFSizeInBytes",
                         (hash as IXOF).XOFSizeInBits >> 3);
 
-                return String.Format("{0}", Name);
+                return String.Format("{0}", this.GetType().Name);
             }
         }
 
@@ -1109,17 +1060,8 @@ namespace SharpHash.Crypto
             UInt64 a_OutputLengthInBits)
             : base((Int32)HashSizeEnum.HashSize128)
         {
-            key = new byte[a_KMACKey?.Length ?? 0];
-            if (!(a_KMACKey == null || a_KMACKey.Length == 0))
-            {
-                Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
-            } // end if
-
-            Customization = new byte[a_Customization?.Length ?? 0];
-            if (!(Customization == null || Customization.Length == 0))
-            {
-                Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
-            } // end if
+            key = a_KMACKey.DeepCopy();
+            Customization = a_Customization.DeepCopy();
 
             hash = a_hash;
             (hash as IXOF).XOFSizeInBits = a_OutputLengthInBits;
@@ -1159,17 +1101,8 @@ namespace SharpHash.Crypto
         private KMAC128XOF(IHash a_hash, byte[] a_KMACKey, byte[] a_Customization)
             : base((Int32)HashSizeEnum.HashSize128)
         {
-            key = new byte[a_KMACKey?.Length ?? 0];
-            if (!(a_KMACKey == null || a_KMACKey.Length == 0))
-            {
-                Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
-            } // end if
-
-            Customization = new byte[a_Customization?.Length ?? 0];
-            if (!(Customization == null || Customization.Length == 0))
-            {
-                Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
-            } // end if
+            key = a_KMACKey.DeepCopy();
+            Customization = a_Customization.DeepCopy();
 
             hash = a_hash;
         } // end constructor
@@ -1219,17 +1152,8 @@ namespace SharpHash.Crypto
             UInt64 a_OutputLengthInBits)
             : base((Int32)HashSizeEnum.HashSize256)
         {
-            key = new byte[a_KMACKey?.Length ?? 0];
-            if (!(a_KMACKey == null || a_KMACKey.Length == 0))
-            {
-                Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
-            } // end if
-
-            Customization = new byte[a_Customization?.Length ?? 0];
-            if (!(Customization == null || Customization.Length == 0))
-            {
-                Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
-            } // end if
+            key = a_KMACKey.DeepCopy();
+            Customization = a_Customization.DeepCopy();
 
             hash = a_hash;
             (hash as IXOF).XOFSizeInBits = a_OutputLengthInBits;
@@ -1269,17 +1193,8 @@ namespace SharpHash.Crypto
         private KMAC256XOF(IHash a_hash, byte[] a_KMACKey, byte[] a_Customization)
             : base((Int32)HashSizeEnum.HashSize256)
         {
-            key = new byte[a_KMACKey?.Length ?? 0];
-            if (!(a_KMACKey == null || a_KMACKey.Length == 0))
-            {
-                Utils.Utils.memcopy(ref key, a_KMACKey, a_KMACKey.Length);
-            } // end if
-
-            Customization = new byte[a_Customization?.Length ?? 0];
-            if (!(Customization == null || Customization.Length == 0))
-            {
-                Utils.Utils.memcopy(ref Customization, a_Customization, a_Customization.Length);
-            } // end if
+            key = a_KMACKey.DeepCopy();
+            Customization = a_Customization.DeepCopy();
 
             hash = a_hash;
         } // end constructor

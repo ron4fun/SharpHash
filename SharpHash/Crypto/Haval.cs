@@ -595,7 +595,7 @@ namespace SharpHash.Crypto
                 hash[6] = hash[6] + g;
                 hash[7] = hash[7] + h;
 
-                Utils.Utils.memset(ref temp, 0);
+                Utils.Utils.Memset(ref temp, 0);
             }
         } // end function TransformBlock
     } // end class Haval3
@@ -1178,7 +1178,7 @@ namespace SharpHash.Crypto
                 hash[6] = hash[6] + g;
                 hash[7] = hash[7] + h;
 
-                Utils.Utils.memset(ref temp, 0);
+                Utils.Utils.Memset(ref temp, 0);
             }
         } // end function TransformBlock
     } // end class Haval4
@@ -1888,7 +1888,7 @@ namespace SharpHash.Crypto
                 hash[6] = hash[6] + g;
                 hash[7] = hash[7] + h;
 
-                Utils.Utils.memset(ref temp, 0);
+                Utils.Utils.Memset(ref temp, 0);
             }
         } // end function TransformBlock
     } // end class Haval5
@@ -1907,8 +1907,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1930,8 +1929,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1953,8 +1951,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1976,8 +1973,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1999,8 +1995,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2022,8 +2017,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2045,8 +2039,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2068,8 +2061,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2091,8 +2083,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2114,8 +2105,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2137,8 +2127,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2160,8 +2149,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2183,8 +2171,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2206,8 +2193,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -2229,8 +2215,7 @@ namespace SharpHash.Crypto
 
             HashInstance.rounds = rounds;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 

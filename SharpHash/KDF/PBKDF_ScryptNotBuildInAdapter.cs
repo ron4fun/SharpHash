@@ -24,7 +24,6 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 
-using SharpHash.Base;
 using SharpHash.Crypto;
 using SharpHash.Interfaces;
 using SharpHash.Utils;
@@ -55,15 +54,9 @@ namespace SharpHash.KDF
         {
             ValidatePBKDF_ScryptInputs(a_Cost, a_BlockSize, a_Parallelism);
 
-            PasswordBytes = new byte[a_PasswordBytes?.Length ?? 0];
+            PasswordBytes = a_PasswordBytes.DeepCopy();
 
-            if (!(a_PasswordBytes == null || a_PasswordBytes.Length == 0))
-                Utils.Utils.memcopy(ref PasswordBytes, a_PasswordBytes, a_PasswordBytes.Length);
-
-            SaltBytes = new byte[a_SaltBytes?.Length ?? 0];
-
-            if (!(a_SaltBytes == null || a_SaltBytes.Length == 0))
-                Utils.Utils.memcopy(ref SaltBytes, a_SaltBytes, a_SaltBytes.Length);
+            SaltBytes = a_SaltBytes.DeepCopy();
 
             Cost = a_Cost;
             BlockSize = a_BlockSize;
@@ -99,8 +92,8 @@ namespace SharpHash.KDF
 
         public override void Clear()
         {
-            Utils.Utils.memset(ref PasswordBytes, 0);
-            Utils.Utils.memset(ref SaltBytes, 0);
+            ArrayUtils.ZeroFill(ref PasswordBytes);
+            ArrayUtils.ZeroFill(ref SaltBytes);
         } // end function Clear
 
         /// <summary>
@@ -119,12 +112,12 @@ namespace SharpHash.KDF
 
         private static void ClearArray(ref byte[] a_Input)
         {
-            Utils.Utils.memset(ref a_Input, 0);
+            ArrayUtils.ZeroFill(ref a_Input);
         } //
 
         private static void ClearArray(ref UInt32[] a_Input)
         {
-            Utils.Utils.memset(ref a_Input, 0);
+            ArrayUtils.ZeroFill(ref a_Input);
         } //
 
         private static void ClearAllArrays(ref UInt32[][] a_Inputs)
@@ -284,16 +277,16 @@ namespace SharpHash.KDF
 
             try
             {
-                Utils.Utils.memmove(ref LX, b, LBCount, bOff);
+                Utils.Utils.Memmove(ref LX, b, LBCount, bOff);
 
                 LOffset = 0;
                 LIdx = 0;
                 while (LIdx < N)
                 {
-                    Utils.Utils.memmove(ref LV, LX, LBCount, 0, LOffset);
+                    Utils.Utils.Memmove(ref LV, LX, LBCount, 0, LOffset);
                     LOffset = LOffset + LBCount;
                     BlockMix(LX, ref LBlockX1, ref LBlockX2, ref LBlockY, R);
-                    Utils.Utils.memmove(ref LV, LBlockY, LBCount, 0, LOffset);
+                    Utils.Utils.Memmove(ref LV, LBlockY, LBCount, 0, LOffset);
                     LOffset = LOffset + LBCount;
                     BlockMix(LBlockY, ref LBlockX1, ref LBlockX2, ref LX, R);
                     LIdx += 2;
@@ -304,13 +297,13 @@ namespace SharpHash.KDF
                 while (LIdx < N)
                 {
                     LJdx = (Int32)(LX[LBCount - 16] & LMask);
-                    Utils.Utils.memmove(ref LBlockY, LV, LBCount, LJdx * LBCount);
+                    Utils.Utils.Memmove(ref LBlockY, LV, LBCount, LJdx * LBCount);
                     Xor(LBlockY, LX, 0, ref LBlockY);
                     BlockMix(LBlockY, ref LBlockX1, ref LBlockX2, ref LX, R);
                     LIdx++;
                 } //
 
-                Utils.Utils.memmove(ref b, LX, LBCount, 0, bOff);
+                Utils.Utils.Memmove(ref b, LX, LBCount, 0, bOff);
             } //
             finally
             {
@@ -324,7 +317,7 @@ namespace SharpHash.KDF
         {
             Int32 bOff, yOff, HalfLen, Idx;
 
-            Utils.Utils.memmove(ref X1, b, 16, b.Length - 16);
+            Utils.Utils.Memmove(ref X1, b, 16, b.Length - 16);
 
             bOff = 0;
             yOff = 0;
@@ -337,7 +330,7 @@ namespace SharpHash.KDF
 
                 SalsaCore(8, X2, ref X1);
 
-                Utils.Utils.memmove(ref y, X1, 16, 0, yOff);
+                Utils.Utils.Memmove(ref y, X1, 16, 0, yOff);
 
                 yOff = HalfLen + bOff - yOff;
                 bOff = bOff + 16;

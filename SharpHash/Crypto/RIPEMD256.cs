@@ -46,8 +46,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt32[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -356,7 +355,7 @@ namespace SharpHash.Crypto
             state[6] = state[6] + c;
             state[7] = state[7] + d;
 
-            Utils.Utils.memset(ref data, 0);
+            Utils.Utils.Memset(ref data, 0);
         } // end function TransformBlock
     } // end class RIPEMD256
 }

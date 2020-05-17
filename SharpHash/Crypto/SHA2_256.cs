@@ -42,8 +42,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt32[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 

@@ -687,8 +687,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt32[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
+            HashInstance.state = state.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -699,7 +698,7 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref state, 0);
+            ArrayUtils.ZeroFill(ref state);
 
             base.Initialize();
         } // end function Initialize
@@ -764,7 +763,7 @@ namespace SharpHash.Crypto
 
             fixed (UInt32* workPtr = work)
             {
-                Utils.Utils.memmove(ref work, state, state.Length);
+                Utils.Utils.Memmove(ref work, state, state.Length);
 
                 Converters.be32_copy(a_data, a_index, (IntPtr)(workPtr + state.Length), 0, BlockSize);
 
@@ -838,7 +837,7 @@ namespace SharpHash.Crypto
                     state[7] = state[7] ^ work[8];
                 } // end if
 
-                Utils.Utils.memset(ref work, 0);
+                Utils.Utils.Memset(ref work, 0);
             }
         } // end function TransformBlock
     } // end class Snefru

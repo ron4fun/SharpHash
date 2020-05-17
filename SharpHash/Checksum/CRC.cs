@@ -1182,5 +1182,6 @@ namespace SharpHash.Checksum
 
             return result;
         } // end function Reflect
+
     } // end class CRC
 }

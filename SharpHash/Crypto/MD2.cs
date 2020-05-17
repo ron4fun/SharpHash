@@ -26,6 +26,7 @@
 
 using SharpHash.Base;
 using SharpHash.Interfaces;
+using SharpHash.Utils;
 using System;
 
 namespace SharpHash.Crypto
@@ -63,11 +64,8 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new byte[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
-
-            HashInstance.checksum = new byte[checksum.Length];
-            Utils.Utils.memcopy(ref HashInstance.checksum, checksum, checksum.Length);
+            HashInstance.state = state.DeepCopy();
+            HashInstance.checksum = checksum.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -76,18 +74,15 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref state, 0);
-            Utils.Utils.memset(ref checksum, 0);
+            ArrayUtils.ZeroFill(ref state);
+            ArrayUtils.ZeroFill(ref checksum);
 
             base.Initialize();
         } // end function Initialize
 
         protected override byte[] GetResult()
         {
-            byte[] result = new byte[state.Length];
-            Utils.Utils.memcopy(ref result, state, state.Length);
-
-            return result;
+            return state.DeepCopy();
         } // end function GetResult
 
         protected override void Finish()
@@ -116,8 +111,8 @@ namespace SharpHash.Crypto
 
             fixed (byte* tempPtr = temp, statetPtr = state)
             {
-                Utils.Utils.memmove((IntPtr)tempPtr, (IntPtr)statetPtr, a_data_length);
-                Utils.Utils.memmove((IntPtr)((byte*)tempPtr + a_data_length), (IntPtr)((byte*)a_data + a_index), a_data_length);
+                Utils.Utils.Memmove((IntPtr)tempPtr, (IntPtr)statetPtr, a_data_length);
+                Utils.Utils.Memmove((IntPtr)((byte*)tempPtr + a_data_length), (IntPtr)((byte*)a_data + a_index), a_data_length);
 
                 for (Int32 i = 0; i < 16; i++)
                 {
@@ -135,7 +130,7 @@ namespace SharpHash.Crypto
                     t = (byte)(t + i);
                 } // end for
 
-                Utils.Utils.memmove((IntPtr)statetPtr, (IntPtr)tempPtr, 16);
+                Utils.Utils.Memmove((IntPtr)statetPtr, (IntPtr)tempPtr, 16);
 
                 t = checksum[15];
 
@@ -145,7 +140,7 @@ namespace SharpHash.Crypto
                     t = checksum[i];
                 } // end for
 
-                Utils.Utils.memset(ref temp, 0);
+                Utils.Utils.Memset(ref temp, 0);
             }
         } // end function TransformBlock
     } // end class MD2

@@ -88,11 +88,8 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt32[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
-
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.state = state.DeepCopy();
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -101,8 +98,8 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref state, 0);
-            Utils.Utils.memset(ref hash, 0);
+            ArrayUtils.ZeroFill(ref state);
+            ArrayUtils.ZeroFill(ref hash);
 
             base.Initialize();
         } // end function Initialize
@@ -169,8 +166,8 @@ namespace SharpHash.Crypto
 
                 Compress(m);
 
-                Utils.Utils.memset(ref data, 0);
-                Utils.Utils.memset(ref m, 0);
+                ArrayUtils.ZeroFill(ref data);
+                ArrayUtils.ZeroFill(ref m);
             }
         } // end function TransformBlock
 
@@ -448,5 +445,6 @@ namespace SharpHash.Crypto
                 ^ v4 ^ (v5 >> 16) ^ v5 ^ (v6 << 16) ^ (v6 >> 16)
                 ^ (v7 << 16) ^ v7;
         } // end function GPT
+
     } // end class Gost
 }

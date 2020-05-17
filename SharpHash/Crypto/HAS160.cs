@@ -56,8 +56,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt32[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -202,7 +201,7 @@ namespace SharpHash.Crypto
                 hash[3] = hash[3] + D;
                 hash[4] = hash[4] + E;
 
-                Utils.Utils.memset((IntPtr)dataPtr, 0, data.Length * sizeof(UInt32));
+                Utils.Utils.Memset((IntPtr)dataPtr, 0, data.Length * sizeof(UInt32));
             }
         } // end function TransformBlock
     } // end class HAS160

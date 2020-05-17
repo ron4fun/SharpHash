@@ -30,87 +30,99 @@ using System;
 namespace SharpHash.Interfaces
 {
     public interface ITransformBlock
-    { }; // end interface ITransformBlock
+    { } // end interface ITransformBlock
 
     public interface IBlockHash : IHash
-    { }; // end interface IBlockHash
+    { } // end interface IBlockHash
 
     public interface INonBlockHash
-    { }; // end interface INonBlockHash
+    { } // end interface INonBlockHash
 
     public interface IChecksum
-    { }; // end interface IChecksum
+    { } // end interface IChecksum
 
     public interface ICrypto : IBlockHash
-    { }; // end interface ICrypto
+    { } // end interface ICrypto
 
     public interface ICryptoNotBuildIn : ICrypto
-    { }; // end interface ICryptoNotBuildIn
+    { } // end interface ICryptoNotBuildIn
 
     public interface IWithKey : IHash
     {
         byte[] Key { get; set; }
         Int32? KeyLength { get; }
-    }; // end interface IWithKey
+    } // end interface IWithKey
 
     public interface IMAC : IHash
     {
         void Clear();
 
         byte[] Key { get; set; }
-    }; // end interface IMAC
+    } // end interface IMAC
 
     public interface IHMAC : IMAC
-    { }; // end interface IHMAC
+    { } // end interface IHMAC
 
     public interface IHMACNotBuildIn : IHMAC
-    { }; // end interface IHMACNotBuildIn
+    { } // end interface IHMACNotBuildIn
 
     public interface IKMAC : IMAC
-    { }; // end interface IKMAC
+    { } // end interface IKMAC
 
     public interface IKMACNotBuildIn : IKMAC
-    { }; // end interface IKMACNotBuildIn
+    { } // end interface IKMACNotBuildIn
 
-    public interface IHash16 : IHash
-    { }; // end interface IHash16
+    public interface IBlake2BMAC :  IMAC
+    {} // end IBlake2BMAC
+
+    public interface IBlake2BMACNotBuildIn :   IBlake2BMAC
+    {} // end IBlake2BMACNotBuildIn
+
+    public interface IBlake2SMAC :   IMAC
+    {} // end IBlake2SMAC
+
+    public interface IBlake2SMACNotBuildIn :  IBlake2SMAC
+    {} // end IBlake2SMACNotBuildIn
+
+     public interface IHash16 : IHash
+    { } // end interface IHash16
 
     public interface IHash32 : IHash
-    { }; // end interface IHash32
+    { } // end interface IHash32
 
     public interface IHash64 : IHash
-    { }; // end interface IHash64
+    { } // end interface IHash64
 
     public interface IHash128 : IHash
-    { }; // end interface IHash128
+    { } // end interface IHash128
 
     public interface IHashWithKey : IWithKey
-    { }; // end interface IHashWithKey
+    { } // end interface IHashWithKey
 
     public interface IPBKDF2_HMAC : IKDF
-    { }; // end interface IPBKDF2_HMAC
+    { } // end interface IPBKDF2_HMAC
 
     public interface IPBKDF2_HMACNotBuildIn : IPBKDF2_HMAC
-    { }; // end interface IPBKDF2_HMACNotBuildIn
+    { } // end interface IPBKDF2_HMACNotBuildIn
 
     public interface IPBKDF_Argon2 : IKDF
-    { }; // end interface IPBKDF_Argon2
+    { } // end interface IPBKDF_Argon2
 
     public interface IPBKDF_Argon2NotBuildIn : IPBKDF_Argon2
-    { }; // end interface IPBKDF_Argon2NotBuildIn
+    { } // end interface IPBKDF_Argon2NotBuildIn
 
     public interface IPBKDF_Scrypt : IKDF
-    { }; // end interface IPBKDF_Scrypt
+    { } // end interface IPBKDF_Scrypt
 
     public interface IPBKDF_ScryptNotBuildIn : IPBKDF_Scrypt
-    { }; // end interface IPBKDF_ScryptNotBuildIn
+    { } // end interface IPBKDF_ScryptNotBuildIn
 
     public interface IXOF : IHash
     {
         UInt64 XOFSizeInBits { get; set; }
 
         void DoOutput(ref byte[] destination, UInt64 destinationOffset, UInt64 outputLength);
-    }; // end interface IXOF
+    } // end interface IXOF
 
     public interface IArgon2Parameters
     {
@@ -124,7 +136,7 @@ namespace SharpHash.Interfaces
         Int32 Lanes { get; }
         Argon2Type Type { get; }
         Argon2Version Version { get; }
-    };  // end interface IArgon2Parameters
+    }  // end interface IArgon2Parameters
 
     public interface IArgon2ParametersBuilder
     {
@@ -147,5 +159,5 @@ namespace SharpHash.Interfaces
         void Clear();
 
         IArgon2ParametersBuilder Build();
-    }; // end interface IArgon2ParametersBuilder
+    } // end interface IArgon2ParametersBuilder
 }

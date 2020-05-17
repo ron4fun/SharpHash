@@ -61,21 +61,14 @@ namespace SharpHash.Crypto
 
             HashInstance.tap = tap;
 
-            HashInstance.state = new UInt32[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
-
-            HashInstance.theta = new UInt32[theta.Length];
-            Utils.Utils.memcopy(ref HashInstance.theta, theta, theta.Length);
-
-            HashInstance.gamma = new UInt32[gamma.Length];
-            Utils.Utils.memcopy(ref HashInstance.gamma, gamma, gamma.Length);
-
-            HashInstance.pi = new UInt32[pi.Length];
-            Utils.Utils.memcopy(ref HashInstance.pi, pi, pi.Length);
+            HashInstance.state = state.DeepCopy();
+            HashInstance.theta = theta.DeepCopy();
+            HashInstance.gamma = gamma.DeepCopy();
+            HashInstance.pi = pi.DeepCopy();
 
             Array.Resize(ref stages, 32);
             for (UInt32 i = 0; i < 32; i++)
-                Utils.Utils.memcopy(ref HashInstance.stages[i], stages[i], stages[i].Length);
+                Utils.Utils.Memcopy(ref HashInstance.stages[i], stages[i], stages[i].Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -84,10 +77,10 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref state, 0);
+            ArrayUtils.ZeroFill(ref state);
 
             for (Int32 i = 0; i < 32; i++)
-                Utils.Utils.memset(ref stages[i], 0);
+                ArrayUtils.ZeroFill(ref stages[i]);
 
             base.Initialize();
         } // end function Initialize
@@ -222,7 +215,7 @@ namespace SharpHash.Crypto
                 state[15] = theta[15] ^ stages[tap16][6];
                 state[16] = theta[16] ^ stages[tap16][7];
 
-                Utils.Utils.memset(ref work_buffer, 0);
+                Utils.Utils.Memset(ref work_buffer, 0);
             }
         } // end function TransformBlock
 
@@ -282,5 +275,6 @@ namespace SharpHash.Crypto
             a_theta[15] = pi[15] ^ pi[16] ^ pi[2];
             a_theta[16] = pi[16] ^ pi[0] ^ pi[3];
         } // end function GPT
+
     } // end class Panama
 }

@@ -33,7 +33,7 @@ namespace SharpHash.Crypto
 {
     internal abstract class Tiger2 : Tiger
     {
-        public new static readonly string InvalidTigerHashSize = "Tiger2 HashSize Must be Either 128 bit(16 byte), 160 bit(20 byte) or 192 bit(24 byte)";
+        public static readonly string InvalidTiger2HashSize = "Tiger2 HashSize Must be Either 128 bit(16 byte), 160 bit(20 byte) or 192 bit(24 byte)";
 
         protected Tiger2(Int32 a_hash_size, HashRounds a_rounds)
             : base(a_hash_size, a_rounds)
@@ -75,8 +75,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -92,8 +91,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -128,8 +126,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -164,8 +161,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 

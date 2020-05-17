@@ -59,11 +59,7 @@ namespace SharpHash.Hash32
                 result.v3 = v3;
                 result.v4 = v4;
 
-                if (!(memory == null || memory.Length == 0))
-                {
-                    result.memory = new byte[memory.Length];
-                    Utils.Utils.memcopy(ref result.memory, memory, memory.Length);
-                } // end if
+                result.memory = memory.DeepCopy();
 
                 return result;
             } // end function Clone
@@ -122,7 +118,7 @@ namespace SharpHash.Hash32
                     {
                         ptrTemp = ptrMemory + state.memsize;
 
-                        Utils.Utils.memmove((IntPtr)ptrTemp, (IntPtr)ptrBuffer, a_length);
+                        Utils.Utils.Memmove((IntPtr)ptrTemp, (IntPtr)ptrBuffer, a_length);
 
                         state.memsize = state.memsize + (UInt32)a_length;
 
@@ -135,7 +131,7 @@ namespace SharpHash.Hash32
                     {
                         ptrTemp = ptrMemory + state.memsize;
 
-                        Utils.Utils.memmove((IntPtr)ptrTemp, (IntPtr)ptrBuffer, (Int32)(16 - state.memsize));
+                        Utils.Utils.Memmove((IntPtr)ptrTemp, (IntPtr)ptrBuffer, (Int32)(16 - state.memsize));
 
                         state.v1 = PRIME32_1 * Bits.RotateLeft32(state.v1 + PRIME32_2 * Converters.ReadBytesAsUInt32LE((IntPtr)ptrMemory, 0), 13);
                         state.v2 = PRIME32_1 * Bits.RotateLeft32(state.v2 + PRIME32_2 * Converters.ReadBytesAsUInt32LE((IntPtr)ptrMemory, 4), 13);
@@ -174,7 +170,7 @@ namespace SharpHash.Hash32
 
                     if (ptrBuffer < ptrEnd)
                     {
-                        Utils.Utils.memmove((IntPtr)ptrMemory, (IntPtr)ptrBuffer, (Int32)(ptrEnd - ptrBuffer));
+                        Utils.Utils.Memmove((IntPtr)ptrMemory, (IntPtr)ptrBuffer, (Int32)(ptrEnd - ptrBuffer));
                         state.memsize = (UInt32)(ptrEnd - ptrBuffer);
                     } // end if
                 }
@@ -231,21 +227,16 @@ namespace SharpHash.Hash32
 
         public Int32? KeyLength
         {
-            get
-            {
-                return 4;
-            }
+            get => 4;
         } // end property KeyLength
 
         public byte[] Key
         {
-            get
-            {
-                return Converters.ReadUInt32AsBytesLE(key);
-            }
+            get => Converters.ReadUInt32AsBytesLE(key);
+            
             set
             {
-                if (value == null || value.Length == 0)
+                if (value.Empty())
                     key = CKEY;
                 else
                 {
@@ -262,5 +253,6 @@ namespace SharpHash.Hash32
                 } // end else
             }
         } // end property GetKey
+
     } // end class XXHash32
 }

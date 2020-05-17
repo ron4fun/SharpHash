@@ -182,7 +182,7 @@ namespace SharpHash.Crypto
                 t3Ptr = table_3, t4Ptr = table_4, t5Ptr = table_5, t6Ptr = table_6,
                 t7Ptr = table_7, masterPtr = master_table)
             {
-                Utils.Utils.memmove((IntPtr)t0Ptr, (IntPtr)masterPtr, 256 * sizeof(UInt64));
+                Utils.Utils.Memmove((IntPtr)t0Ptr, (IntPtr)masterPtr, 256 * sizeof(UInt64));
 
                 CalcTable(1, t1Ptr);
                 CalcTable(2, t2Ptr);
@@ -207,11 +207,8 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.state = new UInt64[state.Length];
-            Utils.Utils.memcopy(ref HashInstance.state, state, state.Length);
-
-            HashInstance.temp = new UInt64[temp.Length];
-            Utils.Utils.memcopy(ref HashInstance.temp, temp, temp.Length);
+            HashInstance.state = state.DeepCopy();
+            HashInstance.temp = temp.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -220,8 +217,8 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref state, 0);
-            Utils.Utils.memset(ref temp, 0);
+            ArrayUtils.ZeroFill(ref state);
+            ArrayUtils.ZeroFill(ref temp);
 
             base.Initialize();
         } // end function Initialize

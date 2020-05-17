@@ -99,5 +99,6 @@ namespace SharpHash.Crypto
 
             TransformBytes(pad, 0, padindex);
         } // end function Finish
+
     } // end class MDBase
 }

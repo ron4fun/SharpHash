@@ -24,6 +24,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 
+using SharpHash.Utils;
 using System;
 
 namespace SharpHash.Base
@@ -48,8 +49,7 @@ namespace SharpHash.Base
 
             result.pos = pos;
 
-            result.data = new byte[data.Length];
-            Utils.Utils.memcopy(ref result.data, data, data.Length);
+            result.data = data.DeepCopy();
 
             return result;
         }
@@ -76,7 +76,7 @@ namespace SharpHash.Base
 
             fixed (byte* bDest = &data[0])
             {
-                Utils.Utils.memmove((IntPtr)bDest, a_data, Length * sizeof(byte));
+                Utils.Utils.Memmove((IntPtr)bDest, a_data, Length * sizeof(byte));
             }
 
             pos = pos + Length;
@@ -107,7 +107,7 @@ namespace SharpHash.Base
 
             fixed (byte* bDest = &data[pos])
             {
-                Utils.Utils.memmove((IntPtr)bDest, (IntPtr)((byte*)a_data + a_start_index), Length * sizeof(byte));
+                Utils.Utils.Memmove((IntPtr)bDest, (IntPtr)((byte*)a_data + a_start_index), Length * sizeof(byte));
             }
 
             pos = pos + Length;
@@ -122,22 +122,16 @@ namespace SharpHash.Base
         {
             pos = 0;
 
-            byte[] result = new byte[data.Length];
-            Utils.Utils.memcopy(ref result, data, data.Length);
-
-            return result;
+            return data.DeepCopy();
         } // end function GetBytes
 
         public unsafe byte[] GetBytesZeroPadded()
         {
-            Utils.Utils.memset(ref data, 0, pos);
+            Utils.Utils.Memset(ref data, 0, pos);
 
             pos = 0;
 
-            byte[] result = new byte[data.Length];
-            Utils.Utils.memcopy(ref result, data, data.Length);
-
-            return result;
+            return data.DeepCopy();
         } // end function GetBytesZeroPadded
 
         public bool IsEmpty => pos == 0;
@@ -152,7 +146,7 @@ namespace SharpHash.Base
         {
             pos = 0;
 
-            Utils.Utils.memset(ref data, 0);
+            ArrayUtils.ZeroFill(ref data);
         } // end function Initialize
 
         public override string ToString()

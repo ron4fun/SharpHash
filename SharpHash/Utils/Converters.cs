@@ -135,7 +135,7 @@ namespace SharpHash.Utils
             } // end if
             else
             {
-                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
+                Utils.Memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end else
         } // end function be32_copy
 
@@ -148,7 +148,7 @@ namespace SharpHash.Utils
             } // end if
             else
             {
-                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
+                Utils.Memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end else
         } // end function be64_copy
 
@@ -177,7 +177,7 @@ namespace SharpHash.Utils
         {
             if (BitConverter.IsLittleEndian)
             {
-                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
+                Utils.Memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end if
             else
             {
@@ -190,7 +190,7 @@ namespace SharpHash.Utils
         {
             if (BitConverter.IsLittleEndian)
             {
-                Utils.memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
+                Utils.Memmove((IntPtr)((byte*)dest + dest_index), (IntPtr)((byte*)src + src_index), length);
             } // end if
             else
             {

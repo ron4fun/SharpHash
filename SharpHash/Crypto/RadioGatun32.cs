@@ -52,12 +52,11 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.mill = new UInt32[mill.Length];
-            Utils.Utils.memcopy(ref HashInstance.mill, mill, mill.Length);
+            HashInstance.mill = mill.DeepCopy();
 
             Array.Resize(ref belt, 13);
             for (Int32 i = 0; i < 13; i++)
-                Utils.Utils.memcopy(ref HashInstance.belt[i], belt[i], belt[i].Length);
+                Utils.Utils.Memcopy(ref HashInstance.belt[i], belt[i], belt[i].Length);
 
             HashInstance.BufferSize = BufferSize;
 
@@ -66,10 +65,10 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref mill, 0);
+            ArrayUtils.ZeroFill(ref mill);
 
             for (Int32 i = 0; i < 13; i++)
-                Utils.Utils.memset(ref belt[i], 0);
+                ArrayUtils.ZeroFill(ref belt[i]);
 
             base.Initialize();
         } // end function Initialize
@@ -86,7 +85,7 @@ namespace SharpHash.Crypto
                     for (Int32 i = 0; i < 4; i++)
                     {
                         RoundFunction();
-                        Utils.Utils.memmove((IntPtr)(tPtr + (i * 2)), (IntPtr)(millPtr + 1), 2 * sizeof(UInt32));
+                        Utils.Utils.Memmove((IntPtr)(tPtr + (i * 2)), (IntPtr)(millPtr + 1), 2 * sizeof(UInt32));
                     } // end for
 
                     Converters.le32_copy((IntPtr)tPtr, 0, (IntPtr)resultPtr, 0,
@@ -130,7 +129,7 @@ namespace SharpHash.Crypto
 
                 RoundFunction();
 
-                Utils.Utils.memset(ref data, 0);
+                ArrayUtils.ZeroFill(ref data);
             }
         } // end function TransformBlock
 
@@ -192,5 +191,6 @@ namespace SharpHash.Crypto
                 i++;
             } // end while
         } // end function RoundFunction
+
     } // end class RadioGatun32
 }

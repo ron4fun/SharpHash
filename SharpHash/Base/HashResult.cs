@@ -61,13 +61,7 @@ namespace SharpHash.Base
 
         public HashResult(byte[] a_hash)
         {
-            if (a_hash == null || a_hash.Length == 0)
-                hash = new byte[0];
-            else
-            {
-                hash = new byte[a_hash.Length];
-                Utils.Utils.memcopy(ref hash, a_hash, a_hash.Length);
-            } // end else
+            hash = a_hash.DeepCopy();
         } // end constructor
 
         public HashResult(UInt32 a_hash)
@@ -107,15 +101,7 @@ namespace SharpHash.Base
         // Copy Constructor
         public HashResult(HashResult right)
         {
-            if (right.hash == null || right.hash.Length == 0)
-            {
-                hash = new byte[0];
-            }
-            else
-            {
-                hash = new byte[right.hash.Length];
-                Utils.Utils.memcopy(ref hash, right.hash, right.hash.Length);
-            }
+            hash = right.hash.DeepCopy();
         }
 
         public bool CompareTo(IHashResult a_hashResult)
@@ -125,12 +111,7 @@ namespace SharpHash.Base
 
         public byte[] GetBytes()
         {
-            if (hash == null || hash.Length == 0) return new byte[0];
-
-            byte[] result = new byte[hash.Length];
-            Utils.Utils.memcopy(ref result, hash, hash.Length);
-
-            return result;
+            return hash.DeepCopy();
         } // end function GetBytes
 
         public override Int32 GetHashCode()
@@ -153,59 +134,49 @@ namespace SharpHash.Base
         public Int32 GetInt32()
         {
             if (hash.Length != 4)
-            {
                 throw new InvalidOperationHashLibException(ImpossibleRepresentationInt32);
-            } // end if
-
+           
             return (hash[0] << 24) | (hash[1] << 16) | (hash[2] << 8) | hash[3];
         } // end function GetInt32
 
         public byte GetUInt8()
         {
             if (hash.Length != 1)
-            {
                 throw new InvalidOperationHashLibException(ImpossibleRepresentationUInt8);
-            } // end if
-
+           
             return hash[0];
         } // end function GetUInt8
 
         public UInt16 GetUInt16()
         {
             if (hash.Length != 2)
-            {
                 throw new InvalidOperationHashLibException(ImpossibleRepresentationUInt16);
-            } // end if
-
+          
             return (UInt16)((hash[0] << 8) | hash[1]);
         } // end function GetUInt16
 
         public UInt32 GetUInt32()
         {
             if (hash.Length != 4)
-            {
                 throw new InvalidOperationHashLibException(ImpossibleRepresentationUInt32);
-            } // end if
-
+          
             return (UInt32)((hash[0] << 24) | (hash[1] << 16) | (hash[2] << 8) | hash[3]);
         } // end function GetUInt32
 
         public UInt64 GetUInt64()
         {
             if (hash.Length != 8)
-            {
                 throw new InvalidOperationHashLibException(ImpossibleRepresentationUInt64);
-            } // end if
-
+            
             return ((UInt64)(hash[0]) << 56) | ((UInt64)(hash[1]) << 48) | ((UInt64)(hash[2]) << 40) | ((UInt64)(hash[3]) << 32) |
                 ((UInt64)(hash[4]) << 24) | ((UInt64)(hash[5]) << 16) | ((UInt64)(hash[6]) << 8) | (UInt64)(hash[7]);
         } // end function GetUInt64
 
         private static bool SlowEquals(byte[] a_ar1, byte[] a_ar2)
         {
-            UInt32 diff = (UInt32)(a_ar1.Length ^ a_ar2.Length), I = 0;
+            UInt32 diff = (UInt32)(a_ar1?.Length ^ a_ar2?.Length), I = 0;
 
-            while (I <= (a_ar1.Length - 1) && I <= (a_ar2.Length - 1))
+            while (I <= (a_ar1?.Length - 1) && I <= (a_ar2?.Length - 1))
             {
                 diff = diff | (UInt32)(a_ar1[I] ^ a_ar2[I]);
                 I += 1;

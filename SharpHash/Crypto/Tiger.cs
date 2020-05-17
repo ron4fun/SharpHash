@@ -947,7 +947,7 @@ namespace SharpHash.Crypto
                 hash[1] = b - hash[1];
                 hash[2] = hash[2] + c;
 
-                Utils.Utils.memset(ref data, 0);
+                Utils.Utils.Memset(ref data, 0);
             }
         } // end function TransformBlock
     } // end class Tiger
@@ -964,8 +964,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -981,8 +980,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1017,8 +1015,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1053,8 +1050,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 

@@ -75,7 +75,7 @@ namespace SharpHash.Hash64
             Int32 Length, current_index;
             UInt64 k, h;
 
-            if (a_data == null || a_data.Length == 0)
+            if (a_data.Empty())
                 return new HashResult((UInt64)0);
 
             Length = a_data.Length;
@@ -203,7 +203,7 @@ namespace SharpHash.Hash64
 
             set
             {
-                if (value == null || value.Length == 0)
+                if (value.Empty())
                     key = CKEY;
                 else
                 {
@@ -220,5 +220,6 @@ namespace SharpHash.Hash64
                 } // end else
             }
         } // end property Key
+
     } // end class Murmur2_64
 }

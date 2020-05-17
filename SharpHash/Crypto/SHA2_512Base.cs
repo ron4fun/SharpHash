@@ -1150,7 +1150,7 @@ namespace SharpHash.Crypto
             state[6] = state[6] + g;
             state[7] = state[7] + h;
 
-            Utils.Utils.memset(ref data, 0);
+            Utils.Utils.Memset(ref data, 0);
         } // end function TransformBlock
     } // end class SHA2_256Base
 }

@@ -119,8 +119,7 @@ namespace SharpHash.Crypto
             HashInstance.buffer = buffer.Clone();
             HashInstance.processed_bytes = processed_bytes;
 
-            HashInstance.hash = new UInt64[hash.Length];
-            Utils.Utils.memcopy(ref HashInstance.hash, hash, hash.Length);
+            HashInstance.hash = hash.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -129,7 +128,7 @@ namespace SharpHash.Crypto
 
         public override unsafe void Initialize()
         {
-            Utils.Utils.memset(ref hash, 0);
+            ArrayUtils.ZeroFill(ref hash);
 
             base.Initialize();
         } // end function Initialize
@@ -204,7 +203,7 @@ namespace SharpHash.Crypto
                         m[i] = m[i] ^ (C7[(byte)(k[(i - 7) & 7])]);
                     } // end for
 
-                    Utils.Utils.memmove(ref k, m, 8);
+                    Utils.Utils.Memmove(ref k, m, 8);
 
                     k[0] = k[0] ^ rc[round];
 
@@ -221,7 +220,7 @@ namespace SharpHash.Crypto
                         m[i] = m[i] ^ (C7[(byte)(temp[(i - 7) & 7])]);
                     } // end for
 
-                    Utils.Utils.memmove(ref temp, m, 8);
+                    Utils.Utils.Memmove(ref temp, m, 8);
                 } // end for
 
                 for (Int32 i = 0; i < 8; i++)
@@ -229,7 +228,7 @@ namespace SharpHash.Crypto
                     hash[i] = hash[i] ^ (temp[i] ^ data[i]);
                 } // end for
 
-                Utils.Utils.memset(ref data, 0);
+                Utils.Utils.Memset(ref data, 0);
             }
         } // end function TransformBlock
 

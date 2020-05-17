@@ -110,7 +110,7 @@ namespace SharpHash
 
         override public void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
-            if (!(a_data == null || a_data.Length == 0))
+            if (!a_data.Empty())
             {
                 Out.Write(a_data, a_index, a_length);
             } // end if

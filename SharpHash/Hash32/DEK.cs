@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 using SharpHash.Base;
+using SharpHash.Utils;
 using SharpHash.Interfaces;
 using System;
 using System.IO;
@@ -55,7 +56,7 @@ namespace SharpHash.Hash32
         {
             UInt32 hash = 0;
 
-            if (!(a_data == null || a_data.Length == 0))
+            if (!a_data.Empty())
             {
                 hash = (UInt32)a_data.Length;
 

@@ -260,10 +260,7 @@ namespace SharpHash.Hash64
 
         virtual public Int32? KeyLength
         {
-            get
-            {
-                return 16;
-            }
+            get => 16;
         } // end property KeyLength
 
         virtual public unsafe byte[] Key
@@ -300,6 +297,7 @@ namespace SharpHash.Hash64
                 } // end else
             }
         } // end property Key
+
     } // end class SipHash
 
     /// <summary>
@@ -324,15 +322,12 @@ namespace SharpHash.Hash64
             HashInstance.fr = fr;
             HashInstance.idx = idx;
 
-            if (!(buf == null || buf.Length == 0))
-            {
-                HashInstance.buf = new byte[buf.Length];
-                Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
-            } // end if
+            HashInstance.buf = buf.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
             return HashInstance;
         } // end function Clone
+
     }; // end class SipHash2_4
 }

@@ -52,16 +52,12 @@ namespace SharpHash.KDF
             hash = a_underlyingHash.Clone();
 
             buffer = new byte[0];
-            //
-            Password = new byte[a_password?.Length ?? 0];
-            // Copy Password
-            if (!(a_password == null || a_password.Length == 0))
-                Utils.Utils.memcopy(ref Password, a_password, a_password.Length);
 
-            Salt = new byte[a_salt?.Length ?? 0];
+            // Copy Password
+            Password = a_password.DeepCopy();
+
             // Copy Salt
-            if (!(a_salt == null || a_salt.Length == 0))
-                Utils.Utils.memcopy(ref Salt, a_salt, a_salt.Length);
+            Salt = a_salt.DeepCopy();
 
             IterationCount = a_iterations;
 
@@ -70,8 +66,8 @@ namespace SharpHash.KDF
 
         public override void Clear()
         {
-            Utils.Utils.memset(ref Password, 0);
-            Utils.Utils.memset(ref Salt, 0);
+            ArrayUtils.ZeroFill(ref Password);
+            ArrayUtils.ZeroFill(ref Salt);
         } // end function Clear
 
         override public byte[] GetBytes(Int32 bc)
@@ -90,14 +86,14 @@ namespace SharpHash.KDF
             {
                 if (bc >= LSize)
                 {
-                    Utils.Utils.memmove(ref LKey, buffer, LSize, startIndex);
+                    Utils.Utils.Memmove(ref LKey, buffer, LSize, startIndex);
                     startIndex = 0;
                     endIndex = 0;
                     LOffset = LOffset + LSize;
                 } // end if
                 else
                 {
-                    Utils.Utils.memmove(ref LKey, buffer, bc, startIndex);
+                    Utils.Utils.Memmove(ref LKey, buffer, bc, startIndex);
                     startIndex = startIndex + bc;
                     return LKey;
                 } // end else
@@ -112,17 +108,17 @@ namespace SharpHash.KDF
                 LRemainder = bc - LOffset;
                 if (LRemainder > BlockSize)
                 {
-                    Utils.Utils.memmove(ref LKey, LT_Block, BlockSize, 0, LOffset);
+                    Utils.Utils.Memmove(ref LKey, LT_Block, BlockSize, 0, LOffset);
                     LOffset = LOffset + BlockSize;
                 } // end if
                 else
                 {
                     if (LRemainder > 0)
-                        Utils.Utils.memmove(ref LKey, LT_Block, LRemainder, 0, LOffset);
+                        Utils.Utils.Memmove(ref LKey, LT_Block, LRemainder, 0, LOffset);
 
                     LRemCount = BlockSize - LRemainder;
                     if (LRemCount > 0)
-                        Utils.Utils.memmove(ref buffer, LT_Block, LRemCount,
+                        Utils.Utils.Memmove(ref buffer, LT_Block, LRemCount,
                             LRemainder, startIndex);
 
                     endIndex = endIndex + LRemCount;
@@ -136,8 +132,7 @@ namespace SharpHash.KDF
         // initializes the state of the operation.
         private void Initialize()
         {
-            if (!(buffer == null || buffer.Length == 0))
-                Utils.Utils.memset(ref buffer, 0);
+            ArrayUtils.ZeroFill(ref buffer);
 
             HMAC = HMACNotBuildInAdapter.CreateHMAC(hash, Password);
 

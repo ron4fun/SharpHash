@@ -1234,20 +1234,20 @@ namespace SharpHash.Crypto
 
             bOff = 64;
 
-            Utils.Utils.memmove(ref IV, _IV, 64);
-            Utils.Utils.memmove(ref h, _IV, 64);
+            Utils.Utils.Memmove(ref IV, _IV, 64);
+            Utils.Utils.Memmove(ref h, _IV, 64);
         } // end constructor
 
         public override unsafe void Initialize()
         {
             bOff = 64;
 
-            Utils.Utils.memset(ref N, 0);
-            Utils.Utils.memset(ref Sigma, 0);
+            ArrayUtils.ZeroFill(ref N);
+            ArrayUtils.ZeroFill(ref Sigma);
 
-            Utils.Utils.memmove(ref h, IV, 64);
+            Utils.Utils.Memmove(ref h, IV, 64);
 
-            Utils.Utils.memset(ref block, 0);
+            ArrayUtils.ZeroFill(ref block);
         } // end function Initialize
 
         public override void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
@@ -1261,7 +1261,7 @@ namespace SharpHash.Crypto
 
             while (a_length >= 64)
             {
-                Utils.Utils.memmove(ref tmp, a_data, 64, a_index);
+                Utils.Utils.Memmove(ref tmp, a_data, 64, a_index);
                 reverse(tmp, ref block);
                 g_N(ref h, ref N, block);
                 addMod512(ref N, 512);
@@ -1296,7 +1296,7 @@ namespace SharpHash.Crypto
 
             m[63 - lenM] = 1;
 
-            if (bOff != 64) Utils.Utils.memmove(ref m, block, lenM, bOff, 64 - lenM);
+            if (bOff != 64) Utils.Utils.Memmove(ref m, block, lenM, bOff, 64 - lenM);
 
             g_N(ref h, ref N, m);
             addMod512(ref N, lenM * 8);
@@ -1306,7 +1306,7 @@ namespace SharpHash.Crypto
 
             reverse(h, ref tmp);
 
-            Utils.Utils.memmove(ref tempRes, tmp, 64);
+            Utils.Utils.Memmove(ref tempRes, tmp, 64);
 
             IHashResult result = new HashResult(tempRes);
 
@@ -1331,7 +1331,7 @@ namespace SharpHash.Crypto
 
         private void g_N(ref byte[] a_h, ref byte[] a_N, byte[] a_m)
         {
-            Utils.Utils.memmove(ref tmp, a_h, 64);
+            Utils.Utils.Memmove(ref tmp, a_h, 64);
 
             xor512(ref a_h, a_N);
             F(ref a_h);
@@ -1345,7 +1345,7 @@ namespace SharpHash.Crypto
         {
             Int32 i;
 
-            Utils.Utils.memmove(ref Ki, K, 64);
+            Utils.Utils.Memmove(ref Ki, K, 64);
             xor512(ref K, a_m);
             F(ref K);
 
@@ -1541,7 +1541,7 @@ namespace SharpHash.Crypto
             V[57] = (byte)(r >> 8);
             V[56] = (byte)(r);
 
-            Utils.Utils.memset(ref res, 0);
+            Utils.Utils.Memset(ref res, 0);
         } // end function F
 
         private static void addMod512(ref byte[] A, Int32 num)
@@ -1585,6 +1585,7 @@ namespace SharpHash.Crypto
             len = src.Length;
             for (i = 0; i < len; i++) dst[len - 1 - i] = src[i];
         } // end function reverse
+
     } // end class GOST3411_2012
 
     internal sealed class GOST3411_2012_256 : GOST3411_2012
@@ -1605,29 +1606,16 @@ namespace SharpHash.Crypto
 
             HashInstance.bOff = bOff;
 
-            HashInstance.IV = new byte[IV.Length];
-            Utils.Utils.memcopy(ref HashInstance.IV, IV, IV.Length);
+            HashInstance.IV = IV.DeepCopy();
+            HashInstance.N = N.DeepCopy();
+            HashInstance.Sigma = Sigma.DeepCopy();
 
-            HashInstance.N = new byte[N.Length];
-            Utils.Utils.memcopy(ref HashInstance.N, N, N.Length);
+            HashInstance.Ki = Ki.DeepCopy();
+            HashInstance.m = m.DeepCopy();
+            HashInstance.h = h.DeepCopy();
 
-            HashInstance.Sigma = new byte[Sigma.Length];
-            Utils.Utils.memcopy(ref HashInstance.Sigma, Sigma, Sigma.Length);
-
-            HashInstance.Ki = new byte[Ki.Length];
-            Utils.Utils.memcopy(ref HashInstance.Ki, Ki, Ki.Length);
-
-            HashInstance.m = new byte[m.Length];
-            Utils.Utils.memcopy(ref HashInstance.m, m, m.Length);
-
-            HashInstance.h = new byte[h.Length];
-            Utils.Utils.memcopy(ref HashInstance.h, h, h.Length);
-
-            HashInstance.tmp = new byte[tmp.Length];
-            Utils.Utils.memcopy(ref HashInstance.tmp, tmp, tmp.Length);
-
-            HashInstance.block = new byte[block.Length];
-            Utils.Utils.memcopy(ref HashInstance.block, block, block.Length);
+            HashInstance.tmp = tmp.DeepCopy();
+            HashInstance.block = block.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -1639,12 +1627,13 @@ namespace SharpHash.Crypto
             byte[] output = base.TransformFinal().GetBytes();
             byte[] tempRes = new byte[hash_size];
 
-            Utils.Utils.memmove(ref tempRes, output, 32, 32);
+            Utils.Utils.Memmove(ref tempRes, output, 32, 32);
 
             IHashResult result = new HashResult(tempRes);
 
             return result;
         } // end function TransformFinal
+
     } // end class GOST3411_2012_256
 
     internal sealed class GOST3411_2012_512 : GOST3411_2012
@@ -1665,29 +1654,16 @@ namespace SharpHash.Crypto
 
             HashInstance.bOff = bOff;
 
-            HashInstance.IV = new byte[IV.Length];
-            Utils.Utils.memcopy(ref HashInstance.IV, IV, IV.Length);
+            HashInstance.IV = IV.DeepCopy();
+            HashInstance.N = N.DeepCopy();
+            HashInstance.Sigma = Sigma.DeepCopy();
 
-            HashInstance.N = new byte[N.Length];
-            Utils.Utils.memcopy(ref HashInstance.N, N, N.Length);
+            HashInstance.Ki = Ki.DeepCopy();
+            HashInstance.m = m.DeepCopy();
+            HashInstance.h = h.DeepCopy();
 
-            HashInstance.Sigma = new byte[Sigma.Length];
-            Utils.Utils.memcopy(ref HashInstance.Sigma, Sigma, Sigma.Length);
-
-            HashInstance.Ki = new byte[Ki.Length];
-            Utils.Utils.memcopy(ref HashInstance.Ki, Ki, Ki.Length);
-
-            HashInstance.m = new byte[m.Length];
-            Utils.Utils.memcopy(ref HashInstance.m, m, m.Length);
-
-            HashInstance.h = new byte[h.Length];
-            Utils.Utils.memcopy(ref HashInstance.h, h, h.Length);
-
-            HashInstance.tmp = new byte[tmp.Length];
-            Utils.Utils.memcopy(ref HashInstance.tmp, tmp, tmp.Length);
-
-            HashInstance.block = new byte[block.Length];
-            Utils.Utils.memcopy(ref HashInstance.block, block, block.Length);
+            HashInstance.tmp = tmp.DeepCopy();
+            HashInstance.block = block.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 

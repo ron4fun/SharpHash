@@ -71,8 +71,7 @@ namespace SharpHash.Hash128
             HashInstance.total_length = total_length;
             HashInstance.idx = idx;
 
-            HashInstance.buf = new byte[buf.Length];
-            Utils.Utils.memcopy(ref HashInstance.buf, buf, buf.Length);
+            HashInstance.buf = buf.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 
@@ -208,21 +207,16 @@ namespace SharpHash.Hash128
 
         public Int32? KeyLength
         {
-            get
-            {
-                return 4;
-            }
+            get => 4;            
         } // end property KeyLength
 
         public byte[] Key
         {
-            get
-            {
-                return Converters.ReadUInt32AsBytesLE(key);
-            }
+            get => Converters.ReadUInt32AsBytesLE(key);
+            
             set
             {
-                if (value == null || value.Length == 0)
+                if (value.Empty())
                     key = CKEY;
                 else
                 {

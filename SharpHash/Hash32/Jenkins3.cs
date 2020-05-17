@@ -63,7 +63,7 @@ namespace SharpHash.Hash32
             Int32 length, currentIndex, i1, i2, i3, i4;
             UInt32 a, b, c;
 
-            if (a_data == null || a_data.Length == 0)
+            if (a_data.Empty())
                 return new HashResult((UInt32)0);
 
             length = a_data.Length;

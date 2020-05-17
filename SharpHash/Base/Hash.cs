@@ -56,9 +56,17 @@ namespace SharpHash.Base
             }
         } // end property BufferSize
 
-        public virtual Int32 BlockSize => block_size;
+        public virtual Int32 BlockSize
+        {
+            get => block_size;
+            set => block_size = value;
+        }
 
-        public virtual Int32 HashSize => hash_size;
+        public virtual Int32 HashSize
+        {
+            get => hash_size;
+            set => hash_size = value;
+        }
 
         protected static Int32 BUFFER_SIZE = (Int32)(64 * 1024); // 64Kb
 
@@ -117,7 +125,7 @@ namespace SharpHash.Base
                         {
                             fixed (byte* bDest = ArrBuffer)
                             {
-                                Utils.Utils.memmove((IntPtr)bDest, (IntPtr)PtrBuffer, LBufferSize);
+                                Utils.Utils.Memmove((IntPtr)bDest, (IntPtr)PtrBuffer, LBufferSize);
                             }
 
                             TransformBytes(ArrBuffer);
@@ -125,10 +133,10 @@ namespace SharpHash.Base
                         } // end if
                         else
                         {
-                            Array.Resize(ref ArrBuffer, (int)(PtrEnd - PtrBuffer));
+                            Array.Resize(ref ArrBuffer, (Int32)(PtrEnd - PtrBuffer));
                             fixed (byte* bDest = ArrBuffer)
                             {
-                                Utils.Utils.memmove((IntPtr)bDest, (IntPtr)PtrBuffer, ArrBuffer.Length);
+                                Utils.Utils.Memmove((IntPtr)bDest, (IntPtr)PtrBuffer, ArrBuffer.Length);
                             }
 
                             TransformBytes(ArrBuffer);
@@ -173,7 +181,7 @@ namespace SharpHash.Base
 
         public virtual void TransformBytes(byte[] a_data, Int32 a_index)
         {
-            if (a_data == null) return;
+            if (a_data.Empty()) return;
             TransformBytes(a_data, a_index, a_data.Length - a_index);
         } // end function TransformBytes
 
