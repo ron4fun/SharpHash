@@ -8,7 +8,7 @@ SharpHash [![License](http://img.shields.io/badge/license-MPL2-blue.svg)](https:
 
 SharpHash is a C# hashing library that provides a fluent interface for computing hashes and checksums of strings, files, streams, bytearrays and untyped data to mention but a few.
 
-It also supports **Incremental Hashing**, **Cloning** and **NullDigest**.
+It also supports **Incremental Hashing**, **Cloning**, **NullDigest** and **HashName Builder**.
 
 Available Algorithms
 ----------------------------------------
@@ -81,13 +81,19 @@ Available Algorithms
 
  * `WhirlPool` :heavy_check_mark:
 
- * `Blake2B (160, 256, 384, 512)`
+ * `Blake2B (160, 256, 384, 512)` :heavy_check_mark:
  
- * `Blake2S (128, 160, 224, 256)`
+ * `Blake2S (128, 160, 224, 256)` :heavy_check_mark:
 
  * `SHA-3 (224, 256, 384, 512)` :heavy_check_mark:
  
  * `Keccak (224, 256, 288, 384, 512)` :heavy_check_mark:
+ 
+ * `Blake2BP` :heavy_check_mark:
+
+ * `Blake2SP` :heavy_check_mark:
+
+ * `Blake3` :heavy_check_mark:
 
 ### Key Derivation Functions
 ----------------------------------------
@@ -109,6 +115,8 @@ Available Algorithms
 
 * `KMAC (KMAC128, KMAC256)` :heavy_check_mark:
 
+* `Blake2MAC (Blake2BMAC, Blake2SMAC)` :heavy_check_mark:
+
 ### XOF (Extendable Output Function)
 ----------------------------------------
 
@@ -116,11 +124,11 @@ Available Algorithms
 
 * `CShake (CShake-128, CShake-256)` :heavy_check_mark:
 
-* `Blake2X (Blake2XS, Blake2XB)`
+* `Blake2X (Blake2XS, Blake2XB)` :heavy_check_mark:
 
 * `KMACXOF (KMAC128XOF, KMAC256XOF)` :heavy_check_mark:
 
-
+* `Blake3XOF` :heavy_check_mark:
 
 ### Usage Examples
 ----------------------------------------
@@ -136,20 +144,28 @@ namespace Program
 {
     public class Hello 
     {
-	public static void Main() 
-	{
-	    // Chaining mode
-	    string result = HashFactory.Crypto.CreateMD5()
-	    			.ComputeString("Hello C#", Encoding.UTF8).ToString();
+		public static void Main() 
+		{
+		    // Chaining mode
+		    string result = HashFactory.Crypto.CreateMD5()
+		    			.ComputeString("Hello C#", Encoding.UTF8).ToString();
+	
+		    // Incremental mode
+		    IHash hash = HashFactory.Crypto.CreateMD5();
+		    hash.Initialize();
+		    hash.TransformString("Hello", Encoding.UTF8);
+		    hash.TransformString(" C#", Encoding.UTF8);
+		    string result_2 = hash.TransformFinal().ToString();
+	
+		    bool check = result == result_2;
+			
+			// Using the HashName Builder variation
+			IHash hash_builder = HashFactory.CreateHash("md5");
+			string result_3 = hash_builder.ComputeString("Hello C#", 
+						Encoding.UTF8).ToString();
 
-	    // Incremental mode
-	    IHash hash = HashFactory.Crypto.CreateMD5();
-	    hash.Initialize();
-	    hash.TransformString("Hello", Encoding.UTF8);
-	    hash.TransformString(" C#", Encoding.UTF8);
-	    string result_2 = hash.TransformFinal().ToString();
+			bool check_2 = result == result_3;
 
-	    bool check = result == result_2;
         }
     }
 }
