@@ -24,21 +24,30 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 
-using System;
+using SharpHash.Interfaces.IBlake2SConfigurations;
 
-namespace SharpHash.Interfaces.IBlake2SConfigurations
+namespace SharpHash.Crypto.Blake2SConfigurations
 {
-    public interface IBlake2STreeConfig
+    /// <summary>
+    /// <b>Blake2XSConfig</b> is used to configure hash function parameters and
+    /// keying.
+    /// </summary>
+    public sealed class Blake2XSConfig : IBlake2XSConfig
     {
-        byte FanOut { get; set; }
-        byte MaxDepth { get; set; }
-        byte NodeDepth { get; set; }
-        byte InnerHashSize { get; set; }
-        UInt32 LeafSize { get; set; }
-        UInt64 NodeOffset { get; set; }
-        bool IsLastNode { get; set; }
+        public IBlake2SConfig Blake2SConfig { get; set; } = null; // blake2S config object
+        public IBlake2STreeConfig Blake2STreeConfig { get; set; } = null; // blake2S tree config object
 
-        IBlake2STreeConfig Clone();
-        
-    } // end interface IBlake2STreeConfig
+        public Blake2XSConfig(IBlake2SConfig a_Blake2SConfig = null, IBlake2STreeConfig a_Blake2STreeConfig = null)
+        {
+            Blake2SConfig = a_Blake2SConfig;
+            Blake2STreeConfig = a_Blake2STreeConfig;
+        } // end cctr
+
+        public IBlake2XSConfig Clone()
+        {
+            return new Blake2XSConfig(Blake2SConfig?.Clone(), Blake2STreeConfig?.Clone());
+        } // end funtion Clone
+
+    } // end class Blake2XSConfig
+
 }

@@ -26,10 +26,14 @@
 
 using SharpHash.Checksum;
 using SharpHash.Crypto;
+using SharpHash.Crypto.Blake2BConfigurations;
+using SharpHash.Crypto.Blake2SConfigurations;
 using SharpHash.Hash128;
 using SharpHash.Hash32;
 using SharpHash.Hash64;
 using SharpHash.Interfaces;
+using SharpHash.Interfaces.IBlake2BConfigurations;
+using SharpHash.Interfaces.IBlake2SConfigurations;
 using SharpHash.KDF;
 using SharpHash.Utils;
 using System;
@@ -542,6 +546,87 @@ namespace SharpHash.Base
 
             ///////////////////////////////////////////
             /// <summary>
+            /// Blake Hash Family
+            /// </summary>
+            ////////////////////////////////////////////
+            ///
+            public static IHash CreateBlake2B(IBlake2BConfig a_Config = null, IBlake2BTreeConfig a_TreeConfig = null)
+            {
+                IBlake2BConfig Config = a_Config;
+
+                if (Config == null)
+                    Config = new Blake2BConfig();
+
+                return new Blake2B(Config, a_TreeConfig);
+            } // end function CreateBlake2B
+
+            public static IHash CreateBlake2B_160()
+            {
+                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize160));
+            } // end function CreateBlake2B_160
+
+            public static IHash CreateBlake2B_256()
+            {
+                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize256));
+            } // end function CreateBlake2B_256
+
+            public static IHash CreateBlake2B_384()
+            {
+                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize384));
+            } // end function CreateBlake2B_384
+
+            public static IHash CreateBlake2B_512()
+            {
+                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize512));
+            } // end function CreateBlake2B_512
+
+            public static IHash CreateBlake2S(IBlake2SConfig a_Config = null, IBlake2STreeConfig a_TreeConfig = null)
+            {
+                IBlake2SConfig Config = a_Config;
+
+                if (Config == null)
+                    Config = new Blake2SConfig();
+
+                return new Blake2S(Config, a_TreeConfig);
+            } // end function CreateBlake2S
+
+            public static IHash CreateBlake2S_128()
+            {
+                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize128));
+            } // end function CreateBlake2S_128
+
+            public static IHash CreateBlake2S_160()
+            {
+                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize160)); ;
+            } // end function CreateBlake2S_160
+
+            public static IHash CreateBlake2S_224()
+            {
+                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize224)); ;
+            } // end function CreateBlake2S_224
+
+            public static IHash CreateBlake2S_256()
+            {
+                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize256));
+            } // end function CreateBlake2S_256
+
+            public static IHash CreateBlake2BP(Int32 a_HashSize, byte[] a_Key)
+            {
+                return new Blake2BP(a_HashSize, a_Key);
+            } // end function CreateBlake2BP
+
+            public static IHash CreateBlake2SP(Int32 a_HashSize, byte[] a_Key)
+            {
+                return new Blake2SP(a_HashSize, a_Key);
+            } // end function CreateBlake2SP
+
+            public static IHash CreateBlake3_256(byte[] a_Key)
+            {
+                return Blake3.CreateBlake3(HashSizeEnum.HashSize256, a_Key);
+            } // end function CreateBlake3_256
+
+            ///////////////////////////////////////////
+            /// <summary>
             /// Tiger Hash Family
             /// </summary>
             ////////////////////////////////////////////
@@ -620,7 +705,7 @@ namespace SharpHash.Base
             public static IHash CreateTiger2(Int32 a_hash_size, HashRounds a_rounds)
             {
                 if ((a_hash_size != 16) && (a_hash_size != 20) && (a_hash_size != 24))
-                    throw new ArgumentHashLibException(Tiger2.InvalidTigerHashSize);
+                    throw new ArgumentHashLibException(Tiger2.InvalidTiger2HashSize);
 
                 return new Tiger2_Base(a_hash_size, a_rounds);
             } // end function CreateTiger2
@@ -854,8 +939,48 @@ namespace SharpHash.Base
                 return Xof as IHash;
             } // end function CreateCShake_256
 
+            public static IHash CreateBlake2XS(IBlake2XSConfig a_Blake2XSConfig, UInt64 a_XofSizeInBits)
+            {
+                IXOF Xof = (new Blake2XS(a_Blake2XSConfig) as IXOF);
+                Xof.XOFSizeInBits = a_XofSizeInBits;
+
+                return Xof as IHash;
+            } // end function CreateBlake2XS
+
+            public static IHash CreateBlake2XS(byte[] a_Key, UInt64 a_XofSizeInBits)
+            {
+                IBlake2SConfig config = new Blake2SConfig(32);
+                config.Key = a_Key.DeepCopy();
+
+                return CreateBlake2XS(new Blake2XSConfig(config, null), a_XofSizeInBits);
+            } // end function CreateBlake2XS
+
+            public static IHash CreateBlake2XB(IBlake2XBConfig a_Blake2XBConfig, UInt64 a_XofSizeInBits)
+            {
+                IXOF Xof = (new Blake2XB(a_Blake2XBConfig) as IXOF);
+                Xof.XOFSizeInBits = a_XofSizeInBits;
+
+                return Xof as IHash;
+            } // end function CreateBlake2XB
+
+            public static IHash CreateBlake2XB(byte[] a_Key, UInt64 a_XofSizeInBits)
+            {
+                IBlake2BConfig config = new Blake2BConfig(64);
+                config.Key = a_Key.DeepCopy();
+
+                return CreateBlake2XB(new Blake2XBConfig(config, null), a_XofSizeInBits);
+            } // end function CreateBlake2XB
+
+            public static IHash CreateBlake3XOF(byte[] a_Key, UInt64 a_XofSizeInBits)
+            {
+                IXOF Xof = (Blake3XOF.CreateBlake3XOF(32, a_Key) as IXOF);
+                Xof.XOFSizeInBits = a_XofSizeInBits;
+
+                return Xof as IHash;
+            } // end function CreateBlake3XOF
+
             public static IHash CreateKMAC128XOF(byte[] a_KMACKey, byte[] a_Customization,
-                UInt64 a_XofSizeInBits)
+                        UInt64 a_XofSizeInBits)
             {
                 return KMAC128XOF.CreateKMAC128XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
             } // end function CreateKMAC128XOF
@@ -890,6 +1015,24 @@ namespace SharpHash.Base
             } // end function CreateHMAC
         } // end class HMAC
 
+        public static class Blake2BMAC
+        {
+            public static IBlake2BMAC CreateBlake2BMAC(byte[] a_Blake2BKey, byte[] a_Salt, byte[] a_Personalisation, Int32 a_OutputLengthInBits)
+            {
+                return Blake2BMACNotBuildInAdapter.CreateBlake2BMAC(a_Blake2BKey, a_Salt,
+                    a_Personalisation, a_OutputLengthInBits);
+            } // end function CreateBlake2BMAC
+        } // end class Blake2BMAC
+
+        public static class Blake2SMAC
+        {
+            public static IBlake2SMAC CreateBlake2SMAC(byte[] a_Blake2SKey, byte[] a_Salt, byte[] a_Personalisation, Int32 a_OutputLengthInBits)
+            {
+                return Blake2SMACNotBuildInAdapter.CreateBlake2SMAC(a_Blake2SKey, a_Salt,
+                    a_Personalisation, a_OutputLengthInBits);
+            } // end function CreateBlake2SMAC
+        } // end class Blake2SMAC
+
         public static class KDF
         {
             public static class PBKDF2_HMAC
@@ -909,16 +1052,25 @@ namespace SharpHash.Base
                     if (a_hash == null)
                         throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.UninitializedInstance);
 
-                    if (a_password == null || a_password.Length == 0)
+                    if (a_password.Empty())
                         throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptyPassword);
 
-                    if (a_salt == null || a_salt.Length == 0)
+                    if (a_salt.Empty())
                         throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptySalt);
 
                     if (a_iterations < 1)
                         throw new ArgumentHashLibException(PBKDF2_HMACNotBuildInAdapter.IterationtooSmall);
 
                     return new PBKDF2_HMACNotBuildInAdapter(a_hash, a_password, a_salt, a_iterations);
+                } // end function CreatePBKDF2_HMAC
+            } // end class PBKDF2_HMAC
+
+            public static class PBKDF_Argon2
+            {
+                public static IPBKDF_Argon2 CreatePBKDF_Argon2(byte[] a_Password, IArgon2Parameters a_Argon2Parameters)
+                {
+
+                    return null; // new PBKDF_Argon2NotBuildInAdapter(new a_Password, a_Argon2Parameters);
                 } // end function CreatePBKDF2_HMAC
             } // end class PBKDF2_HMAC
 

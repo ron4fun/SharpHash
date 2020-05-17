@@ -24,21 +24,13 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 
-using System;
-
-namespace SharpHash.Interfaces.IBlake2SConfigurations
+namespace SharpHash.Interfaces.IBlake2BConfigurations
 {
-    public interface IBlake2STreeConfig
+    public interface IBlake2XBConfig
     {
-        byte FanOut { get; set; }
-        byte MaxDepth { get; set; }
-        byte NodeDepth { get; set; }
-        byte InnerHashSize { get; set; }
-        UInt32 LeafSize { get; set; }
-        UInt64 NodeOffset { get; set; }
-        bool IsLastNode { get; set; }
+        IBlake2BConfig Blake2BConfig { get; set; }
+        IBlake2BTreeConfig Blake2BTreeConfig { get; set; }
 
-        IBlake2STreeConfig Clone();
-        
-    } // end interface IBlake2STreeConfig
+        IBlake2XBConfig Clone();
+    } // end interface IBlake2XSConfig
 }

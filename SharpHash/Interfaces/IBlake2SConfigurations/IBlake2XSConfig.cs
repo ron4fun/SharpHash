@@ -28,17 +28,11 @@ using System;
 
 namespace SharpHash.Interfaces.IBlake2SConfigurations
 {
-    public interface IBlake2STreeConfig
+    public interface IBlake2XSConfig
     {
-        byte FanOut { get; set; }
-        byte MaxDepth { get; set; }
-        byte NodeDepth { get; set; }
-        byte InnerHashSize { get; set; }
-        UInt32 LeafSize { get; set; }
-        UInt64 NodeOffset { get; set; }
-        bool IsLastNode { get; set; }
+        IBlake2SConfig Blake2SConfig { get; set; }
+        IBlake2STreeConfig Blake2STreeConfig { get; set; }
 
-        IBlake2STreeConfig Clone();
-        
-    } // end interface IBlake2STreeConfig
+        IBlake2XSConfig Clone();
+    } // end interface IBlake2XSConfig
 }
