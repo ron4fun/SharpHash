@@ -24,7 +24,9 @@ namespace SharpHash
             string ActualString = LIHashWithKey.ComputeString(TestConstants.EmptyData,
                 Encoding.UTF8).ToString();
 
-            Assert.AreEqual(ExpectedString, ActualString);
+            Assert.AreEqual(ExpectedString, ActualString,
+                 String.Format("Expected {0} but got {1}.",
+                 ExpectedString, ActualString));
         }
 
         [TestMethod]
@@ -39,7 +41,9 @@ namespace SharpHash
             string ActualString = LIHashWithKey.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();
 
-            Assert.AreEqual(ExpectedString, ActualString);
+            Assert.AreEqual(ExpectedString, ActualString,
+                 String.Format("Expected {0} but got {1}.",
+                 ExpectedString, ActualString));
         }
     }
 }

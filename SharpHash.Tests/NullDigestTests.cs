@@ -66,12 +66,12 @@ namespace SharpHash.Tests
             hash.Initialize();
 
             Temp = new byte[4];
-            Utils.Utils.memcopy(ref Temp, BytesZeroToNine, 4);
+            Utils.Utils.Memcopy(ref Temp, BytesZeroToNine, 4);
 
             hash.TransformBytes(Temp);
 
             Temp = new byte[6];
-            Utils.Utils.memcopy(ref Temp, BytesZeroToNine, 6, 4);
+            Utils.Utils.Memcopy(ref Temp, BytesZeroToNine, 6, 4);
 
             hash.TransformBytes(Temp);
 

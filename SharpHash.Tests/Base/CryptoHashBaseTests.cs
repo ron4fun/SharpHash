@@ -3,6 +3,7 @@ using SharpHash.Base;
 using SharpHash.Interfaces;
 using SharpHash.Tests;
 using SharpHash.Utils;
+using System;
 using System.Text;
 
 namespace SharpHash
@@ -22,7 +23,9 @@ namespace SharpHash
             string ActualString = hmac.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();
 
-            Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithLongKey, ActualString);
+            Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithLongKey, ActualString,
+                String.Format("Expected {0} but got {1}.",
+                ExpectedHashOfDefaultDataWithHMACWithLongKey, ActualString));
         }
 
         [TestMethod]
@@ -34,7 +37,9 @@ namespace SharpHash
             string ActualString = hmac.ComputeString(TestConstants.DefaultData,
                 Encoding.UTF8).ToString();
 
-            Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithShortKey, ActualString);
+            Assert.AreEqual(ExpectedHashOfDefaultDataWithHMACWithShortKey, ActualString,
+                String.Format("Expected {0} but got {1}.",
+                ExpectedHashOfDefaultDataWithHMACWithShortKey, ActualString));
         }
 
         [TestMethod]

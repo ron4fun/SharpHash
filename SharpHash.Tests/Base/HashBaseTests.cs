@@ -62,7 +62,7 @@ namespace SharpHash
                 Count = ChunkedDataBytes.Length - i;
 
                 temp = new byte[Count];
-                Utils.Utils.memcopy(ref temp, ChunkedDataBytes, Count, i);
+                Utils.Utils.Memcopy(ref temp, ChunkedDataBytes, Count, i);
 
                 hash.Initialize();
 
@@ -71,7 +71,9 @@ namespace SharpHash
                 ActualString = hash.TransformFinal().ToString();
                 ExpectedString = hash.ComputeBytes(temp).ToString();
 
-                Assert.AreEqual(ExpectedString, ActualString);
+                Assert.AreEqual(ExpectedString, ActualString,
+                String.Format("Expected {0} but got {1}.",
+                ExpectedString, ActualString));
             }
         }
 

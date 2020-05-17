@@ -118,8 +118,8 @@ namespace SharpHash.Checksum.Tests
             ChunkOne = new byte[Count];
             ChunkTwo = new byte[MainData.Length - Count];
 
-            Utils.Utils.memcopy(ref ChunkOne, MainData, Count);
-            Utils.Utils.memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
+            Utils.Utils.Memcopy(ref ChunkOne, MainData, Count);
+            Utils.Utils.Memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
 
             foreach (CRCStandard Idx in CRCStandardValues)
             {
@@ -280,8 +280,8 @@ namespace SharpHash.Checksum.Tests
             ChunkOne = new byte[Count];
             ChunkTwo = new byte[MainData.Length - Count];
 
-            Utils.Utils.memcopy(ref ChunkOne, MainData, Count);
-            Utils.Utils.memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
+            Utils.Utils.Memcopy(ref ChunkOne, MainData, Count);
+            Utils.Utils.Memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
 
             foreach (var Idx in WorkingIndex)
             {

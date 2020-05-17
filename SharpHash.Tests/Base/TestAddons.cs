@@ -132,8 +132,8 @@ namespace SharpHash.Tests
             ChunkOne = new byte[Count];
             ChunkTwo = new byte[MainData.Length - Count];
 
-            Utils.Utils.memcopy(ref ChunkOne, MainData, Count);
-            Utils.Utils.memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
+            Utils.Utils.Memcopy(ref ChunkOne, MainData, Count);
+            Utils.Utils.Memcopy(ref ChunkTwo, MainData, MainData.Length - Count, Count);
         }
 
         public static void MultithreadComputeHash(ref string result, IHash hash, Int32 iterations)
@@ -368,5 +368,6 @@ namespace SharpHash.Tests
                 String.Format("Expected {0} but got {1}.",
                 expected, ActualString));
         } // end function TestIncrementalHash
+
     } // end class TestHelper
 }
