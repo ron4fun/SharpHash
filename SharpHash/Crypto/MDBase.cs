@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////
 /// SharpHash Library
-/// Copyright(c) 2019  Mbadiwe Nnaemeka Ronald
+/// Copyright(c) 2019 - 2020  Mbadiwe Nnaemeka Ronald
 /// Github Repository <https://github.com/ron4fun/SharpHash>
 ///
 /// The contents of this file are subject to the

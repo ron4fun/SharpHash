@@ -1,8 +1,3 @@
-
-> ![](warning.jpg)  
-> # Project is not yet production ready.
-...
-
 SharpHash [![License](http://img.shields.io/badge/license-MPL2-blue.svg)](https://github.com/Ron4fun/HashLib4CSharp/blob/master/LICENSE) [![Build Status](https://travis-ci.org/Ron4fun/SharpHash.svg?branch=master)](https://travis-ci.org/Ron4fun/SharpHash)
 ====
 
