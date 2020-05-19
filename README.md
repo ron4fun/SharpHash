@@ -139,29 +139,29 @@ namespace Program
 {
     public class Hello 
     {
-		public static void Main() 
-		{
-		    // Chaining mode
-		    string result = HashFactory.Crypto.CreateMD5()
-		    			.ComputeString("Hello C#", Encoding.UTF8).ToString();
-	
-		    // Incremental mode
-		    IHash hash = HashFactory.Crypto.CreateMD5();
-		    hash.Initialize();
-		    hash.TransformString("Hello", Encoding.UTF8);
-		    hash.TransformString(" C#", Encoding.UTF8);
-		    string result_2 = hash.TransformFinal().ToString();
-	
-		    bool check = result == result_2;
-			
-			// Using the HashName Builder variation
-			IHash hash_builder = HashFactory.CreateHash("md5");
-			string result_3 = hash_builder.ComputeString("Hello C#", 
-						Encoding.UTF8).ToString();
+	public static void Main() 
+	{
+	    // Chaining mode
+	    string result = HashFactory.Crypto.CreateMD5()
+	    			.ComputeString("Hello C#", Encoding.UTF8).ToString();
 
-			bool check_2 = result == result_3;
+	    // Incremental mode
+	    IHash hash = HashFactory.Crypto.CreateMD5();
+	    hash.Initialize();
+	    hash.TransformString("Hello", Encoding.UTF8);
+	    hash.TransformString(" C#", Encoding.UTF8);
+	    string result_2 = hash.TransformFinal().ToString();
 
-        }
+	    bool check = result == result_2;
+		
+	// Using the HashName Builder variation
+	IHash hash_builder = HashFactory.CreateHash("md5");
+	string result_3 = hash_builder.ComputeString("Hello C#", 
+				Encoding.UTF8).ToString();
+
+	bool check_2 = result == result_3;
+
+    }
     }
 }
 ```
