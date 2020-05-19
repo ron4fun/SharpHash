@@ -99,7 +99,7 @@ Available Algorithms
 
 * `PBKDF2` :heavy_check_mark:
  
-* `Argon2 (2i, 2d and 2id variants)`
+* `Argon2 (2i, 2d and 2id variants)` :heavy_check_mark:
 
 * `Scrypt` :heavy_check_mark:
 

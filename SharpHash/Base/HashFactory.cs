@@ -1069,10 +1069,9 @@ namespace SharpHash.Base
             {
                 public static IPBKDF_Argon2 CreatePBKDF_Argon2(byte[] a_Password, IArgon2Parameters a_Argon2Parameters)
                 {
-
-                    return null; // new PBKDF_Argon2NotBuildInAdapter(new a_Password, a_Argon2Parameters);
-                } // end function CreatePBKDF2_HMAC
-            } // end class PBKDF2_HMAC
+                    return new PBKDF_Argon2NotBuildInAdapter(a_Password, a_Argon2Parameters);
+                } // end function CreatePBKDF_Argon2
+            } // end class PBKDF_Argon2
 
             public static class PBKDF_Scrypt
             {
@@ -1081,7 +1080,7 @@ namespace SharpHash.Base
                 {
                     return new PBKDF_ScryptNotBuildInAdapter(a_PasswordBytes, a_SaltBytes,
                         a_Cost, a_BlockSize, a_Parallelism);
-                } //
+                } // end function CreatePBKDF_Scrypt
             } // end class PBKDF_Scrypt
         } // end class KDF
     } // end class HashFactory
