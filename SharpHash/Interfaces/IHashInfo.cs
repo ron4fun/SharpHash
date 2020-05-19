@@ -158,6 +158,6 @@ namespace SharpHash.Interfaces
 
         void Clear();
 
-        IArgon2ParametersBuilder Build();
+        IArgon2Parameters Build();
     } // end interface IArgon2ParametersBuilder
 }
