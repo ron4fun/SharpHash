@@ -93,10 +93,7 @@ namespace SharpHash.Crypto.Blake2SConfigurations
             Clear();
         }
 
-        public static IBlake2SConfig GetDefaultConfig()
-        {
-            return new Blake2SConfig();
-        }
+        public static Blake2SConfig DefaultConfig => new Blake2SConfig();
 
         public IBlake2SConfig Clone()
         {

@@ -33,7 +33,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class Blake2SP : Hash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class Blake2SP : Hash, ICryptoNotBuiltIn, ITransformBlock
     {
         // had to use the classes directly for performance purposes
         private Blake2S RootHash { get; set; }

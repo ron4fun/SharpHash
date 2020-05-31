@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class Panama : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class Panama : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt32[][] stages = null;
         private UInt32[] state, theta, gamma, pi, work_buffer;

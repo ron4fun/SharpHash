@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class HAS160 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class HAS160 : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt32[] hash = null;
 

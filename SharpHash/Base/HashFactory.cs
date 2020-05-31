@@ -42,116 +42,73 @@ namespace SharpHash.Base
 {
     public static class HashFactory
     {
-        public static IHash CreateHash(string hash_string)
-        {
-            return LangBuilder.Reducer(hash_string);
-        } // end function CreateHash
+        public static IHash CreateHash(string hash_string) => LangBuilder.Reducer(hash_string);
 
         public static class NullDigestFactory
         {
-            public static IHash CreateNullDigest()
-            {
-                return new NullDigest();
-            } // end function CreateNullDigest
+            public static IHash CreateNullDigest() => new NullDigest();
+
         } // end class NullDigestFactory
 
         public static class Checksum
         {
             public static IHash CreateCRC(Int32 width, UInt64 polynomial, UInt64 initialValue,
                 bool reflectIn, bool reflectOut, UInt64 outputXor, UInt64 checkValue,
-                string[] Names)
-            {
-                return new CRC(width, polynomial, initialValue, reflectIn,
+                string[] Names) => new CRC(width, polynomial, initialValue, reflectIn,
                     reflectOut, outputXor, checkValue, Names);
-            } // end function CreateCRC
 
-            public static IHash CreateCRC(CRCStandard value)
-            {
-                return CRC.CreateCRCObject(value);
-            } // end function CreateCRC
+            public static IHash CreateCRC(CRCStandard value) => CRC.CreateCRCObject(value);
 
             public static IHash CreateCRC16(UInt64 polynomial, UInt64 initialValue,
                 bool reflectIn, bool reflectOut, UInt64 outputXor, UInt64 checkValue,
-                string[] Names)
-            {
-                return new CRC16(polynomial, initialValue, reflectIn,
+                string[] Names) => new CRC16(polynomial, initialValue, reflectIn,
                     reflectOut, outputXor, checkValue, Names);
-            } // end function CreateCRC16
 
             /// <summary>
             /// BUYPASS, polynomial = 0x8005
             /// </summary>
             /// <returns>IHash</returns>
-            public static IHash CreateCRC16_BUYPASS()
-            {
-                return new CRC16_BUYPASS();
-            } // end function CreateCRC16_BUYPASS
+            public static IHash CreateCRC16_BUYPASS() => new CRC16_BUYPASS();
 
             public static IHash CreateCRC32(UInt64 polynomial, UInt64 initialValue,
                 bool reflectIn, bool reflectOut, UInt64 outputXor, UInt64 checkValue,
-                string[] Names)
-            {
-                return new CRC32(polynomial, initialValue, reflectIn,
+                string[] Names) => new CRC32(polynomial, initialValue, reflectIn,
                     reflectOut, outputXor, checkValue, Names);
-            } // end function CreateCRC32
 
             /// <summary>
             /// Castagnoli, polynomial = 0x1EDC6F41
             /// </summary>
             /// <returns>IHash</returns>
-            public static IHash CreateCRC32_CASTAGNOLI()
-            {
-                return new CRC32_CASTAGNOLI_Fast();
-            } // end function CreateCRC32_CASTAGNOLI
+            public static IHash CreateCRC32_CASTAGNOLI() => new CRC32_CASTAGNOLI_Fast();
 
             /// <summary>
             /// PKZIP, polynomial = 0x04C11DB7
             /// </summary>
             /// <returns>IHash</returns>
-            public static IHash CreateCRC32_PKZIP()
-            {
-                return new CRC32_PKZIP_Fast();
-            } // end function CreateCRC32_PKZIP
+            public static IHash CreateCRC32_PKZIP() => new CRC32_PKZIP_Fast();
 
             public static IHash CreateCRC64(UInt64 polynomial, UInt64 initialValue,
                 bool reflectIn, bool reflectOut, UInt64 outputXor, UInt64 checkValue,
-                string[] Names)
-            {
-                return new CRC64(polynomial, initialValue, reflectIn,
+                string[] Names) => new CRC64(polynomial, initialValue, reflectIn,
                     reflectOut, outputXor, checkValue, Names);
-            } // end function CreateCRC64
 
             /// <summary>
             /// ECMA-182, polynomial = 0x42F0E1EBA9EA3693
             /// </summary>
             /// <returns>IHash</returns>
-            public static IHash CreateCRC64_ECMA_182()
-            {
-                return new CRC64_ECMA_182();
-            } // end function CreateCRC64_ECMA_182
+            public static IHash CreateCRC64_ECMA_182() => new CRC64_ECMA_182();
 
-            public static IHash CreateAdler32()
-            {
-                return new Adler32();
-            } // end function CreateAdler32
+            public static IHash CreateAdler32() => new Adler32();
+
         } // end class Checksum
 
         public static class Crypto
         {
-            public static IHash CreateHAS160()
-            {
-                return new HAS160();
-            } // end function CreateHAS160
+            public static IHash CreateHAS160() => new HAS160();
 
-            public static IHash CreatePanama()
-            {
-                return new Panama();
-            } // end function CreatePanama
+            public static IHash CreatePanama() => new Panama();
 
-            public static IHash CreateWhirlPool()
-            {
-                return new WhirlPool();
-            } // end function CreateWhirlPool
+            public static IHash CreateWhirlPool() => new WhirlPool();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -159,20 +116,11 @@ namespace SharpHash.Base
             /// </summary>
             ////////////////////////////////////////////
 
-            public static IHash CreateGost()
-            {
-                return new Gost();
-            } // end function CreateGost
+            public static IHash CreateGost() => new Gost();
 
-            public static IHash CreateGOST3411_2012_256()
-            {
-                return new GOST3411_2012_256();
-            } // end function CreateGOST3411_2012_256
+            public static IHash CreateGOST3411_2012_256() => new GOST3411_2012_256();
 
-            public static IHash CreateGOST3411_2012_512()
-            {
-                return new GOST3411_2012_512();
-            } // end function CreateGOST3411_2012_512
+            public static IHash CreateGOST3411_2012_512() => new GOST3411_2012_512();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -261,80 +209,35 @@ namespace SharpHash.Base
                 } // end switch
             } // end function Haval
 
-            public static IHash CreateHaval_3_128()
-            {
-                return new Haval_3_128();
-            } // end function CreateHaval_3_128
+            public static IHash CreateHaval_3_128() => new Haval_3_128();
 
-            public static IHash CreateHaval_4_128()
-            {
-                return new Haval_4_128();
-            } // end function CreateHaval_4_128
+            public static IHash CreateHaval_4_128() => new Haval_4_128();
 
-            public static IHash CreateHaval_5_128()
-            {
-                return new Haval_5_128();
-            } // end function CreateHaval_5_128
+            public static IHash CreateHaval_5_128() => new Haval_5_128();
 
-            public static IHash CreateHaval_3_160()
-            {
-                return new Haval_3_160();
-            } // end function CreateHaval_3_160
+            public static IHash CreateHaval_3_160() => new Haval_3_160();
 
-            public static IHash CreateHaval_4_160()
-            {
-                return new Haval_4_160();
-            } // end function CreateHaval_4_160
+            public static IHash CreateHaval_4_160() => new Haval_4_160();
 
-            public static IHash CreateHaval_5_160()
-            {
-                return new Haval_5_160();
-            } // end function CreateHaval_5_160
+            public static IHash CreateHaval_5_160() => new Haval_5_160();
 
-            public static IHash CreateHaval_3_192()
-            {
-                return new Haval_3_192();
-            } // end function CreateHaval_3_192
+            public static IHash CreateHaval_3_192() => new Haval_3_192();
 
-            public static IHash CreateHaval_4_192()
-            {
-                return new Haval_4_192();
-            } // end function CreateHaval_4_192
+            public static IHash CreateHaval_4_192() => new Haval_4_192();
 
-            public static IHash CreateHaval_5_192()
-            {
-                return new Haval_5_192();
-            } // end function CreateHaval_5_192
+            public static IHash CreateHaval_5_192() => new Haval_5_192();
 
-            public static IHash CreateHaval_3_224()
-            {
-                return new Haval_3_224();
-            } // end function CreateHaval_3_224
+            public static IHash CreateHaval_3_224() => new Haval_3_224();
 
-            public static IHash CreateHaval_4_224()
-            {
-                return new Haval_4_224();
-            } // end function CreateHaval_4_224
+            public static IHash CreateHaval_4_224() => new Haval_4_224();
 
-            public static IHash CreateHaval_5_224()
-            {
-                return new Haval_5_224();
-            } // end function CreateHaval_5_224
+            public static IHash CreateHaval_5_224() => new Haval_5_224();
 
-            public static IHash CreateHaval_3_256()
-            {
-                return new Haval_3_256();
-            } // end function CreateHaval_3_256
+            public static IHash CreateHaval_3_256() => new Haval_3_256();
 
-            public static IHash CreateHaval_4_256()
-            {
-                return new Haval_4_256();
-            } // end function CreateHaval_4_256
+            public static IHash CreateHaval_4_256() => new Haval_4_256();
 
-            public static IHash CreateHaval_5_256()
-            {
-                return new Haval_5_256();
-            } // end function CreateHaval_5_256
+            public static IHash CreateHaval_5_256() => new Haval_5_256();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -342,15 +245,9 @@ namespace SharpHash.Base
             /// </summary>
             ////////////////////////////////////////////
 
-            public static IHash CreateRadioGatun32()
-            {
-                return new RadioGatun32();
-            } // end function CreateRadioGatun32
+            public static IHash CreateRadioGatun32() => new RadioGatun32();
 
-            public static IHash CreateRadioGatun64()
-            {
-                return new RadioGatun64();
-            } // end function CreateRadioGatun64
+            public static IHash CreateRadioGatun64() => new RadioGatun64();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -358,15 +255,9 @@ namespace SharpHash.Base
             /// </summary>
             ////////////////////////////////////////////
 
-            public static IHash CreateGrindahl256()
-            {
-                return new Grindahl256();
-            } // end function CreateGrindahl256
+            public static IHash CreateGrindahl256() => new Grindahl256();
 
-            public static IHash CreateGrindahl512()
-            {
-                return new Grindahl512();
-            } // end function CreateGrindahl512
+            public static IHash CreateGrindahl512() => new Grindahl512();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -374,30 +265,15 @@ namespace SharpHash.Base
             /// </summary>
             ////////////////////////////////////////////
 
-            public static IHash CreateRIPEMD()
-            {
-                return new RIPEMD();
-            } // end function CreateRIPEMD
+            public static IHash CreateRIPEMD() => new RIPEMD();
 
-            public static IHash CreateRIPEMD128()
-            {
-                return new RIPEMD128();
-            } // end function CreateRIPEMD128
+            public static IHash CreateRIPEMD128() => new RIPEMD128();
 
-            public static IHash CreateRIPEMD160()
-            {
-                return new RIPEMD160();
-            } // end function CreateRIPEMD160
+            public static IHash CreateRIPEMD160() => new RIPEMD160();
 
-            public static IHash CreateRIPEMD256()
-            {
-                return new RIPEMD256();
-            } // end function CreateRIPEMD256
+            public static IHash CreateRIPEMD256() => new RIPEMD256();
 
-            public static IHash CreateRIPEMD320()
-            {
-                return new RIPEMD320();
-            } // end function CreateRIPEMD320
+            public static IHash CreateRIPEMD320() => new RIPEMD320();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -422,15 +298,9 @@ namespace SharpHash.Base
                     throw new ArgumentHashLibException(Snefru.InvalidSnefruHashSize);
             } // end function CreateSnefru
 
-            public static IHash CreateSnefru_8_128()
-            {
-                return CreateSnefru(8, HashSizeEnum.HashSize128);
-            } // end function CreateSnefru_8_128
+            public static IHash CreateSnefru_8_128() => CreateSnefru(8, HashSizeEnum.HashSize128);
 
-            public static IHash CreateSnefru_8_256()
-            {
-                return CreateSnefru(8, HashSizeEnum.HashSize256);
-            } // end function CreateSnefru_8_256
+            public static IHash CreateSnefru_8_256() => CreateSnefru(8, HashSizeEnum.HashSize256);
 
             ///////////////////////////////////////////
             /// <summary>
@@ -438,20 +308,11 @@ namespace SharpHash.Base
             /// </summary>
             ////////////////////////////////////////////
 
-            public static IHash CreateMD2()
-            {
-                return new MD2();
-            } // end function CreateMD2
+            public static IHash CreateMD2() => new MD2();
 
-            public static IHash CreateMD4()
-            {
-                return new MD4();
-            } // end function CreateMD4
+            public static IHash CreateMD4() => new MD4();
 
-            public static IHash CreateMD5()
-            {
-                return new MD5();
-            } // end function CreateMD5
+            public static IHash CreateMD5() => new MD5();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -459,90 +320,39 @@ namespace SharpHash.Base
             /// </summary>
             ////////////////////////////////////////////
 
-            public static IHash CreateSHA0()
-            {
-                return new SHA0();
-            } // end function CreateSHA0
+            public static IHash CreateSHA0() => new SHA0();
 
-            public static IHash CreateSHA1()
-            {
-                return new SHA1();
-            } // end function CreateSHA1
+            public static IHash CreateSHA1() => new SHA1();
 
-            public static IHash CreateSHA2_224()
-            {
-                return new SHA2_224();
-            } // end function CreateSHA2_224
+            public static IHash CreateSHA2_224() => new SHA2_224();
 
-            public static IHash CreateSHA2_256()
-            {
-                return new SHA2_256();
-            } // end function CreateSHA2_256
+            public static IHash CreateSHA2_256() => new SHA2_256();
 
-            public static IHash CreateSHA2_384()
-            {
-                return new SHA2_384();
-            } // end function CreateSHA2_384
+            public static IHash CreateSHA2_384() => new SHA2_384();
 
-            public static IHash CreateSHA2_512()
-            {
-                return new SHA2_512();
-            } // end function CreateSHA2_512
+            public static IHash CreateSHA2_512() => new SHA2_512();
 
-            public static IHash CreateSHA2_512_224()
-            {
-                return new SHA2_512_224();
-            } // end function CreateSHA2_512_224
+            public static IHash CreateSHA2_512_224() => new SHA2_512_224();
 
-            public static IHash CreateSHA2_512_256()
-            {
-                return new SHA2_512_256();
-            } // end function CreateSHA2_512_256
+            public static IHash CreateSHA2_512_256() => new SHA2_512_256();
 
-            public static IHash CreateSHA3_224()
-            {
-                return new SHA3_224();
-            } // end function CreateSHA3_224
+            public static IHash CreateSHA3_224() => new SHA3_224();
 
-            public static IHash CreateSHA3_256()
-            {
-                return new SHA3_256();
-            } // end function CreateSHA3_256
+            public static IHash CreateSHA3_256() => new SHA3_256();
 
-            public static IHash CreateSHA3_384()
-            {
-                return new SHA3_384();
-            } // end function CreateSHA3_384
+            public static IHash CreateSHA3_384() => new SHA3_384();
 
-            public static IHash CreateSHA3_512()
-            {
-                return new SHA3_512();
-            } // end function CreateSHA3_512
+            public static IHash CreateSHA3_512() => new SHA3_512();
 
-            public static IHash CreateKeccak_224()
-            {
-                return new Keccak_224();
-            } // end function CreateKeccak_224
+            public static IHash CreateKeccak_224() => new Keccak_224();
 
-            public static IHash CreateKeccak_256()
-            {
-                return new Keccak_256();
-            } // end function CreateKeccak_256
+            public static IHash CreateKeccak_256() => new Keccak_256();
 
-            public static IHash CreateKeccak_288()
-            {
-                return new Keccak_288();
-            } // end function CreateKeccak_288
+            public static IHash CreateKeccak_288() => new Keccak_288();
 
-            public static IHash CreateKeccak_384()
-            {
-                return new Keccak_384();
-            } // end function CreateKeccak_384
+            public static IHash CreateKeccak_384() => new Keccak_384();
 
-            public static IHash CreateKeccak_512()
-            {
-                return new Keccak_512();
-            } // end function CreateKeccak_512
+            public static IHash CreateKeccak_512() => new Keccak_512();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -551,79 +361,32 @@ namespace SharpHash.Base
             ////////////////////////////////////////////
             ///
             public static IHash CreateBlake2B(IBlake2BConfig a_Config = null, IBlake2BTreeConfig a_TreeConfig = null)
-            {
-                IBlake2BConfig Config = a_Config;
+                => new Blake2B(a_Config ?? Blake2BConfig.DefaultConfig, a_TreeConfig);
 
-                if (Config == null)
-                    Config = new Blake2BConfig();
+            public static IHash CreateBlake2B_160() => CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize160));
 
-                return new Blake2B(Config, a_TreeConfig);
-            } // end function CreateBlake2B
+            public static IHash CreateBlake2B_256() => CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize256));
 
-            public static IHash CreateBlake2B_160()
-            {
-                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize160));
-            } // end function CreateBlake2B_160
+            public static IHash CreateBlake2B_384() => CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize384));
 
-            public static IHash CreateBlake2B_256()
-            {
-                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize256));
-            } // end function CreateBlake2B_256
-
-            public static IHash CreateBlake2B_384()
-            {
-                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize384));
-            } // end function CreateBlake2B_384
-
-            public static IHash CreateBlake2B_512()
-            {
-                return CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize512));
-            } // end function CreateBlake2B_512
+            public static IHash CreateBlake2B_512() => CreateBlake2B(new Blake2BConfig(HashSizeEnum.HashSize512));
 
             public static IHash CreateBlake2S(IBlake2SConfig a_Config = null, IBlake2STreeConfig a_TreeConfig = null)
-            {
-                IBlake2SConfig Config = a_Config;
+                => new Blake2S(a_Config ?? Blake2SConfig.DefaultConfig, a_TreeConfig);
 
-                if (Config == null)
-                    Config = new Blake2SConfig();
+            public static IHash CreateBlake2S_128() => CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize128));
 
-                return new Blake2S(Config, a_TreeConfig);
-            } // end function CreateBlake2S
+            public static IHash CreateBlake2S_160() => CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize160)); 
 
-            public static IHash CreateBlake2S_128()
-            {
-                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize128));
-            } // end function CreateBlake2S_128
+            public static IHash CreateBlake2S_224() => CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize224));
 
-            public static IHash CreateBlake2S_160()
-            {
-                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize160)); ;
-            } // end function CreateBlake2S_160
+            public static IHash CreateBlake2S_256() => CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize256));
 
-            public static IHash CreateBlake2S_224()
-            {
-                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize224)); ;
-            } // end function CreateBlake2S_224
+            public static IHash CreateBlake2BP(Int32 a_HashSize, byte[] a_Key) => new Blake2BP(a_HashSize, a_Key);
 
-            public static IHash CreateBlake2S_256()
-            {
-                return CreateBlake2S(new Blake2SConfig(HashSizeEnum.HashSize256));
-            } // end function CreateBlake2S_256
+            public static IHash CreateBlake2SP(Int32 a_HashSize, byte[] a_Key) => new Blake2SP(a_HashSize, a_Key);
 
-            public static IHash CreateBlake2BP(Int32 a_HashSize, byte[] a_Key)
-            {
-                return new Blake2BP(a_HashSize, a_Key);
-            } // end function CreateBlake2BP
-
-            public static IHash CreateBlake2SP(Int32 a_HashSize, byte[] a_Key)
-            {
-                return new Blake2SP(a_HashSize, a_Key);
-            } // end function CreateBlake2SP
-
-            public static IHash CreateBlake3_256(byte[] a_Key)
-            {
-                return Blake3.CreateBlake3(HashSizeEnum.HashSize256, a_Key);
-            } // end function CreateBlake3_256
+            public static IHash CreateBlake3_256(byte[] a_Key) => Blake3.CreateBlake3(HashSizeEnum.HashSize256, a_Key);
 
             ///////////////////////////////////////////
             /// <summary>
@@ -645,50 +408,23 @@ namespace SharpHash.Base
                 return new Tiger_Base(a_hash_size, a_rounds);
             } // end function CreateTiger
 
-            public static IHash CreateTiger_3_128()
-            {
-                return Tiger_128.CreateRound3();
-            } // end function CreateTiger_3_128
+            public static IHash CreateTiger_3_128() => Tiger_128.CreateRound3();
 
-            public static IHash CreateTiger_3_160()
-            {
-                return Tiger_160.CreateRound3();
-            } // end function CreateTiger_3_160
+            public static IHash CreateTiger_3_160() => Tiger_160.CreateRound3();
 
-            public static IHash CreateTiger_3_192()
-            {
-                return Tiger_192.CreateRound3();
-            } // end function CreateTiger_3_192
+            public static IHash CreateTiger_3_192() => Tiger_192.CreateRound3();
 
-            public static IHash CreateTiger_4_128()
-            {
-                return Tiger_128.CreateRound4();
-            } // end function CreateTiger_4_128
+            public static IHash CreateTiger_4_128() => Tiger_128.CreateRound4();
 
-            public static IHash CreateTiger_4_160()
-            {
-                return Tiger_160.CreateRound4();
-            } // end function CreateTiger_4_160
+            public static IHash CreateTiger_4_160() => Tiger_160.CreateRound4();
 
-            public static IHash CreateTiger_4_192()
-            {
-                return Tiger_192.CreateRound4();
-            } // end function CreateTiger_4_192
+            public static IHash CreateTiger_4_192() => Tiger_192.CreateRound4();
 
-            public static IHash CreateTiger_5_128()
-            {
-                return Tiger_128.CreateRound5();
-            } // end function CreateTiger_5_128
+            public static IHash CreateTiger_5_128() => Tiger_128.CreateRound5();
 
-            public static IHash CreateTiger_5_160()
-            {
-                return Tiger_160.CreateRound5();
-            } // end function CreateTiger_5_160
+            public static IHash CreateTiger_5_160() => Tiger_160.CreateRound5();
 
-            public static IHash CreateTiger_5_192()
-            {
-                return Tiger_192.CreateRound5();
-            } // end function CreateTiger_5_192
+            public static IHash CreateTiger_5_192() => Tiger_192.CreateRound5();
 
             ///////////////////////////////////////////
             /// <summary>
@@ -710,199 +446,92 @@ namespace SharpHash.Base
                 return new Tiger2_Base(a_hash_size, a_rounds);
             } // end function CreateTiger2
 
-            public static IHash CreateTiger2_3_128()
-            {
-                return Tiger2_128.CreateRound3();
-            } // end function CreateTiger2_3_128
+            public static IHash CreateTiger2_3_128() => Tiger2_128.CreateRound3();
 
-            public static IHash CreateTiger2_3_160()
-            {
-                return Tiger2_160.CreateRound3();
-            } // end function CreateTiger2_3_160
+            public static IHash CreateTiger2_3_160() => Tiger2_160.CreateRound3();
 
-            public static IHash CreateTiger2_3_192()
-            {
-                return Tiger2_192.CreateRound3();
-            } // end function CreateTiger2_3_192
+            public static IHash CreateTiger2_3_192() => Tiger2_192.CreateRound3();
 
-            public static IHash CreateTiger2_4_128()
-            {
-                return Tiger2_128.CreateRound4();
-            } // end function CreateTiger2_4_128
+            public static IHash CreateTiger2_4_128() => Tiger2_128.CreateRound4();
 
-            public static IHash CreateTiger2_4_160()
-            {
-                return Tiger2_160.CreateRound4();
-            } // end function CreateTiger2_4_160
+            public static IHash CreateTiger2_4_160() => Tiger2_160.CreateRound4();
 
-            public static IHash CreateTiger2_4_192()
-            {
-                return Tiger2_192.CreateRound4();
-            } // end function CreateTiger2_4_192
+            public static IHash CreateTiger2_4_192() => Tiger2_192.CreateRound4();
 
-            public static IHash CreateTiger2_5_128()
-            {
-                return Tiger2_128.CreateRound5();
-            } // end function CreateTiger2_5_128
+            public static IHash CreateTiger2_5_128() => Tiger2_128.CreateRound5();
 
-            public static IHash CreateTiger2_5_160()
-            {
-                return Tiger2_160.CreateRound5();
-            } // end function CreateTiger2_5_160
+            public static IHash CreateTiger2_5_160() => Tiger2_160.CreateRound5();
 
-            public static IHash CreateTiger2_5_192()
-            {
-                return Tiger2_192.CreateRound5();
-            } // end function CreateTiger2_5_192
+            public static IHash CreateTiger2_5_192() => Tiger2_192.CreateRound5();
+
         } // end class Crypto
 
         public static class Hash32
         {
-            public static IHash CreateAP()
-            {
-                return new AP();
-            } // end function CreateAP
+            public static IHash CreateAP() => new AP();
 
-            public static IHash CreateBernstein()
-            {
-                return new Bernstein();
-            } // end function CreateBernstein
+            public static IHash CreateBernstein() => new Bernstein();
 
-            public static IHash CreateBernstein1()
-            {
-                return new Bernstein1();
-            } // end function CreateBernstein1
+            public static IHash CreateBernstein1() => new Bernstein1();
 
-            public static IHash CreateBKDR()
-            {
-                return new BKDR();
-            } // end function CreateBKDR
+            public static IHash CreateBKDR() => new BKDR();
 
-            public static IHash CreateDEK()
-            {
-                return new DEK();
-            } // end function CreateDEK
+            public static IHash CreateDEK() => new DEK();
 
-            public static IHash CreateDJB()
-            {
-                return new DJB();
-            } // end function CreateDJB
+            public static IHash CreateDJB() => new DJB();
 
-            public static IHash CreateELF()
-            {
-                return new ELF();
-            } // end function CreateELF
+            public static IHash CreateELF() => new ELF();
 
-            public static IHash CreateFNV()
-            {
-                return new FNV();
-            } // end function CreateFNV
+            public static IHash CreateFNV() => new FNV();
 
-            public static IHash CreateFNV1a()
-            {
-                return new FNV1a();
-            } // end function CreateFNV1a
+            public static IHash CreateFNV1a() => new FNV1a();
 
-            public static IHash CreateJenkins3(Int32 initialValue = 0)
-            {
-                return new Jenkins3(initialValue);
-            } // end function CreateJenkins3
+            public static IHash CreateJenkins3(Int32 initialValue = 0) => new Jenkins3(initialValue);
 
-            public static IHash CreateJS()
-            {
-                return new JS();
-            } // end function CreateJS
+            public static IHash CreateJS() => new JS();
 
-            public static IHashWithKey CreateMurmur2()
-            {
-                return new Murmur2();
-            } // end function CreateMurmur2
+            public static IHashWithKey CreateMurmur2() => new Murmur2();
 
-            public static IHashWithKey CreateMurmurHash3_x86_32()
-            {
-                return new MurmurHash3_x86_32();
-            } // end function CreateMurmurHash3_x86_32
+            public static IHashWithKey CreateMurmurHash3_x86_32() => new MurmurHash3_x86_32();
 
-            public static IHash CreateOneAtTime()
-            {
-                return new OneAtTime();
-            } // end function CreateOneAtTime
+            public static IHash CreateOneAtTime() => new OneAtTime();
 
-            public static IHash CreatePJW()
-            {
-                return new PJW();
-            } // end function CreatePJW
+            public static IHash CreatePJW() => new PJW();
 
-            public static IHash CreateRotating()
-            {
-                return new Rotating();
-            } // end function CreateRotating
+            public static IHash CreateRotating() => new Rotating();
 
-            public static IHash CreateRS()
-            {
-                return new RS();
-            } // end function CreateRS
+            public static IHash CreateRS() => new RS();
 
-            public static IHash CreateSDBM()
-            {
-                return new SDBM();
-            } // end function CreateSDBM
+            public static IHash CreateSDBM() => new SDBM();
 
-            public static IHash CreateShiftAndXor()
-            {
-                return new ShiftAndXor();
-            } // end function CreateShiftAndXor
+            public static IHash CreateShiftAndXor() => new ShiftAndXor();
 
-            public static IHash CreateSuperFast()
-            {
-                return new SuperFast();
-            } // end function CreateSuperFast
+            public static IHash CreateSuperFast() => new SuperFast();
 
-            public static IHashWithKey CreateXXHash32()
-            {
-                return new XXHash32();
-            } // end function CreateXXHash32
+            public static IHashWithKey CreateXXHash32() => new XXHash32();
+
         } // end class Hash32
 
         public static class Hash64
         {
-            public static IHash CreateFNV()
-            {
-                return new FNV64();
-            } // end function CreateFNV
+            public static IHash CreateFNV() => new FNV64();
 
-            public static IHash CreateFNV1a()
-            {
-                return new FNV1a64();
-            } // end function CreateFNV1a
+            public static IHash CreateFNV1a() => new FNV1a64();
 
-            public static IHashWithKey CreateMurmur2()
-            {
-                return new Murmur2_64();
-            } // end function CreateMurmur2
+            public static IHashWithKey CreateMurmur2() => new Murmur2_64();
 
-            public static IHashWithKey CreateSipHash2_4()
-            {
-                return new SipHash2_4();
-            } // end function CreateSipHash2_4
+            public static IHashWithKey CreateSipHash2_4() => new SipHash2_4();
 
-            public static IHashWithKey CreateXXHash64()
-            {
-                return new XXHash64();
-            } // end function CreateXXHash64
+            public static IHashWithKey CreateXXHash64() => new XXHash64();
+
         } // end class Hash64
 
         public static class Hash128
         {
-            public static IHashWithKey CreateMurmurHash3_x86_128()
-            {
-                return new MurmurHash3_x86_128();
-            } // end function CreateMurmurHash3_x86_128
+            public static IHashWithKey CreateMurmurHash3_x86_128() => new MurmurHash3_x86_128();
 
-            public static IHashWithKey CreateMurmurHash3_x64_128()
-            {
-                return new MurmurHash3_x64_128();
-            } // end function CreateMurmurHash3_x64_128
+            public static IHashWithKey CreateMurmurHash3_x64_128() => new MurmurHash3_x64_128();
+
         } // end class Hash128
 
         public static class XOF
@@ -980,57 +609,48 @@ namespace SharpHash.Base
             } // end function CreateBlake3XOF
 
             public static IHash CreateKMAC128XOF(byte[] a_KMACKey, byte[] a_Customization,
-                        UInt64 a_XofSizeInBits)
-            {
-                return KMAC128XOF.CreateKMAC128XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
-            } // end function CreateKMAC128XOF
+                        UInt64 a_XofSizeInBits) 
+                => KMAC128XOF.CreateKMAC128XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
 
             public static IHash CreateKMAC256XOF(byte[] a_KMACKey, byte[] a_Customization,
-                UInt64 a_XofSizeInBits)
-            {
-                return KMAC256XOF.CreateKMAC256XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
-            } // end function CreateKMAC256XOF
+                UInt64 a_XofSizeInBits) 
+                => KMAC256XOF.CreateKMAC256XOF(a_KMACKey, a_Customization, a_XofSizeInBits);
+
         } // end class XOF
 
         public static class KMAC
         {
             public static IHash CreateKMAC128(byte[] a_KMACKey, byte[] a_Customization,
-                UInt64 a_OutputLengthInBits)
-            {
-                return KMAC128.CreateKMAC128(a_KMACKey, a_Customization, a_OutputLengthInBits);
-            } // end function CreateKMAC128
+                UInt64 a_OutputLengthInBits) 
+                => KMAC128.CreateKMAC128(a_KMACKey, a_Customization, a_OutputLengthInBits);
 
             public static IHash CreateKMAC256(byte[] a_KMACKey, byte[] a_Customization,
-                UInt64 a_OutputLengthInBits)
-            {
-                return KMAC256.CreateKMAC256(a_KMACKey, a_Customization, a_OutputLengthInBits);
-            } // end function CreateKMAC256
+                UInt64 a_OutputLengthInBits) 
+                => KMAC256.CreateKMAC256(a_KMACKey, a_Customization, a_OutputLengthInBits);
+
         } // end class KMAC
 
         public static class HMAC
         {
-            public static IHMAC CreateHMAC(IHash hash, byte[] a_HMACKey)
-            {
-                return HMACNotBuildInAdapter.CreateHMAC(hash, a_HMACKey);
-            } // end function CreateHMAC
+            public static IHMAC CreateHMAC(IHash hash, byte[] a_HMACKey) 
+                => HMACNotBuildInAdapter.CreateHMAC(hash, a_HMACKey);
+
         } // end class HMAC
 
         public static class Blake2BMAC
         {
             public static IBlake2BMAC CreateBlake2BMAC(byte[] a_Blake2BKey, byte[] a_Salt, byte[] a_Personalisation, Int32 a_OutputLengthInBits)
-            {
-                return Blake2BMACNotBuildInAdapter.CreateBlake2BMAC(a_Blake2BKey, a_Salt,
+                => Blake2BMACNotBuildInAdapter.CreateBlake2BMAC(a_Blake2BKey, a_Salt,
                     a_Personalisation, a_OutputLengthInBits);
-            } // end function CreateBlake2BMAC
+
         } // end class Blake2BMAC
 
         public static class Blake2SMAC
         {
             public static IBlake2SMAC CreateBlake2SMAC(byte[] a_Blake2SKey, byte[] a_Salt, byte[] a_Personalisation, Int32 a_OutputLengthInBits)
-            {
-                return Blake2SMACNotBuildInAdapter.CreateBlake2SMAC(a_Blake2SKey, a_Salt,
+                => Blake2SMACNotBuildInAdapter.CreateBlake2SMAC(a_Blake2SKey, a_Salt,
                     a_Personalisation, a_OutputLengthInBits);
-            } // end function CreateBlake2SMAC
+
         } // end class Blake2SMAC
 
         public static class KDF
@@ -1044,44 +664,51 @@ namespace SharpHash.Base
                 /// <param name="a_password">The password to derive the key for.</param>
                 /// <param name="a_salt">The salt to use to derive the key.</param>
                 /// <param name="a_iterations">The number of iterations to use to derive the key.</param>
-                /// <exception cref="ArgumentNilHashLibException">The password, salt or algorithm is Nil.</exception>
+                /// <exception cref="ArgumentNullHashLibException">The password, salt or algorithm is Nil.</exception>
                 /// <exception cref="ArgumentHashLibException">The iteration is less than 1.</exception>
                 public static IPBKDF2_HMAC CreatePBKDF2_HMAC(IHash a_hash, byte[] a_password,
                     byte[] a_salt, UInt32 a_iterations)
                 {
                     if (a_hash == null)
-                        throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.UninitializedInstance);
+                        throw new ArgumentNullHashLibException(PBKDF2_HMACNotBuildInAdapter.UninitializedInstance);
 
                     if (a_password.Empty())
-                        throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptyPassword);
+                        throw new ArgumentNullHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptyPassword);
 
                     if (a_salt.Empty())
-                        throw new ArgumentNilHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptySalt);
+                        throw new ArgumentNullHashLibException(PBKDF2_HMACNotBuildInAdapter.EmptySalt);
 
                     if (a_iterations < 1)
-                        throw new ArgumentHashLibException(PBKDF2_HMACNotBuildInAdapter.IterationtooSmall);
+                        throw new ArgumentHashLibException(PBKDF2_HMACNotBuildInAdapter.IterationTooSmall);
 
                     return new PBKDF2_HMACNotBuildInAdapter(a_hash, a_password, a_salt, a_iterations);
                 } // end function CreatePBKDF2_HMAC
             } // end class PBKDF2_HMAC
 
+            public static class PBKDF_Blake3
+            {
+                public static IPBKDF_Blake3NotBuiltIn CreatePBKDF_Blake3(byte[] a_key, byte[] ctx) 
+                    => new PBKDF_Blake3NotBuiltInAdapter(a_key, ctx);
+
+            } // end class PBKDF_Blake3
+
             public static class PBKDF_Argon2
             {
                 public static IPBKDF_Argon2 CreatePBKDF_Argon2(byte[] a_Password, IArgon2Parameters a_Argon2Parameters)
-                {
-                    return new PBKDF_Argon2NotBuildInAdapter(a_Password, a_Argon2Parameters);
-                } // end function CreatePBKDF_Argon2
+                    => new PBKDF_Argon2NotBuildInAdapter(a_Password, a_Argon2Parameters);
+
             } // end class PBKDF_Argon2
 
             public static class PBKDF_Scrypt
             {
                 public static IPBKDF_Scrypt CreatePBKDF_Scrypt(byte[] a_PasswordBytes,
-                    byte[] a_SaltBytes, Int32 a_Cost, Int32 a_BlockSize, Int32 a_Parallelism)
-                {
-                    return new PBKDF_ScryptNotBuildInAdapter(a_PasswordBytes, a_SaltBytes,
+                    byte[] a_SaltBytes, Int32 a_Cost, Int32 a_BlockSize, Int32 a_Parallelism) 
+                    => new PBKDF_ScryptNotBuildInAdapter(a_PasswordBytes, a_SaltBytes,
                         a_Cost, a_BlockSize, a_Parallelism);
-                } // end function CreatePBKDF_Scrypt
+
             } // end class PBKDF_Scrypt
+
         } // end class KDF
+
     } // end class HashFactory
 }

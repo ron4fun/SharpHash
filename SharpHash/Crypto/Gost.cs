@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class Gost : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class Gost : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt32[] state, hash;
 

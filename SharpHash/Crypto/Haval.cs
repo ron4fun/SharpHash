@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal abstract class Haval : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal abstract class Haval : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         protected Int32 rounds;
         protected UInt32[] hash;

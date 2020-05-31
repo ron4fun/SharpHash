@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class MD2 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class MD2 : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private byte[] state = null;
         private byte[] checksum = null;

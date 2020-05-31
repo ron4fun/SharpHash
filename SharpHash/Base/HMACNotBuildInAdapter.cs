@@ -30,11 +30,16 @@ using System;
 
 namespace SharpHash.Base
 {
-    internal class HMACNotBuildInAdapter : Hash, IHMAC, IHMACNotBuildIn, IWithKey,
-        ICrypto, ICryptoNotBuildIn
+    internal class HMACNotBuildInAdapter : Hash, IHMACNotBuiltIn, ICryptoNotBuiltIn
     {
         private IHash hash = null;
-        private byte[] opad = null, ipad = null, key = null;
+        private byte[] opad = null, ipad = null, key = null, workingKey = null;
+
+        private HMACNotBuildInAdapter(IHash a_underlyingHash)
+           : base(a_underlyingHash.HashSize, a_underlyingHash.BlockSize)
+        {
+            hash = a_underlyingHash;
+        } // end constructor
 
         private HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_HMACKey)
             : base(a_underlyingHash.HashSize, a_underlyingHash.BlockSize)
@@ -45,10 +50,12 @@ namespace SharpHash.Base
             opad = new byte[hash.BlockSize];
         } // end constructor
 
-        public static IHMAC CreateHMAC(IHash a_Hash, byte[] a_HMACKey)
+        public static IHMACNotBuiltIn CreateHMAC(IHash a_Hash, byte[] a_HMACKey)
         {
-            if (a_Hash is IHMAC)
-                return a_Hash as IHMAC;
+            if (a_HMACKey == null) throw new ArgumentNullHashLibException(nameof(a_HMACKey));
+            if (a_Hash == null) throw new ArgumentNullHashLibException(nameof(a_Hash));
+
+            if (a_Hash is IHMACNotBuiltIn hmacNotBuiltIn) return (IHMACNotBuiltIn)hmacNotBuiltIn.Clone();
 
             return new HMACNotBuildInAdapter(a_Hash, a_HMACKey);
         } //
@@ -56,16 +63,20 @@ namespace SharpHash.Base
         public void Clear()
         {
             ArrayUtils.ZeroFill(ref key);
+            ArrayUtils.ZeroFill(ref workingKey);
         } // end function Clear
 
         public override IHash Clone()
         {
-            HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash, Key);
+            HMACNotBuildInAdapter hmac = new HMACNotBuildInAdapter(hash.Clone());
 
             hmac.opad = opad.DeepCopy();
             hmac.ipad = ipad.DeepCopy();
             hmac.key = key.DeepCopy();
+            hmac.workingKey = workingKey.DeepCopy();
 
+            hmac.BufferSize = BufferSize;
+            
             return hmac;
         }
 
@@ -92,33 +103,57 @@ namespace SharpHash.Base
             hash.TransformBytes(a_data, a_index, a_length);
         } // end function TransformBytes
 
-        public override string Name => $"HMAC({hash.Name})";
+        public override string ToString() => Name;
 
-        public virtual byte[] Key
+        public override string Name => $"HMACNotBuiltIn({hash.Name})";
+
+        public byte[] Key
         {
             get => key.DeepCopy();
-            set => key = value.DeepCopy();            
-        } // end property Key
-
-        public virtual Int32? KeyLength => null;
+            set
+            {
+                if (value == null) throw new ArgumentNullHashLibException(nameof(value));
+                key = value.DeepCopy();
+                TransformKey();
+            }
+        }
+        
+        public byte[] WorkingKey
+        {
+            get => workingKey.DeepCopy();
+            private set => workingKey = value != null
+                ? value.DeepCopy()
+                : throw new ArgumentNullHashLibException(nameof(value));
+        }
 
         protected void UpdatePads()
         {
-            byte[] LKey;
-            Int32 Idx;
+            Int32 Idx = 0;
+            Int32 blockSize = hash.BlockSize;
+            Int32 length = workingKey.Length;
 
-            LKey = Key.Length > hash.BlockSize ? hash.ComputeBytes(Key).GetBytes() : Key;
+            ArrayUtils.Fill(ref ipad,0, blockSize, 0x36);
+            ArrayUtils.Fill(ref opad, 0, blockSize, 0x5C);
 
-            Utils.Utils.Memset(ref ipad, 0x36);
-            Utils.Utils.Memset(ref opad, 0x5C);
-
-            Idx = 0;
-            while ((Idx < LKey.Length) && (Idx < hash.BlockSize))
+            while (Idx < length && Idx < blockSize)
             {
-                ipad[Idx] = (byte)(ipad[Idx] ^ LKey[Idx]);
-                opad[Idx] = (byte)(opad[Idx] ^ LKey[Idx]);
+                ipad[Idx] = (byte)(ipad[Idx] ^ workingKey[Idx]);
+                opad[Idx] = (byte)(opad[Idx] ^ workingKey[Idx]);
                 Idx++;
             } // end while
         } // end function UpdatePads
+
+        /// <summary>
+        /// Computes the actual key used for hashing. This will not be the same as the
+        /// original key passed to TransformKey() if the original key exceeds the <br />
+        /// hash algorithm's block size. (See RFC 2104, section 2)
+        /// </summary>
+        private void TransformKey()
+        {
+            Int32 blockSize = hash.BlockSize;
+            // Perform RFC 2104, section 2 key adjustment.
+            WorkingKey = key.Length > blockSize ? hash.ComputeBytes(key).GetBytes() : key;
+        } // end function TransformKey
+
     }
 }

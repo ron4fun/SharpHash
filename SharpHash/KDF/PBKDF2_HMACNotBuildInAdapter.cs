@@ -31,10 +31,9 @@ using System;
 
 namespace SharpHash.KDF
 {
-    internal class PBKDF2_HMACNotBuildInAdapter : Base.KDF, IPBKDF2_HMACNotBuildIn
+    internal class PBKDF2_HMACNotBuildInAdapter : KDFNotBuiltIn, IPBKDF2_HMACNotBuiltIn
     {
-        private IHash hash = null;
-        private IHMAC HMAC = null;
+        private IHMACNotBuiltIn hmacNotBuiltIn;
         private byte[] Password = null, Salt = null, buffer = null;
         private UInt32 IterationCount, Block;
         private Int32 BlockSize, startIndex, endIndex;
@@ -44,14 +43,23 @@ namespace SharpHash.KDF
         public static readonly string UninitializedInstance = "\"IHash\" instance is uninitialized.";
         public static readonly string EmptyPassword = "Password can't be empty.";
         public static readonly string EmptySalt = "Salt can't be empty.";
-        public static readonly string IterationtooSmall = "Iteration must be greater than zero.";
+        public static readonly string IterationTooSmall = "Iteration must be greater than zero.";
 
-        public PBKDF2_HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_password,
+        private PBKDF2_HMACNotBuildInAdapter()
+        { } // end cctr
+
+        internal PBKDF2_HMACNotBuildInAdapter(IHash a_underlyingHash, byte[] a_password,
             byte[] a_salt, UInt32 a_iterations)
         {
-            hash = a_underlyingHash.Clone();
+            if (a_password == null) throw new ArgumentNullHashLibException(EmptyPassword);
+            if (a_salt == null) throw new ArgumentNullHashLibException(EmptySalt);
+            if (a_iterations <= 0) throw new ArgumentOutOfRangeHashLibException(IterationTooSmall);
 
-            buffer = new byte[0];
+            var hash = a_underlyingHash?.Clone() ?? throw new ArgumentNullHashLibException(UninitializedInstance);
+            hmacNotBuiltIn = HMACNotBuildInAdapter.CreateHMAC(hash, a_password);
+
+            BlockSize = hmacNotBuiltIn.HashSize;
+            buffer = new byte[BlockSize];
 
             // Copy Password
             Password = a_password.DeepCopy();
@@ -70,7 +78,7 @@ namespace SharpHash.KDF
             ArrayUtils.ZeroFill(ref Salt);
         } // end function Clear
 
-        override public byte[] GetBytes(Int32 bc)
+        public override byte[] GetBytes(Int32 bc)
         {
             Int32 LOffset, LSize, LRemainder, LRemCount;
             byte[] LKey, LT_Block = null;
@@ -99,7 +107,7 @@ namespace SharpHash.KDF
                 } // end else
             } // end if
 
-            if ((startIndex != 0) && (endIndex != 0))
+            if (startIndex != 0 && endIndex != 0)
                 throw new ArgumentHashLibException(InvalidIndex);
 
             while (LOffset < bc)
@@ -122,23 +130,42 @@ namespace SharpHash.KDF
                             LRemainder, startIndex);
 
                     endIndex = endIndex + LRemCount;
+
+                    Initialize();
+
                     return LKey;
                 } // end else
             } // end while
 
+            Initialize();
+
             return LKey;
         } // end function GetBytes
+
+        public override string Name => $"{GetType().Name}({hmacNotBuiltIn.Name})";
+
+        public override string ToString() => Name;
+
+        public override IKDFNotBuiltIn Clone()
+        {
+            return new PBKDF2_HMACNotBuildInAdapter
+            {
+                hmacNotBuiltIn = (IHMACNotBuiltIn)hmacNotBuiltIn.Clone(),
+                Password = Password.DeepCopy(),
+                Salt = Salt.DeepCopy(),
+                buffer = buffer.DeepCopy(),
+                IterationCount = IterationCount,
+                Block = Block,
+                BlockSize = BlockSize,
+                startIndex = startIndex,
+                endIndex = endIndex
+            };
+        } // end function Clone
 
         // initializes the state of the operation.
         private void Initialize()
         {
             ArrayUtils.ZeroFill(ref buffer);
-
-            HMAC = HMACNotBuildInAdapter.CreateHMAC(hash, Password);
-
-            BlockSize = (Int32)HMAC.HashSize;
-
-            Array.Resize(ref buffer, BlockSize);
 
             Block = 1;
             startIndex = 0;
@@ -149,31 +176,32 @@ namespace SharpHash.KDF
         private byte[] Func()
         {
             byte[] INT_block = GetBigEndianBytes(Block);
-            HMAC.Initialize();
+            hmacNotBuiltIn.Initialize();
 
-            HMAC.TransformBytes(Salt, 0, Salt.Length);
-            HMAC.TransformBytes(INT_block, 0, INT_block.Length);
+            hmacNotBuiltIn.TransformBytes(Salt, 0, Salt.Length);
+            hmacNotBuiltIn.TransformBytes(INT_block, 0, INT_block.Length);
 
-            byte[] temp = HMAC.TransformFinal().GetBytes();
-            byte[] ret = temp;
+            byte[] temp = hmacNotBuiltIn.TransformFinal().GetBytes();
+            byte[] result = temp.DeepCopy();
 
             UInt32 i = 2;
             Int32 j = 0;
             while (i <= IterationCount)
             {
-                temp = HMAC.ComputeBytes(temp).GetBytes();
+                temp = hmacNotBuiltIn.ComputeBytes(temp).GetBytes();
                 j = 0;
                 while (j < BlockSize)
                 {
-                    ret[j] = (byte)(ret[j] ^ temp[j]);
+                    result[j] = (byte)(result[j] ^ temp[j]);
                     j++;
                 } // end while
+
                 i++;
             } // end while
 
             Block++;
 
-            return ret;
+            return result;
         } // end function Func
 
         /// <summary>
@@ -183,11 +211,10 @@ namespace SharpHash.KDF
         /// <returns>array of bytes, in big endian.</returns>
         private static byte[] GetBigEndianBytes(UInt32 i)
         {
-            byte[] b = BitConverter.GetBytes(i);
-            byte[] invertedBytes = new byte[] { b[3], b[2], b[1], b[0] };
-            if (BitConverter.IsLittleEndian)
-                return invertedBytes;
-            return b;
+            byte[] result = new byte[sizeof(UInt32)];
+            Converters.ReadUInt32AsBytesBE(i, ref result, 0);
+            return result;
         } // end function GetBigEndianBytes
+
     }
 }

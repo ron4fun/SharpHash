@@ -38,10 +38,8 @@ namespace SharpHash.Checksum.Tests
 {
     public static class EnumUtil
     {
-        public static IEnumerable<T> GetValues<T>()
-        {
-            return Enum.GetValues(typeof(T)).Cast<T>();
-        }
+        public static IEnumerable<T> GetValues<T>() => Enum.GetValues(typeof(T)).Cast<T>();
+        
     } // end class EnumUtil
 
     [TestClass]

@@ -30,6 +30,10 @@ namespace SharpHash.Interfaces
 {
     public interface IKDF
     {
+        string Name { get; }
+
+        string ToString();
+
         void Clear();
 
         /// <summary>
@@ -40,5 +44,11 @@ namespace SharpHash.Interfaces
         /// <exception cref="ArgumentOutOfRangeHashLibException">bc must be greater than zero.</exception>
         /// <exception cref="ArgumentHashLibException">invalid start index or end index of internal buffer.</exception>
         byte[] GetBytes(Int32 bc);
-    }
+    } // end interface IKDF
+
+    public interface IKDFNotBuiltIn : IKDF
+    {
+        IKDFNotBuiltIn Clone();
+    } // end interface IKDFNotBuiltIn
+
 }

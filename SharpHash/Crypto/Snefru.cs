@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class Snefru : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class Snefru : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt32[] state = null;
         private Int32 security_level;

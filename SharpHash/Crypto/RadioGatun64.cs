@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class RadioGatun64 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class RadioGatun64 : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt64[] mill = null;
         private UInt64[][] belt = null;

@@ -33,7 +33,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal class Blake2S : Hash, ICryptoNotBuildIn, ITransformBlock
+    internal class Blake2S : Hash, ICryptoNotBuiltIn, ITransformBlock
     {
         public static readonly string InvalidConfigLength = "Config Length Must Be 8 Words";
         public static readonly string ConfigNil = "Config Cannot Be Nil";
@@ -84,7 +84,7 @@ namespace SharpHash.Crypto
             DoTransformKeyBlock = a_DoTransformKeyBlock;
 
             if (Config == null)
-                Config = Blake2SConfig.GetDefaultConfig();
+                Config = Blake2SConfig.DefaultConfig;
 
             // Reset HashSize
             HashSize = Config.HashSize;
@@ -95,10 +95,7 @@ namespace SharpHash.Crypto
             Buffer = new byte[BlockSizeInBytes];
         }
 
-        public override string Name
-        {
-            get => String.Format("{0}_{1}", this.GetType().Name, HashSize * 8);
-        } // end property Name
+        public override string Name => String.Format("{0}_{1}", this.GetType().Name, HashSize * 8);
 
         public Blake2S CloneInternal()
         {
@@ -141,7 +138,7 @@ namespace SharpHash.Crypto
             }
 
             if (RawConfig.Empty())
-                throw new ArgumentNilHashLibException(ConfigNil);
+                throw new ArgumentNullHashLibException(ConfigNil);
 
             if (RawConfig.Length != 8)
                 throw new ArgumentHashLibException(InvalidConfigLength);
@@ -1729,7 +1726,7 @@ namespace SharpHash.Crypto
 
     } // end class Blake2XS
 
-    internal sealed class Blake2SMACNotBuildInAdapter : Hash, IBlake2SMACNotBuildIn, ICryptoNotBuildIn
+    internal sealed class Blake2SMACNotBuildInAdapter : Hash, IBlake2SMACNotBuiltIn, ICryptoNotBuiltIn
     {
         private IHash hash = null;
 

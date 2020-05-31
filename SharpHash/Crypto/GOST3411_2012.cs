@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal abstract class GOST3411_2012 : Hash, ICryptoNotBuildIn, ITransformBlock
+    internal abstract class GOST3411_2012 : Hash, ICryptoNotBuiltIn, ITransformBlock
     {
         protected byte[] IV, N, Sigma, Ki, m, h, tmp, block;
         protected Int32 bOff;

@@ -27,10 +27,17 @@
 using SharpHash.Interfaces;
 using System;
 
-namespace SharpHash.Base
+namespace SharpHash.KDF
 {
-    internal abstract class KDF : IKDF
+    internal abstract class KDFNotBuiltIn : IKDFNotBuiltIn
     {
+
+        public abstract string Name { get; }
+
+        public abstract override string ToString();
+
+        public abstract IKDFNotBuiltIn Clone();
+
         public abstract void Clear();
 
         /// <summary>

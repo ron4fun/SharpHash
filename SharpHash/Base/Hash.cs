@@ -208,7 +208,7 @@ namespace SharpHash.Base
                     return;
             } // end if
             else
-                throw new ArgumentNilHashLibException(UnAssignedStream);
+                throw new ArgumentNullHashLibException(UnAssignedStream);
 
             if ((Int32)size > BUFFER_SIZE)
             {

@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal abstract class Tiger : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal abstract class Tiger : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         protected UInt64[] hash = null;
 

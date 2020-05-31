@@ -58,9 +58,9 @@ namespace SharpHash.Utils
         { }
     }; // end class ArgumentHashLibException
 
-    public class ArgumentNilHashLibException : HashLibException
+    public class ArgumentNullHashLibException : HashLibException
     {
-        public ArgumentNilHashLibException(string text) : base(text)
+        public ArgumentNullHashLibException(string text) : base(text)
         { }
     }; // end class ArgumentNilHashLibException
 

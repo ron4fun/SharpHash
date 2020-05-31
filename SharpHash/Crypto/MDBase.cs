@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal abstract class MDBase : BlockHash, ICryptoNotBuildIn
+    internal abstract class MDBase : BlockHash, ICryptoNotBuiltIn
     {
         protected readonly static UInt32 C1 = 0x50A28BE6;
         protected readonly static UInt32 C2 = 0x5A827999;

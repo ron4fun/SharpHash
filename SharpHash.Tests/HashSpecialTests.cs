@@ -44,12 +44,12 @@ namespace SharpHash.Tests
         [TestMethod]
         public void TestNullStreamThrowException()
         {
-            Assert.ThrowsException<ArgumentNilHashLibException>(() => hash.ComputeStream(null));
+            Assert.ThrowsException<ArgumentNullHashLibException>(() => hash.ComputeStream(null));
 
             //
             hash.Initialize();
 
-            Assert.ThrowsException<ArgumentNilHashLibException>(() => hash.TransformStream(null));
+            Assert.ThrowsException<ArgumentNullHashLibException>(() => hash.TransformStream(null));
 
             hash.TransformFinal();
         }

@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal abstract class SHA2_256Base : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal abstract class SHA2_256Base : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         protected UInt32[] state = null;
 

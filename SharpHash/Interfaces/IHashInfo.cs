@@ -29,23 +29,26 @@ using System;
 
 namespace SharpHash.Interfaces
 {
-    public interface ITransformBlock
+    internal interface ITransformBlock
     { } // end interface ITransformBlock
 
-    public interface IBlockHash : IHash
+    internal interface IBlockHash : IHash
     { } // end interface IBlockHash
 
-    public interface INonBlockHash
+    internal interface INonBlockHash
     { } // end interface INonBlockHash
 
     public interface IChecksum
     { } // end interface IChecksum
 
-    public interface ICrypto : IBlockHash
+    internal interface ICrypto : IHash
     { } // end interface ICrypto
 
-    public interface ICryptoNotBuildIn : ICrypto
-    { } // end interface ICryptoNotBuildIn
+    internal interface ICryptoBuiltIn : ICrypto
+    { } // end interface ICryptoBuiltIn
+
+    internal interface ICryptoNotBuiltIn : ICrypto
+    { } // end interface ICryptoNotBuiltIn
 
     public interface IWithKey : IHash
     {
@@ -62,60 +65,68 @@ namespace SharpHash.Interfaces
 
     public interface IHMAC : IMAC
     { } // end interface IHMAC
-
-    public interface IHMACNotBuildIn : IHMAC
-    { } // end interface IHMACNotBuildIn
+    
+    public interface IHMACNotBuiltIn : IHMAC
+    {
+        byte[] WorkingKey { get; }
+    } // end interface IHMACNotBuiltIn
 
     public interface IKMAC : IMAC
     { } // end interface IKMAC
 
-    public interface IKMACNotBuildIn : IKMAC
-    { } // end interface IKMACNotBuildIn
+    public interface IKMACNotBuiltIn : IKMAC
+    { } // end interface IKMACNotBuiltIn
 
     public interface IBlake2BMAC :  IMAC
     {} // end IBlake2BMAC
 
-    public interface IBlake2BMACNotBuildIn :   IBlake2BMAC
-    {} // end IBlake2BMACNotBuildIn
+    public interface IBlake2BMACNotBuiltIn :   IBlake2BMAC
+    {} // end IBlake2BMACNotBuiltIn
 
     public interface IBlake2SMAC :   IMAC
     {} // end IBlake2SMAC
 
-    public interface IBlake2SMACNotBuildIn :  IBlake2SMAC
-    {} // end IBlake2SMACNotBuildIn
+    public interface IBlake2SMACNotBuiltIn :  IBlake2SMAC
+    {} // end IBlake2SMACNotBuiltIn
 
-     public interface IHash16 : IHash
+    internal interface IHash16 : IHash
     { } // end interface IHash16
 
-    public interface IHash32 : IHash
+    internal interface IHash32 : IHash
     { } // end interface IHash32
 
-    public interface IHash64 : IHash
+    internal interface IHash64 : IHash
     { } // end interface IHash64
 
-    public interface IHash128 : IHash
+    internal interface IHash128 : IHash
     { } // end interface IHash128
 
     public interface IHashWithKey : IWithKey
     { } // end interface IHashWithKey
 
-    public interface IPBKDF2_HMAC : IKDF
+    public interface IPBKDF2_HMAC : IKDFNotBuiltIn
     { } // end interface IPBKDF2_HMAC
 
-    public interface IPBKDF2_HMACNotBuildIn : IPBKDF2_HMAC
-    { } // end interface IPBKDF2_HMACNotBuildIn
+    public interface IPBKDF2_HMACNotBuiltIn : IPBKDF2_HMAC
+    { } // end interface IPBKDF2_HMACNotBuiltIn
 
-    public interface IPBKDF_Argon2 : IKDF
+    public interface IPBKDF_Argon2 : IKDFNotBuiltIn
     { } // end interface IPBKDF_Argon2
 
-    public interface IPBKDF_Argon2NotBuildIn : IPBKDF_Argon2
-    { } // end interface IPBKDF_Argon2NotBuildIn
+    public interface IPBKDF_Argon2NotBuiltIn : IPBKDF_Argon2
+    { } // end interface IPBKDF_Argon2NotBuiltIn
 
-    public interface IPBKDF_Scrypt : IKDF
+    public interface IPBKDF_Scrypt : IKDFNotBuiltIn
     { } // end interface IPBKDF_Scrypt
 
-    public interface IPBKDF_ScryptNotBuildIn : IPBKDF_Scrypt
-    { } // end interface IPBKDF_ScryptNotBuildIn
+    public interface IPBKDF_ScryptNotBuiltIn : IPBKDF_Scrypt
+    { } // end interface IPBKDF_ScryptNotBuiltIn
+
+    public interface IPBKDF_Blake3 : IKDFNotBuiltIn
+    { } // end interface IPBKDF_Blake3
+
+    public interface IPBKDF_Blake3NotBuiltIn : IPBKDF_Blake3
+    { } // end interface IPBKDF_Blake3NotBuiltIn
 
     public interface IXOF : IHash
     {
@@ -127,6 +138,8 @@ namespace SharpHash.Interfaces
     public interface IArgon2Parameters
     {
         void Clear();
+
+        IArgon2Parameters Clone();
 
         byte[] Salt { get; }
         byte[] Secret { get; }

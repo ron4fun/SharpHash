@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class WhirlPool : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class WhirlPool : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt64[] hash = null;
 

@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal class Blake3 : Hash, ICryptoNotBuildIn, ITransformBlock
+    internal class Blake3 : Hash, ICryptoNotBuiltIn, ITransformBlock
     {
         public static readonly string InvalidXOFSize = "XOFSize in Bits must be Multiples of 8 and be Greater than Zero Bytes";
         public static readonly string InvalidKeyLength = "\"Key\" Length Must Not Be Greater Than {0}, \"{1}\"";
@@ -42,7 +42,7 @@ namespace SharpHash.Crypto
 
         private const Int32 ChunkSize = 1024;
         private const Int32 BlockSizeInBytes = 64;
-        protected const Int32 KeyLengthInBytes = 32;
+        internal const Int32 KeyLengthInBytes = 32;
 
         private const UInt32 flagChunkStart = (UInt32)(1 << 0);
         private const UInt32 flagChunkEnd = (UInt32)(1 << 1);
@@ -55,7 +55,7 @@ namespace SharpHash.Crypto
         // maximum size in bytes this digest output reader can produce
         private const UInt64 MaxDigestLengthInBytes = UInt64.MaxValue;
 
-        protected static readonly UInt32[] IV = new UInt32[] {0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A,
+        internal static readonly UInt32[] IV = new UInt32[] {0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A,
             0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 };
 
 

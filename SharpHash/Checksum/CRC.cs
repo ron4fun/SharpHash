@@ -559,7 +559,7 @@ namespace SharpHash.Checksum
 
         private UInt64[] CRCTable { get; set; }
 
-        private static Int32 Delta { get => 7; }
+        private static Int32 Delta => 7;
 
         public CRC(Int32 _Width, UInt64 _poly, UInt64 _Init,
             bool _refIn, bool _refOut, UInt64 _XorOut, UInt64 _check, string[] _Names)
@@ -609,12 +609,7 @@ namespace SharpHash.Checksum
             HashInstance.hash = hash;
             HashInstance.IsTableGenerated = IsTableGenerated;
 
-            if (!(CRCTable == null || CRCTable.Length == 0))
-            {
-                HashInstance.CRCTable = new UInt64[CRCTable.Length];
-                for (Int32 i = 0; i < CRCTable.Length; i++)
-                    HashInstance.CRCTable[i] = CRCTable[i];
-            } // end if
+            HashInstance.CRCTable = CRCTable.DeepCopy();
 
             HashInstance.BufferSize = BufferSize;
 

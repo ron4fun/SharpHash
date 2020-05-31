@@ -49,7 +49,7 @@ namespace SharpHash.KDF
     /// Argon2 PBKDF - Based on the results of https://password-hashing.net/
     /// and https://www.ietf.org/archive/id/draft-irtf-cfrg-argon2-03.txt
     /// </summary>
-    internal sealed class PBKDF_Argon2NotBuildInAdapter : Base.KDF, IPBKDF_Argon2, IPBKDF_Argon2NotBuildIn
+    internal sealed class PBKDF_Argon2NotBuildInAdapter : KDFNotBuiltIn, IPBKDF_Argon2NotBuiltIn
     {
         private const Int32 ARGON2_BLOCK_SIZE = 1024;
         private const Int32 ARGON2_QWORDS_IN_BLOCK = ARGON2_BLOCK_SIZE / 8;
@@ -93,7 +93,7 @@ namespace SharpHash.KDF
                 foreach (Block block in a_Blocks)
                 {
                     if (!block.Initialized)
-                        throw new ArgumentNilHashLibException(Global.BlockInstanceNotInitialized);
+                        throw new ArgumentNullHashLibException(Global.BlockInstanceNotInitialized);
                 }
             } // end function CheckAreBlocksInitialized
 
@@ -343,6 +343,9 @@ namespace SharpHash.KDF
         private IArgon2Parameters Parameters = null;
         private byte[] Password, Result;
 
+
+        private PBKDF_Argon2NotBuildInAdapter() { } // end cctr
+
         /// <summary>
         /// Initialise the <see cref="PBKDF_Argon2NotBuildInAdapter" />
         /// from the password and parameters.
@@ -353,8 +356,10 @@ namespace SharpHash.KDF
         /// <param name="a_Parameters">
         /// Argon2 configuration.
         /// </param>
-        public PBKDF_Argon2NotBuildInAdapter(byte[] a_Password, IArgon2Parameters a_Parameters)
+        internal PBKDF_Argon2NotBuildInAdapter(byte[] a_Password, IArgon2Parameters a_Parameters)
         {
+            if (a_Password == null) throw new ArgumentNullHashLibException(nameof(a_Password));
+
             ValidatePBKDF_Argon2Inputs(a_Parameters);
 
             Password = a_Password.DeepCopy();
@@ -411,6 +416,36 @@ namespace SharpHash.KDF
 
             return result;
         }  // end function GetBytes
+
+        public override string Name => GetType().Name;
+
+        public override string ToString() => Name;
+
+        public override IKDFNotBuiltIn Clone()
+        {
+            return new PBKDF_Argon2NotBuildInAdapter()
+            {
+                Result = Result.DeepCopy(),
+                Password = Password.DeepCopy(),
+                Memory = DeepCopyBlockArray(Memory),
+                Parameters = Parameters.Clone(),
+                SegmentLength = SegmentLength,
+                LaneLength = LaneLength
+            };
+        } // end function Clone
+
+        private static Block[] DeepCopyBlockArray(Block[] blocks)
+        {
+            if (blocks == null) throw new ArgumentNullHashLibException(nameof(blocks));
+            Block[] result = new Block[blocks.Length];
+
+            for (Int32 idx = 0; idx < result.Length; idx++)
+            {
+                result[idx] = blocks[idx].Clone();
+            }
+
+            return result;
+        } // end function DeepCopyBlockArray
 
         public override void Clear()
         {
@@ -898,7 +933,7 @@ namespace SharpHash.KDF
         private static void ValidatePBKDF_Argon2Inputs(IArgon2Parameters a_Argon2Parameters)
         {
             if (a_Argon2Parameters == null)
-                throw new ArgumentNilHashLibException(Global.Argon2ParameterBuilderNotInitialized);
+                throw new ArgumentNullHashLibException(Global.Argon2ParameterBuilderNotInitialized);
         } // end function ValidatePBKDF_Argon2Inputs
 
         private static void AddIntToLittleEndian(IHash a_Hash, Int32 a_n)
@@ -1069,14 +1104,19 @@ namespace SharpHash.KDF
         public Argon2Parameters(Argon2Type a_Type, byte[] a_Salt, byte[] a_Secret, byte[] a_Additional,
             Int32 a_Iterations, Int32 a_Memory, Int32 a_Lanes, Argon2Version a_Version)
         {
-            Salt= a_Salt.DeepCopy();
-            Secret= a_Secret.DeepCopy();
-            Additional= a_Additional.DeepCopy();
-            Iterations= a_Iterations;
-            Memory= a_Memory;
-            Lanes= a_Lanes;
-            Type= a_Type;
-            Version= a_Version;
+            if (a_Salt == null) throw new ArgumentNullHashLibException(nameof(a_Salt));
+            if (a_Secret == null) throw new ArgumentNullHashLibException(nameof(a_Secret));
+            if (a_Additional == null) throw new ArgumentNullHashLibException(nameof(a_Additional));
+
+            Salt = a_Salt.DeepCopy();
+            Secret = a_Secret.DeepCopy();
+            Additional = a_Additional.DeepCopy();
+
+            Iterations = a_Iterations;
+            Memory = a_Memory;
+            Lanes = a_Lanes;
+            Type = a_Type;
+            Version = a_Version;
         } // end cctr
 
         public void Clear()
@@ -1085,6 +1125,9 @@ namespace SharpHash.KDF
             ArrayUtils.ZeroFill(ref secret);
             ArrayUtils.ZeroFill(ref additional);
         } // end function Clear
+
+        public IArgon2Parameters Clone() =>
+            new Argon2Parameters(Type, salt, secret, additional, Iterations, Memory, Lanes, Version);
 
     } // end class Argon2Parameters
 

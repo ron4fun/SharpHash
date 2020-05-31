@@ -31,7 +31,7 @@ using System;
 
 namespace SharpHash.Crypto
 {
-    internal sealed class Grindahl256 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal sealed class Grindahl256 : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         private UInt32[] state = null;
         private UInt32[] temp = null;

@@ -36,7 +36,7 @@ namespace SharpHash.KDF
     /// Scrypt was created by Colin Percival and is specified in
     /// <a href="http://tools.ietf.org/html/draft-josefsson-scrypt-kdf-01">draft-josefsson-scrypt-kd</a>.
     /// </remarks>
-    internal class PBKDF_ScryptNotBuildInAdapter : Base.KDF, IPBKDF_ScryptNotBuildIn
+    internal class PBKDF_ScryptNotBuildInAdapter : KDFNotBuiltIn, IPBKDF_ScryptNotBuiltIn
     {
         private byte[] PasswordBytes = null;
         private byte[] SaltBytes = null;
@@ -49,7 +49,9 @@ namespace SharpHash.KDF
         public static readonly string InvalidParallelism = "Parallelism parameter must be >= 1 and <= {0} (based on block size of {1})";
         public static readonly string RoundsMustBeEven = "Number of Rounds Must be Even";
 
-        public PBKDF_ScryptNotBuildInAdapter(byte[] a_PasswordBytes, byte[] a_SaltBytes,
+        private PBKDF_ScryptNotBuildInAdapter() { } // end cctr
+
+        internal PBKDF_ScryptNotBuildInAdapter(byte[] a_PasswordBytes, byte[] a_SaltBytes,
             Int32 a_Cost, Int32 a_BlockSize, Int32 a_Parallelism)
         {
             ValidatePBKDF_ScryptInputs(a_Cost, a_BlockSize, a_Parallelism);
@@ -95,6 +97,22 @@ namespace SharpHash.KDF
             ArrayUtils.ZeroFill(ref PasswordBytes);
             ArrayUtils.ZeroFill(ref SaltBytes);
         } // end function Clear
+
+        public override string Name => GetType().Name;
+
+        public override string ToString() => Name;
+
+        public override IKDFNotBuiltIn Clone()
+        {
+            return new PBKDF_ScryptNotBuildInAdapter()
+            {
+                PasswordBytes = PasswordBytes.DeepCopy(),
+                SaltBytes = SaltBytes.DeepCopy(),
+                Cost = Cost,
+                BlockSize = BlockSize,
+                Parallelism = Parallelism
+            };
+        } // end function Clone
 
         /// <summary>
         /// Returns the pseudo-random bytes for this object.

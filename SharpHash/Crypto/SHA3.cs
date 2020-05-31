@@ -48,7 +48,7 @@ namespace SharpHash.Crypto
         CShake = 0x04
     }; // end enum HashMode
 
-    internal abstract class SHA3 : BlockHash, ICryptoNotBuildIn, ITransformBlock
+    internal abstract class SHA3 : BlockHash, ICryptoNotBuiltIn, ITransformBlock
     {
         protected UInt64[] state = null;
         protected HashMode hash_mode;
@@ -973,7 +973,7 @@ namespace SharpHash.Crypto
         } // end function Clone
     } // end class CShake_256
 
-    internal abstract class KMACNotBuildInAdapter : Hash, IKMAC, IKMACNotBuildIn, ICrypto, ICryptoNotBuildIn
+    internal abstract class KMACNotBuildInAdapter : Hash, IKMAC, IKMACNotBuiltIn, ICrypto, ICryptoNotBuiltIn
     {
         protected IHash hash;
         protected byte[] key, Customization;
