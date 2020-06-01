@@ -13,14 +13,15 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/ron4fun/SharpHash</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ron4fun/SharpHash.git</RepositoryUrl>
-    <Copyright>2019</Copyright>
-    <PackageId>SharpHash_Ron4fun</PackageId>
+    <Copyright>2020</Copyright>
+    <PackageId>SharpHash</PackageId>
     <PackageTags>Hash;Hashing;Crypto;Cryptography;Checksum;HMAC;KDF;PBKDF;</PackageTags>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>sharphash_key.pfx</AssemblyOriginatorKeyFile>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

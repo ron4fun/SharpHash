@@ -846,9 +846,9 @@ namespace SharpHash.KDF
                   2 * i + 81, 2 * i + 96, 2 * i + 97, 2 * i + 112, 2 * i + 113);
             } //
 
-            if (a_WithXor) ;
+            //if (a_WithXor) ;
             //a_CurrentBlock.Xor(R, Z, a_CurrentBlock);
-            else;
+            //else;
             // a_CurrentBlock.Xor(R, Z);
         } //
 
