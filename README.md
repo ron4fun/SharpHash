@@ -1,4 +1,4 @@
-SharpHash [![License](http://img.shields.io/badge/license-MPL2-blue.svg)](https://github.com/Ron4fun/HashLib4CSharp/blob/master/LICENSE) [![Build Status](https://travis-ci.org/Ron4fun/SharpHash.svg?branch=master)](https://travis-ci.org/Ron4fun/SharpHash)
+SharpHash [![License](http://img.shields.io/badge/license-MPL2-blue.svg)](https://github.com/Ron4fun/HashLib4CSharp/blob/master/LICENSE) [![Build Status](https://travis-ci.org/Ron4fun/SharpHash.svg?branch=master)](https://travis-ci.org/Ron4fun/SharpHash) [![Nuget](https://img.shields.io/nuget/v/SharpHash)](https://www.nuget.org/packages/SharpHash/) [![Nuget](https://img.shields.io/nuget/dt/SharpHash)](https://www.nuget.org/packages/SharpHash/)
 ====
 
 SharpHash is a C# hashing library that provides a fluent interface for computing hashes and checksums of strings, files, streams, bytearrays and untyped data to mention but a few.
