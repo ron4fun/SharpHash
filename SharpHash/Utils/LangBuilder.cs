@@ -157,8 +157,8 @@ namespace SharpHash.Utils
                 #endregion
 
                 #region Grindahl Hash Family
-                case "Grindahl":
-                case "Grindahl256":
+                case "grindahl":
+                case "grindahl256":
                     return new Grindahl256();
                 case "grindahl512":
                     return new Grindahl512();
@@ -178,10 +178,10 @@ namespace SharpHash.Utils
                 #endregion
 
                 #region Snefru Hash Family
-                case "Snefru":
-                case "Snefru8128":
+                case "snefru":
+                case "snefru8128":
                     return new Snefru(8, 128);
-                case "Snefru8256":
+                case "snefru8256":
                     return new Snefru(8, 256);
                 #endregion
 
@@ -255,7 +255,6 @@ namespace SharpHash.Utils
                     return new Blake2S(new Blake2SConfig(HashSizeEnum.HashSize256), null);
 
                 case "blake3":
-                    return Blake3.CreateBlake3(HashSizeEnum.HashSize256, null);
                 case "blake3256":
                     return Blake3.CreateBlake3(HashSizeEnum.HashSize256, null);
 
