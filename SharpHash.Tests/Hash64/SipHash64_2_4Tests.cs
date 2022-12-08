@@ -35,13 +35,13 @@ using System.Text;
 namespace SharpHash.Hash64.Tests
 {
     [TestClass]
-    public class SipHash2_4Tests : HashAdapter1BaseTests
+    public class SipHash64_2_4Tests : HashAdapter1BaseTests
     {
         private string ExpectedHashWithExternalKey { get; set; }
 
-        public SipHash2_4Tests()
+        public SipHash64_2_4Tests()
         {
-            hash = HashFactory.Hash64.CreateSipHash2_4();
+            hash = HashFactory.Hash64.CreateSipHash64_2_4();
 
             ExpectedHashOfEmptyData = "310E0EDD47DB6F72";
             ExpectedHashOfDefaultData = "4ED2198628C443AA";
