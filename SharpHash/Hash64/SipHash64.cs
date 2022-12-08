@@ -46,13 +46,11 @@ namespace SharpHash.Hash64
 
         static private readonly string InvalidKeyLength = "KeyLength Must Be Equal to {0}";
 
-        public SipHash(Int32 a_compression_rounds = 2, Int32 a_finalization_rounds = 4)
-            : base(8, 8)
+        public SipHash(Int32 hash_size, Int32 block_size)
+            : base(hash_size, block_size)
         {
             key0 = KEY0;
             key1 = KEY1;
-            cr = a_compression_rounds;
-            fr = a_finalization_rounds;
             Array.Resize(ref buf, 8);
         } // end constructor
 
@@ -73,12 +71,11 @@ namespace SharpHash.Hash64
 
         override public unsafe void TransformBytes(byte[] a_data, Int32 a_index, Int32 a_length)
         {
-            Int32 i, Length, iter, offset;
+            Int32 i, iter, offset;
 
-            Length = a_length;
             i = a_index;
 
-            total_length += (UInt32)Length;
+            total_length += (UInt32)a_length;
 
             fixed (byte* ptr_a_data = a_data, ptr_Fm_buf = buf)
             {
@@ -86,12 +83,12 @@ namespace SharpHash.Hash64
 
                 if ((idx != 0) && (a_length != 0))
                 {
-                    while ((idx < 8) && (Length != 0))
+                    while ((idx < 8) && (a_length != 0))
                     {
                         buf[idx] = *(ptr_a_data + a_index);
                         idx++;
                         a_index++;
-                        Length--;
+                        a_length--;
                     } // end while
                     if (idx == 8)
                     {
@@ -105,7 +102,7 @@ namespace SharpHash.Hash64
                     i = 0;
                 } // end else
 
-                iter = Length >> 3;
+                iter = a_length >> 3;
 
                 // body
 
@@ -119,7 +116,7 @@ namespace SharpHash.Hash64
                 // save pending end bytes
                 offset = a_index + (i * 8);
 
-                while (offset < (Length + a_index))
+                while (offset < (a_length + a_index))
                 {
                     ByteUpdate(a_data[offset]);
                     offset++;
@@ -129,7 +126,12 @@ namespace SharpHash.Hash64
 
         override public IHashResult TransformFinal()
         {
-            Finish();
+            UInt64 finalBlock = ProcessFinalBlock();
+            v3 ^= finalBlock;
+            CompressTimes(cr);
+            v0 ^= finalBlock;
+            v2 ^= GetMagicXor();
+            CompressTimes(fr);
 
             byte[] BufferByte = new byte[HashSize];
             Converters.ReadUInt64AsBytesLE(v0 ^ v1 ^ v2 ^ v3, ref BufferByte, 0);
@@ -141,7 +143,9 @@ namespace SharpHash.Hash64
             return result;
         } // end function TransformFinal
 
-        private void Compress()
+        protected abstract byte GetMagicXor();
+
+        protected void Compress()
         {
             v0 = v0 + v1;
             v2 = v2 + v3;
@@ -159,7 +163,7 @@ namespace SharpHash.Hash64
             v2 = Bits.RotateLeft64(v2, 32);
         } // end function Compress
 
-        private void CompressTimes(Int32 a_times)
+        protected void CompressTimes(Int32 a_times)
         {
             Int32 i = 0;
 
@@ -170,14 +174,14 @@ namespace SharpHash.Hash64
             } // end while
         } // end function CompressTimes
 
-        private void ProcessBlock(UInt64 a_m)
+        protected void ProcessBlock(UInt64 a_m)
         {
             v3 = v3 ^ a_m;
             CompressTimes(cr);
             v0 = v0 ^ a_m;
         } // end function ProcessBlock
 
-        private unsafe void ByteUpdate(byte a_b)
+        protected unsafe void ByteUpdate(byte a_b)
         {
             buf[idx] = a_b;
             idx++;
@@ -192,7 +196,7 @@ namespace SharpHash.Hash64
             } // end if
         } // end function ByteUpdate
 
-        private void Finish()
+        protected void Finish()
         {
             UInt64 b = (UInt64)(total_length & 0xFF) << 56;
 
@@ -258,6 +262,66 @@ namespace SharpHash.Hash64
             CompressTimes(fr);
         } // end function Finish
 
+        protected UInt64 ProcessFinalBlock()
+        {
+            UInt64 result = (total_length & 0xFF) << 56;
+
+            if (idx == 0) return result;
+            switch (idx)
+            {
+                case 7:
+                    result |= (UInt64)buf[6] << 48;
+                    result |= (UInt64)buf[5] << 40;
+                    result |= (UInt64)buf[4] << 32;
+                    result |= (UInt64)buf[3] << 24;
+                    result |= (UInt64)buf[2] << 16;
+                    result |= (UInt64)buf[1] << 8;
+                    result |= buf[0];
+                    break;
+
+                case 6:
+                    result |= (UInt64)buf[5] << 40;
+                    result |= (UInt64)buf[4] << 32;
+                    result |= (UInt64)buf[3] << 24;
+                    result |= (UInt64)buf[2] << 16;
+                    result |= (UInt64)buf[1] << 8;
+                    result |= buf[0];
+                    break;
+
+                case 5:
+                    result |= (UInt64)buf[4] << 32;
+                    result |= (UInt64)buf[3] << 24;
+                    result |= (UInt64)buf[2] << 16;
+                    result |= (UInt64)buf[1] << 8;
+                    result |= buf[0];
+                    break;
+
+                case 4:
+                    result |= (UInt64)buf[3] << 24;
+                    result |= (UInt64)buf[2] << 16;
+                    result |= (UInt64)buf[1] << 8;
+                    result |= buf[0];
+                    break;
+
+                case 3:
+                    result |= (UInt64)buf[2] << 16;
+                    result |= (UInt64)buf[1] << 8;
+                    result |= buf[0];
+                    break;
+
+                case 2:
+                    result |= (UInt64)buf[1] << 8;
+                    result |= buf[0];
+                    break;
+
+                case 1:
+                    result |= buf[0];
+                    break;
+            }
+
+            return result;
+        }
+
         virtual public Int32? KeyLength
         {
             get => 16;
@@ -300,17 +364,51 @@ namespace SharpHash.Hash64
 
     } // end class SipHash
 
+  
+    internal class SipHash64 : SipHash
+    {
+        protected SipHash64(Int32 compression_rounds, Int32 finalization_rounds) 
+            : base(8, 8)
+        {
+            cr = compression_rounds;
+            fr = finalization_rounds;
+        } // end constructor
+
+        override public IHashResult TransformFinal()
+        {
+            UInt64 finalBlock = ProcessFinalBlock();
+            v3 ^= finalBlock;
+            CompressTimes(cr);
+            v0 ^= finalBlock;
+            v2 ^= GetMagicXor();
+            CompressTimes(fr);
+
+            byte[] BufferByte = new byte[HashSize];
+            Converters.ReadUInt64AsBytesLE(v0 ^ v1 ^ v2 ^ v3, ref BufferByte, 0);
+
+            IHashResult result = new HashResult(BufferByte);
+
+            Initialize();
+
+            return result;
+        } // end function TransformFinal
+
+        override protected byte GetMagicXor() => 0xFF;
+
+    }; // end class SipHash64
+
     /// <summary>
     /// SipHash 2 - 4 algorithm.
     /// <summary>
-    internal sealed class SipHash2_4 : SipHash
+    internal sealed class SipHash64_2_4 : SipHash64
     {
-        public SipHash2_4() : base(2, 4)
-        { } // end constructor
+        public SipHash64_2_4()
+            : base(2, 4)
+        {} // end constructor
 
         public override IHash Clone()
         {
-            SipHash2_4 HashInstance = new SipHash2_4();
+            SipHash64_2_4 HashInstance = new SipHash64_2_4();
             HashInstance.v0 = v0;
             HashInstance.v1 = v1;
             HashInstance.v2 = v2;
@@ -329,5 +427,6 @@ namespace SharpHash.Hash64
             return HashInstance;
         } // end function Clone
 
-    }; // end class SipHash2_4
+    } // end class SipHash64_2_4
+
 }

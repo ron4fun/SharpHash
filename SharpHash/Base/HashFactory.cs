@@ -520,7 +520,7 @@ namespace SharpHash.Base
 
             public static IHashWithKey CreateMurmur2() => new Murmur2_64();
 
-            public static IHashWithKey CreateSipHash2_4() => new SipHash2_4();
+            public static IHashWithKey CreateSipHash64_2_4() => new SipHash64_2_4();
 
             public static IHashWithKey CreateXXHash64() => new XXHash64();
 
@@ -531,6 +531,8 @@ namespace SharpHash.Base
             public static IHashWithKey CreateMurmurHash3_x86_128() => new MurmurHash3_x86_128();
 
             public static IHashWithKey CreateMurmurHash3_x64_128() => new MurmurHash3_x64_128();
+
+            public static IHashWithKey CreateSipHash128_2_4() => new SipHash128_2_4();
 
         } // end class Hash128
 
