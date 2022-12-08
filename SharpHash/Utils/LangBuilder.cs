@@ -358,8 +358,9 @@ namespace SharpHash.Utils
                     return new FNV1a64();
                 case "murmur264":
                     return new Murmur2_64();
-                case "siphash24":
-                    return new SipHash2_4();
+                case "siphash64":
+                case "siphash6424":
+                    return new SipHash64_2_4();
                 case "xxhash64":
                     return new XXHash64();
                 #endregion
@@ -372,6 +373,9 @@ namespace SharpHash.Utils
                 case "murmurhash3128x64":
                 case "murmurhash3x64128":
                     return new MurmurHash3_x64_128();
+                case "siphash128":
+                case "siphash12824":
+                    return new SipHash64_2_4();
                 #endregion
 
             }
