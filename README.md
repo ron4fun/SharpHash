@@ -171,8 +171,8 @@ namespace Program
 If you want implementations in other languages, you can check out these
 
 * [HashLib4Pascal](https://github.com/Xor-el/HashLib4Pascal) by Ugochukwu Mmaduekwe
-* [HashLib4CPP](https://github.com/ron4fun/HashLib4CPP) by Mbadiwe Nnaemeka Ronald
-* [HashLib4Python](https://github.com/ron4fun/HashLib4Python) by Mbadiwe Nnaemeka Ronald
+* [HashLibPlus](https://github.com/ron4fun/HashLibPlus) by Mbadiwe Nnaemeka Ronald
+
 
 ### Tip Jar
 ----------------------------------------
