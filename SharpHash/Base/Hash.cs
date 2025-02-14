@@ -204,13 +204,13 @@ namespace SharpHash.Base
                         throw new IndexOutOfRangeHashLibException(IndexOutOfRange);
                 } // end if
 
-                if (a_stream.Position >= (Int32)size)
+                if (a_stream.Position >= (long)size)
                     return;
             } // end if
             else
                 throw new ArgumentNullHashLibException(UnAssignedStream);
 
-            if ((Int32)size > BUFFER_SIZE)
+            if ((long)size > BUFFER_SIZE)
             {
                 if (a_length == -1) LBufferSize = BUFFER_SIZE;
                 else
@@ -220,7 +220,7 @@ namespace SharpHash.Base
             }
             else
             {
-                LBufferSize = (Int32)(a_length == -1 ? (Int32)size : a_length);
+                LBufferSize = (Int32)(a_length == -1 ? (long)size : a_length);
             }
 
             byte[] data = new byte[LBufferSize];
