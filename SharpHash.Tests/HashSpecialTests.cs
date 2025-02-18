@@ -30,6 +30,7 @@ using SharpHash.Interfaces;
 using SharpHash.Tests;
 using SharpHash.Utils;
 using System;
+using System.IO;
 using System.Text;
 
 namespace SharpHash.Tests
@@ -40,6 +41,8 @@ namespace SharpHash.Tests
         private IHash hash = HashFactory.Crypto.CreateMD5();
         private readonly string ExpectedHashOfDefaultData = "462EC1E50C8F2D5C387682E98F9BC842";
         private readonly string ExpectedHashOfEmptyData = "D41D8CD98F00B204E9800998ECF8427E";
+        private readonly string ExpectedHashOfLargeData = "72964394000CC54628101A7ED458D980";
+        private string _tempDirectory = Directory.CreateDirectory($"{System.Environment.GetEnvironmentVariable("TEMP")}\\{Guid.NewGuid()}").FullName;
 
         [TestMethod]
         public void TestNullStreamThrowException()
@@ -52,6 +55,40 @@ namespace SharpHash.Tests
             Assert.ThrowsException<ArgumentNullHashLibException>(() => hash.TransformStream(null));
 
             hash.TransformFinal();
+        }
+
+        [TestMethod]
+        public void TestHashOfLargeFile()
+        {
+            var filePath = $"{_tempDirectory}\\hashTest";
+            CreateTestFile(filePath, 2147483648);
+
+            hash.Initialize();
+            var hashResult = hash.ComputeFile(filePath);
+
+            Assert.AreEqual(hashResult.ToString(), ExpectedHashOfLargeData);
+        }
+
+        private void CreateTestFile(string filePath, long totalBytes = 6442450944)
+        {
+            byte[] pattern = Encoding.UTF8.GetBytes("abcdefhg");
+            int patternLength = pattern.Length;
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                long bytesWritten = 0;
+                while (bytesWritten < totalBytes)
+                {
+                    int bytesToWrite = (int)Math.Min(patternLength, totalBytes - bytesWritten);
+                    fs.Write(pattern, 0, bytesToWrite);
+                    bytesWritten += bytesToWrite;
+                }
+            }
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            Directory.Delete(_tempDirectory, true);
         }
 
         [TestMethod]
